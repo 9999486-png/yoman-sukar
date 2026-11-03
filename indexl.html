@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>יומן סוכר ותזונה</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: soft blush app — raspberry hero card with geometric art, frosted rounded cards, pill tabs, concentric arcs in the backdrop */
+:root{
+  --bg:#fbe3ea; --surface:#fff6f8; --sunk:#fae0e8; --line:#f2c9d6; --arc:rgb(214 92 134 / .16);
+  --ink:#5c1634; --muted:#a05676; --accent:#b8265e; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
+  --tile:#c73a6f; --tile-2:#a81f55; --tile-ink:#ffffff; --tile-soft:rgb(255 255 255 / .16);
+  --shape-1:#f7b4c9; --shape-2:#e57399; --shape-3:#a81f55; --shape-4:#fde7ee; --face:#8f1747;
+  --ok:#2e9d57; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-text:#c96400; --warn-soft:#fdebd3; --high:#d7333a; --high-soft:#fbd9dc; --pill-ink:#ffffff;
+  --l1:#b8265e; --l2:#e08a3c; --l3:#7b55b0;
+  --shadow:0 10px 30px rgb(184 38 94 / .10);
+  --f-display:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
+  --f-body:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
+  --r:22px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1f0e16; --surface:#2b1520; --sunk:#361b29; --line:#4b2638; --arc:rgb(242 122 165 / .10);
+  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
+  --tile:#8f1f4c; --tile-2:#6e1239; --tile-ink:#fff0f5; --tile-soft:rgb(255 255 255 / .10);
+  --shape-1:#7a2a4a; --shape-2:#c2507c; --shape-3:#f27aa5; --shape-4:#4a1d33; --face:#fde4ee;
+  --ok:#5cc47e; --ok-soft:#173222; --warn:#ff9a3c; --warn-text:#ffb06a; --warn-soft:#3b2912; --high:#ff6b73; --high-soft:#43191e; --pill-ink:#1f0e16;
+  --l1:#f27aa5; --l2:#f0a35a; --l3:#b39af0; --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1f0e16; --surface:#2b1520; --sunk:#361b29; --line:#4b2638; --arc:rgb(242 122 165 / .10);
+  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
+  --tile:#8f1f4c; --tile-2:#6e1239; --tile-ink:#fff0f5; --tile-soft:rgb(255 255 255 / .10);
+  --shape-1:#7a2a4a; --shape-2:#c2507c; --shape-3:#f27aa5; --shape-4:#4a1d33; --face:#fde4ee;
+  --ok:#5cc47e; --ok-soft:#173222; --warn:#ff9a3c; --warn-text:#ffb06a; --warn-soft:#3b2912; --high:#ff6b73; --high-soft:#43191e; --pill-ink:#1f0e16;
+  --l1:#f27aa5; --l2:#f0a35a; --l3:#b39af0; --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:repeating-radial-gradient(circle at 0% 0%,transparent 0 46px,var(--arc) 46px 48px) no-repeat 0 0/min(100%,620px) 520px,var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;direction:rtl}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 60px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;color:var(--ink)}
+h1{font-size:1.9rem}
+h2{font-size:1.3rem}
+h3{font-size:1.05rem;font-weight:600}
+.sub{color:var(--muted);margin:2px 0 0}
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:28px;padding:22px;background:linear-gradient(160deg,var(--tile),var(--tile-2));color:var(--tile-ink);display:grid;grid-template-columns:1fr auto;gap:18px;box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;inset:-40% -30% auto auto;width:420px;height:420px;background:repeating-radial-gradient(circle,transparent 0 22px,var(--tile-soft) 22px 23px);pointer-events:none}
+.hero>*{position:relative;z-index:1;min-width:0}
+.hero h1{color:var(--tile-ink);font-size:1.75rem}
+.hero .hello{opacity:.85;font-size:.95rem}
+.hero .status{color:var(--tile-ink);opacity:.8;font-size:.82rem;margin-top:4px}
+.quote{margin-top:14px;background:var(--tile-soft);border-radius:18px;padding:14px 16px;display:grid;gap:8px}
+.quote p{margin:0;font-size:1.08rem;font-weight:500;line-height:1.5}
+.quote small{opacity:.8}
+.quote button{justify-self:start;border:1px solid rgb(255 255 255 / .5);background:transparent;color:var(--tile-ink);border-radius:999px;padding:4px 14px;font:500 .85rem var(--f-body);cursor:pointer}
+.hero-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+.hero-tiles div{background:var(--tile-soft);border-radius:16px;padding:10px 12px}
+.hero-tiles b{display:block;font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.hero-tiles span{font-size:.8rem;opacity:.85}
+.hero-art{width:160px;align-self:center}
+.hero-art svg{display:block;width:100%;height:auto}
+@media (prefers-reduced-motion:no-preference){.hero-art svg{animation:pop .45s ease-out}}
+@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:none;opacity:1}}
+@media (max-width:620px){.hero{grid-template-columns:1fr}.hero-art{position:absolute;top:14px;left:14px;width:78px}.hero h1{padding-left:84px}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding-block:14px 10px;margin-top:6px}
+nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:500 .98rem var(--f-body);padding:8px 16px;border-radius:999px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+section.tab{display:grid;gap:18px;margin-top:10px;grid-template-columns:minmax(0,1fr)}
+section.tab>*{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+label{display:grid;gap:4px;font-weight:600;font-size:.92rem}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 12px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:60px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.row>label{flex:1 1 140px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font:600 .95rem var(--f-body);padding:9px 20px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.small{padding:4px 10px;font-size:.85rem}
+.btn.danger{border-color:var(--high);background:transparent;color:var(--high)}
+.hint{color:var(--muted);font-size:.88rem;margin:0}
+.num{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:1px 10px;border-radius:999px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--sunk);color:var(--ink)}
+.pill.ok{background:var(--ok);color:var(--pill-ink)}
+.pill.warn{background:var(--warn);color:var(--pill-ink)}
+.pill.high{background:var(--high);color:var(--pill-ink)}
+.gwrap{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gnote{font-size:.85rem;font-weight:600}
+.emo{font-size:1.1rem;line-height:1}
+.pill:not(.ok):not(.warn):not(.high){background:var(--surface);border:1px solid var(--line)}
+.gnote.ok{color:var(--ok)}
+.gnote.warn{color:var(--warn-text)}
+.gnote.high{color:var(--high)}
+.legend-g{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:.88rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;font:inherit;font-size:.88rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:700}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--sunk);border-radius:6px;padding:1px 8px;font-size:.84rem}
+.tag button{border:0;background:none;color:var(--muted);cursor:pointer;font:inherit;padding:0}
+/* day log */
+.slots{display:grid;gap:10px}
+.slot{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.slot:first-child{border-top:0}
+.slot-h{display:grid;gap:6px;align-content:start;justify-items:start}
+.slot-h b{font-family:var(--f-display);font-weight:600;font-size:1.02rem;color:var(--accent)}
+.entries{display:grid;gap:8px;min-width:0}
+.entry{background:var(--sunk);border-radius:16px;padding:10px 12px;display:grid;gap:6px;min-width:0}
+.entry.pending{background:var(--warn-soft)}
+.entry-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
+.entry .food{font-weight:600;overflow-wrap:anywhere}
+.entry .meta{color:var(--muted);font-size:.85rem}
+.empty{color:var(--muted);font-size:.9rem}
+@media (max-width:560px){.slot{grid-template-columns:1fr}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:linear-gradient(160deg,var(--tile),var(--tile-2));color:var(--tile-ink);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow)}
+.stat .k{opacity:.85;font-size:.85rem}
+.stat .v{font-family:var(--f-display);font-weight:700;font-size:1.7rem;font-variant-numeric:tabular-nums}
+.stat .v small{font-family:var(--f-body);font-weight:400;font-size:.8rem;opacity:.8}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.82rem;color:var(--muted);font-weight:500;letter-spacing:.02em}
+.tip{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.tip .ic{width:44px;height:44px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center}
+.tip p{margin:2px 0 0}
+.tip .lbl{font-size:.8rem;color:var(--accent);font-weight:600;letter-spacing:.03em}
+td.wrap{white-space:normal;min-width:160px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.88rem;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-inline-end:6px}
+svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
+/* insights */
+.insight{border-inline-start:4px solid var(--warn);background:var(--warn-soft);border-radius:16px;padding:12px 14px;display:grid;gap:6px}
+.insight.good{border-color:var(--ok);background:var(--ok-soft)}
+.insight p{margin:0}
+/* foods */
+.gi{font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:999px}
+.gi.L{background:var(--ok-soft);color:var(--ok)}
+.gi.M{background:var(--warn-soft);color:var(--warn-text)}
+.gi.H{background:var(--high-soft);color:var(--high)}
+.foods{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.food{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;gap:10px;align-content:start;box-shadow:var(--shadow);min-width:0}
+.food-h{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.food-h b{font-size:1.05rem}
+.food p{margin:0}
+.food .addPlate{justify-self:start}
+.gix{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.88rem;color:var(--muted)}
+.gix b{color:var(--ink);font-variant-numeric:tabular-nums}
+.gix .hint{font-size:.85rem}
+.nut{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0;background:var(--sunk);border-radius:12px;padding:8px}
+.nut div{text-align:center;min-width:0}
+.nut dt{font-size:.72rem;color:var(--muted)}
+.nut dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+.nut small{font-weight:400;color:var(--muted)}
+.plate{position:sticky;bottom:12px;background:var(--surface);border:1px solid var(--accent);border-radius:var(--r);padding:12px 16px;display:grid;gap:8px;box-shadow:var(--shadow)}
+.plate-items{display:flex;flex-wrap:wrap;gap:6px}
+.qty{width:64px;padding:2px 6px}
+.meals{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.meal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);display:grid;gap:8px;align-content:start}
+.meal ul{margin:0;padding-inline-start:18px;color:var(--ink)}
+.meal .carb{color:var(--muted);font-size:.9rem}
+.rules{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rules li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start}
+.rules li b{display:block}
+.rules .ix{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:0;margin:auto;width:max-content;max-width:calc(100% - 32px);background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:999px;z-index:20;box-shadow:var(--shadow)}
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:.85rem}
+@media (prefers-reduced-motion:no-preference){.entry,.insight{transition:background .2s}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="hello" id="hello">שלום</div>
+      <h1>יומן סוכר ותזונה</h1>
+      <div class="status" id="status">טוען נתונים…</div>
+      <div class="quote">
+        <p id="quoteText"></p>
+        <small id="quoteSrc"></small>
+        <button type="button" id="quoteNext">עוד מילה טובה</button>
+      </div>
+      <div class="hero-tiles">
+        <div><b id="hToday">0</b><span>מדידות היום</span></div>
+        <div><b id="hOk">—</b><span>בתוך היעד</span></div>
+        <div><b id="hPend">0</b><span>ממתינות למדידה</span></div>
+      </div>
+    </div>
+    <div class="hero-art" id="heroArt" aria-hidden="true"></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="today" aria-selected="true">היומן</button>
+    <button role="tab" data-tab="track" aria-selected="false">מעקב וזיהוי</button>
+    <button role="tab" data-tab="meals" aria-selected="false">הצעות לארוחות</button>
+    <button role="tab" data-tab="foods" aria-selected="false">מאגר מאכלים</button>
+    <button role="tab" data-tab="me" aria-selected="false">פרטים ויעדים</button>
+  </nav>
+
+  <!-- ============ TODAY ============ -->
+  <section class="tab" id="tab-today">
+    <div class="card tip">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.5 10.9V17h7v-3.1A6 6 0 0 0 12 3zM9.5 20h5" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div><div class="lbl">הטיפ היומי לאיזון הסוכר</div><p id="tipText"></p><button type="button" class="btn ghost small" id="tipNext" style="margin-top:8px">טיפ נוסף</button></div>
+    </div>
+    <div class="card" id="noTarget" hidden style="display:grid;gap:8px;border-color:var(--accent)">
+      <b>כדי שהמדידות ייצבעו בירוק, כתום ואדום, יש למלא את יעדי הסוכר</b>
+      <span class="hint">כרגע לא נשמרו יעדים, ולכן המספרים מופיעים בלי צבע. ממלאים כאן פעם אחת את הערכים שקבע הצוות המטפל:</span>
+      <div class="row">
+        <label>צום בבוקר עד<input type="number" id="nFast" inputmode="numeric" placeholder="mg/dL"></label>
+        <label>שעה אחרי ארוחה עד<input type="number" id="nMeal" inputmode="numeric" placeholder="mg/dL"></label>
+        <label>לפני השינה עד<input type="number" id="nBed" inputmode="numeric" placeholder="mg/dL"></label>
+        <button class="btn" type="button" id="nSave" style="flex:0 0 auto">שמירת יעדים</button>
+      </div>
+      <span class="hint" id="nMsg"></span>
+    </div>
+    <div class="card" id="pendingCard" hidden>
+      <h3>איך הייתה הארוחה? כמה הסוכר?</h3>
+      <p class="hint">ארוחות שנרשמו וממתינות למדידה של שעה אחרי האוכל.</p>
+      <div class="entries" id="pendingList" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card" id="formCard">
+      <h2 id="formTitle">רישום חדש</h2>
+      <form id="entryForm" style="display:grid;gap:12px;margin-top:12px">
+        <div class="row">
+          <label>תאריך<input type="date" id="fDate" required></label>
+          <label>שעה<span style="display:flex;gap:6px;direction:ltr"><select id="fHour" aria-label="שעה"></select><span style="align-self:center">:</span><select id="fMin" aria-label="דקות"></select></span></label>
+          <label>סוג מדידה
+            <select id="fSlot"></select>
+          </label>
+        </div>
+        <div id="foodFields" style="display:grid;gap:12px">
+          <label>מה אכלתי<textarea id="fFood" placeholder="למשל: 2 פרוסות לחם מלא, חביתה, סלט ירקות"></textarea></label>
+          <div style="display:grid;gap:6px">
+            <span style="font-weight:600;font-size:.92rem">מרכיבים (מזוהים אוטומטית, אפשר לערוך)</span>
+            <div class="chips" id="fIngr"></div>
+            <div class="row"><label style="flex:1 1 200px">הוספת מרכיב<input id="fIngrAdd" placeholder="למשל: גזר"></label><button type="button" class="btn ghost small" id="fIngrBtn">הוספה</button></div>
+          </div>
+          <div class="hint" id="fCarbs"></div>
+        </div>
+        <div class="row">
+          <label>רמת סוכר (mg/dL)<input type="number" id="fGlu" inputmode="numeric" min="20" max="600" placeholder="אפשר להשאיר ריק ולהשלים אחר כך"></label>
+        </div>
+        <div id="feelWrap" style="display:grid;gap:6px">
+          <span style="font-weight:600;font-size:.92rem">איך זה היה?</span>
+          <div class="chips" id="fFeel"></div>
+        </div>
+        <label>הערה<input id="fNote" placeholder="הליכה אחרי האוכל, אכילה מאוחרת וכו'"></label>
+        <div class="row">
+          <button class="btn" type="submit" id="fSubmit">שמירה</button>
+          <button class="btn ghost" type="button" id="fCancel" hidden>ביטול עריכה</button>
+          <span class="hint" id="fMsg"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <h2 id="dayTitle">היום</h2>
+        <div class="row" style="gap:6px">
+          <button class="btn ghost small" id="dPrev" aria-label="יום קודם">→ יום קודם</button>
+          <input type="date" id="dPick" style="width:auto">
+          <button class="btn ghost small" id="dNext" aria-label="יום הבא">יום הבא ←</button>
+        </div>
+      </div>
+      <div class="slots" id="daySlots" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <!-- ============ TRACK ============ -->
+  <section class="tab" id="tab-track" hidden>
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <h2>מעקב לאורך זמן</h2>
+      <label style="flex:0 0 auto">תקופה
+        <select id="tRange"><option value="7">7 ימים</option><option value="14" selected>14 ימים</option><option value="30">30 ימים</option><option value="90">90 ימים</option></select>
+      </label>
+    </div>
+    <div class="stats" id="tStats"></div>
+    <div class="card">
+      <h3>זיהוי מאכלים שמעלים את הסוכר</h3>
+      <p class="hint" id="insHint">המערכת משווה בין המרכיבים של ארוחות שאחריהן הסוכר היה גבוה לבין ארוחות שהסתדרו טוב.</p>
+      <div style="display:grid;gap:10px;margin-top:12px" id="insights"></div>
+    </div>
+    <div class="card">
+      <h3>מגמה</h3>
+      <div class="legend" style="margin:8px 0">
+        <span><i style="background:var(--l1)"></i>צום בבוקר</span>
+        <span><i style="background:var(--l2)"></i>ממוצע אחרי ארוחות</span>
+        <span><i style="background:var(--l3)"></i>לפני השינה</span>
+      </div>
+      <div class="scroll" id="chart"></div>
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <h3>טבלת מדידות יומית</h3>
+        <span class="row" style="gap:6px"><button class="btn ghost small" id="copySum">העתקת סיכום לצוות המטפל</button><button class="btn small" id="bXlsx2">הורדה לאקסל</button></span>
+      </div>
+      <div class="scroll" style="margin-top:8px"><table id="tTable"></table></div>
+      <textarea id="copyFallback" hidden readonly style="margin-top:8px;min-height:160px"></textarea>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>ארוחות שהסתדרו טוב</h3><div id="goodMeals" style="margin-top:8px"></div></div>
+      <div class="card"><h3>ארוחות שכדאי לבדוק</h3><div id="badMeals" style="margin-top:8px"></div></div>
+    </div>
+  </section>
+
+  <!-- ============ MEALS ============ -->
+  <section class="tab" id="tab-meals" hidden>
+    <div class="card">
+      <h2>מה כדאי לשלב</h2>
+      <ul class="rules" style="margin-top:12px">
+        <li><span class="ix">1</span><span><b>חצי צלחת ירקות</b>רבע חלבון (עוף, דג, ביצה, גבינה, קטניות) ורבע פחמימה מורכבת.</span></li>
+        <li><span class="ix">2</span><span><b>פחמימה תמיד בליווי</b>לחם, אורז או פרי לצד חלבון, שומן טוב או סיבים מאטים את עליית הסוכר.</span></li>
+        <li><span class="ix">3</span><span><b>להתחיל מהירקות והחלבון</b>ורק אחר כך את הפחמימה של הארוחה.</span></li>
+        <li><span class="ix">4</span><span><b>דגנים מלאים וקטניות</b>במקום לבן ומעובד: כוסמת, בורגול, קינואה, עדשים, לחם מלא.</span></li>
+        <li><span class="ix">5</span><span><b>פרי שלם ולא מיץ</b>מנה אחת בכל פעם, לצד מעט אגוזים או יוגורט.</span></li>
+        <li><span class="ix">6</span><span><b>לפזר לאורך היום</b>כמה ארוחות קטנות וקבועות עדיפות על ארוחה אחת גדולה.</span></li>
+      </ul>
+      <p class="hint" style="margin-top:12px">כמות הפחמימות המתאימה לכל ארוחה נקבעת אישית עם הצוות המטפל או דיאטנית.</p>
+    </div>
+    <div class="chips" id="mealFilter"></div>
+    <div class="meals" id="mealList"></div>
+  </section>
+
+  <!-- ============ FOODS ============ -->
+  <section class="tab" id="tab-foods" hidden>
+    <div class="card" style="display:grid;gap:10px">
+      <div class="row">
+        <label style="flex:2 1 220px">חיפוש מאכל<input id="qFood" placeholder="למשל: לחם, עדשים, תפוח"></label>
+        <label>השפעה על הסוכר
+          <select id="qGi"><option value="">הכול</option><option value="L">נמוכה</option><option value="M">בינונית</option><option value="H">גבוהה</option></select>
+        </label>
+        <label>מיון
+          <select id="qSort"><option value="cat">לפי קטגוריה</option><option value="carb">פחמימות (מהנמוך)</option><option value="fiber">סיבים (מהגבוה)</option><option value="gi">ערך גליקמי (מהנמוך)</option><option value="gl">עומס גליקמי (מהנמוך)</option><option value="prot">חלבון (מהגבוה)</option></select>
+        </label>
+      </div>
+      <div class="chips" id="qCats"></div>
+      <details class="hint"><summary style="cursor:pointer;color:var(--accent);font-weight:600">מה זה ערך גליקמי ועומס גליקמי?</summary>
+        <p style="margin:6px 0 0"><b>ערך גליקמי</b> מראה כמה מהר הפחמימה במאכל מעלה את הסוכר, בסולם של 0 עד 100: עד 55 נמוך, 56–69 בינוני, 70 ומעלה גבוה.</p>
+        <p style="margin:4px 0 0"><b>עומס גליקמי</b> מחשב גם את כמות הפחמימות במנה, ולכן מראה טוב יותר כמה המנה עצמה מעלה את הסוכר: עד 10 נמוך, 11–19 בינוני, 20 ומעלה גבוה. למשל לאבטיח ערך גליקמי גבוה, אבל בכוס אחת העומס נמוך.</p>
+        <p style="margin:4px 0 0">הערכים הם ממוצעים מטבלאות המחקר הבינלאומיות של ערך גליקמי, ומשתנים לפי זן, בשלות ואופן הכנה. ירקות דלי פחמימות (מלפפון, עגבנייה, חסה וכדומה) כמעט לא נבדקים, כי בבדיקה צריך לאכול כמות שמכילה 50 גרם פחמימות, כלומר יותר מקילו ירק. לכן מופיע אצלם "לא נמדד".</p>
+      </details>
+      <p class="hint">הערכים התזונתיים למנה מקובלת וקרובים לממוצע; הם משתנים לפי מותג, גודל ואופן הכנה. "השפעה על הסוכר" לוקחת בחשבון את הערך הגליקמי, את כמות הפחמימות במנה ואת סוג המאכל.</p>
+    </div>
+    <div class="hint" id="foodCount"></div>
+    <div class="foods" id="foodGrid"></div>
+    <div class="plate" id="plate" hidden>
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <b>הצלחת שלי</b>
+        <span class="num" id="plateTot"></span>
+      </div>
+      <div class="plate-items" id="plateItems"></div>
+      <div class="row"><button class="btn small" id="plateLog">רישום כארוחה ביומן</button><button class="btn ghost small" id="plateClear">ניקוי</button></div>
+    </div>
+  </section>
+
+  <!-- ============ ME ============ -->
+  <section class="tab" id="tab-me" hidden>
+    <div class="grid2">
+      <div class="card" style="display:grid;gap:12px">
+        <h2>פרטים אישיים</h2>
+        <div class="row">
+          <label>גיל<input type="number" id="pAge" min="10" max="99" inputmode="numeric"></label>
+          <label>גובה (ס"מ)<input type="number" id="pHeight" min="100" max="230" inputmode="numeric"></label>
+          <label>משקל (ק"ג)<input type="number" id="pWeight" min="30" max="250" step="0.1" inputmode="decimal"></label>
+        </div>
+        <div class="row"><button class="btn" id="pSave">שמירת פרטים</button><span class="hint" id="pMsg"></span></div>
+        <div class="stats" id="pStats"></div>
+      </div>
+      <div class="card" style="display:grid;gap:12px">
+        <h2>יעדי סוכר</h2>
+        <p class="hint">יש למלא את הערכים שקבע הצוות המטפל. לפיהם המדידות נצבעות ומזוהים מאכלים בעייתיים.</p>
+        <div class="legend-g"><span class="gwrap"><span class="pill ok">ירוק</span><span class="emo">😊</span><span class="gnote ok">ערך רצוי</span></span><span class="gwrap"><span class="pill warn">כתום</span><span class="emo">😐</span><span class="gnote warn">גבולי (עד 10% מעל היעד)</span></span><span class="gwrap"><span class="pill high">אדום</span><span class="emo">😟</span><span class="gnote high">גבוה מהרצוי</span></span></div>
+        <div class="row">
+          <label>צום בבוקר עד<input type="number" id="sFast" inputmode="numeric" placeholder="mg/dL"></label>
+          <label>שעה אחרי ארוחה עד<input type="number" id="sMeal" inputmode="numeric" placeholder="mg/dL"></label>
+          <label>לפני השינה עד<input type="number" id="sBed" inputmode="numeric" placeholder="mg/dL"></label>
+        </div>
+        <div class="row"><button class="btn" id="sSave">שמירת יעדים</button><span class="hint" id="sMsg"></span></div>
+      </div>
+    </div>
+    <div class="card" id="backupCard" style="display:grid;gap:12px">
+      <h2>ייצוא, גיבוי ושחזור</h2>
+      <p class="hint">מומלץ לשמור גיבוי פעם בשבוע, ולפני כל ביקור אצל הצוות המטפל להוריד קובץ אקסל.</p>
+      <div class="row">
+        <button class="btn" type="button" id="bXlsx">הורדת כל הנתונים לאקסל</button>
+        <button class="btn ghost" type="button" id="bJson">הורדת קובץ גיבוי</button>
+        <label class="btn ghost" style="display:inline-flex;flex:0 0 auto;font-weight:600" for="bFile">שחזור מגיבוי</label>
+        <input type="file" id="bFile" accept=".json,application/json" hidden>
+      </div>
+      <p class="hint" id="bLast"></p>
+      <div id="bRestore" hidden style="display:grid;gap:10px;background:var(--sunk);border-radius:16px;padding:14px"></div>
+    </div>
+    <div class="card">
+      <h3>היסטוריית משקל</h3>
+      <div class="scroll" style="margin-top:8px"><table id="wTable"></table></div>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===================== FOOD DATABASE =====================
+   [name, category, serving, carbs g, fiber g, protein g, kcal, GI level L/M/H, tip] */
+const CATS=["ירקות","חלבונים","חלב ומוצריו","דגנים ולחמים","קטניות","פירות","אגוזים וזרעים","שומנים","משקאות ותוספות","חטיפים ומתוקים"];
+const FOODS=[
+["מלפפון","ירקות","1 בינוני",4,1,1,20,"L","דל מאוד בפחמימות, השפעה קטנה על הסוכר"],
+["עגבנייה","ירקות","1 בינונית",5,1.5,1,22,"L","מכילה מעט פחמימות (כ-5 ג'), השפעה קטנה על הסוכר. בכמות גדולה כדאי לשים לב"],
+["פלפל אדום","ירקות","1 בינוני",7,2.5,1,37,"L","מתאים לנשנוש עם ממרח חומוס"],
+["פלפל ירוק","ירקות","1 בינוני",5,2,1,24,"L",""],
+["חסה","ירקות","2 כוסות",3,2,1,15,"L","בסיס טוב לסלט גדול"],
+["כרוב","ירקות","1 כוס חתוך",5,2,1,22,"L",""],
+["ברוקולי מבושל","ירקות","1 כוס",11,5,4,55,"L","עשיר בסיבים"],
+["כרובית מבושלת","ירקות","1 כוס",5,3,2,28,"L","תחליף טוב לאורז (כרובית מגורדת)"],
+["קישוא מבושל","ירקות","1 כוס",5,2,2,27,"L",""],
+["חציל קלוי","ירקות","1 כוס",9,2.5,1,35,"L",""],
+["שעועית ירוקה מבושלת","ירקות","1 כוס",10,4,2,44,"L",""],
+["תרד מבושל","ירקות","1 כוס",7,4,5,41,"L",""],
+["פטריות","ירקות","1 כוס",2,1,2,15,"L",""],
+["גזר","ירקות","1 בינוני",6,2,0.5,25,"L","מבושל או מרוסק מעלה סוכר מהר יותר מטרי"],
+["סלק מבושל","ירקות","½ כוס",8,2,1,37,"M",""],
+["בצל","ירקות","½ כוס",7,1,1,32,"L",""],
+["אספרגוס","ירקות","6 גבעולים",4,2,2,20,"L",""],
+["סלרי","ירקות","2 גבעולים",2,1.5,0.5,12,"L",""],
+["צנון","ירקות","½ כוס",2,1,0.5,9,"L",""],
+["קולרבי","ירקות","1 כוס",8,5,2,36,"L","נשנוש פריך ומשביע"],
+["דלעת מבושלת","ירקות","1 כוס",12,3,2,49,"M",""],
+["תירס","ירקות","½ כוס",15,2,2.5,70,"M","נחשב פחמימה, לא כמו ירקות דלי פחמימות"],
+["אפונה ירוקה","ירקות","½ כוס",11,4,4,62,"L",""],
+["תפוח אדמה מבושל","ירקות","1 בינוני (150 ג')",30,2.5,3,130,"H","עדיף קר (בסלט) ובכמות קטנה"],
+["בטטה מבושלת","ירקות","1 קטנה (100 ג')",20,3,2,90,"M","אפויה מעלה יותר ממבושלת; לשלב עם חלבון"],
+["חזה עוף צלוי","חלבונים","100 ג'",0,0,31,165,"L",""],
+["פרגית צלויה","חלבונים","100 ג'",0,0,26,200,"L",""],
+["הודו","חלבונים","100 ג'",0,0,29,150,"L",""],
+["בקר רזה","חלבונים","100 ג'",0,0,26,200,"L",""],
+["סלמון","חלבונים","100 ג'",0,0,22,208,"L","עשיר בשומן טוב"],
+["אמנון / מושט","חלבונים","100 ג'",0,0,26,128,"L",""],
+["טונה במים","חלבונים","½ קופסה (80 ג')",0,0,20,90,"L",""],
+["סרדינים","חלבונים","1 קופסה (100 ג')",0,0,25,208,"L",""],
+["ביצה קשה","חלבונים","1 יחידה",0.5,0,6,72,"L","מצוינת לצד פחמימה"],
+["חביתה","חלבונים","2 ביצים",1,0,12,180,"L",""],
+["קציצות בשר","חלבונים","2 קציצות (100 ג')",6,0.5,18,220,"L",""],
+["שניצל עוף","חלבונים","100 ג'",12,1,18,260,"M","הציפוי מוסיף פחמימות"],
+["טופו","חלבונים","100 ג'",2,1,8,76,"L",""],
+["יוגורט טבעי 3%","חלב ומוצריו","גביע 200 ג'",9,0,7,120,"L","ללא סוכר מוסף"],
+["יוגורט יווני 0%","חלב ומוצריו","150 ג'",5,0,15,90,"L","עשיר בחלבון"],
+["גבינה לבנה 5%","חלב ומוצריו","100 ג'",4,0,9,96,"L",""],
+["קוטג' 5%","חלב ומוצריו","100 ג'",3,0,11,95,"L",""],
+["גבינה צהובה","חלב ומוצריו","1 פרוסה (25 ג')",0,0,7,90,"L",""],
+["גבינה בולגרית 5%","חלב ומוצריו","50 ג'",0.5,0,7.5,60,"L",""],
+["לבנה","חלב ומוצריו","2 כפות (30 ג')",1.5,0,2,45,"L",""],
+["חלב 3%","חלב ומוצריו","1 כוס",12,0,8,145,"L",""],
+["משקה סויה ללא סוכר","חלב ומוצריו","1 כוס",3,1,7,80,"L",""],
+["מעדן חלב ממותק","חלב ומוצריו","1 גביע",25,0,4,150,"H","סוכר מוסף, עדיף להימנע"],
+["לחם מלא","דגנים ולחמים","1 פרוסה (30 ג')",13,2,3,75,"M",""],
+["לחם לבן","דגנים ולחמים","1 פרוסה (30 ג')",14,0.5,2.5,75,"H",""],
+["לחם שיפון מלא","דגנים ולחמים","1 פרוסה (30 ג')",12,2.5,3,70,"M",""],
+["לחם כוסמין מלא","דגנים ולחמים","1 פרוסה (30 ג')",14,2,3.5,80,"M",""],
+["חלה","דגנים ולחמים","1 פרוסה (40 ג')",20,1,3.5,115,"H",""],
+["פיתה","דגנים ולחמים","1 יחידה",33,1.5,5.5,165,"H","חצי פיתה מספיקה לרוב"],
+["פיתה מקמח מלא","דגנים ולחמים","1 יחידה",35,5,6,170,"M",""],
+["קרקר מלא","דגנים ולחמים","4 יחידות (20 ג')",13,2,2,85,"M",""],
+["פריכית אורז","דגנים ולחמים","1 יחידה",7,0.5,0.7,35,"H","עולה מהר; עדיף פריכית כוסמין/מלאה"],
+["שיבולת שועל גסה","דגנים ולחמים","½ כוס יבשה (40 ג')",27,4,5,150,"L","עדיף גסה ולא אינסטנט"],
+["אורז לבן מבושל","דגנים ולחמים","1 כוס",45,0.6,4,205,"H",""],
+["אורז מלא מבושל","דגנים ולחמים","1 כוס",45,3.5,5,215,"M",""],
+["קינואה מבושלת","דגנים ולחמים","1 כוס",39,5,8,222,"L",""],
+["בורגול מבושל","דגנים ולחמים","1 כוס",34,8,6,151,"L",""],
+["כוסמת מבושלת","דגנים ולחמים","1 כוס",33,4.5,5.7,155,"L",""],
+["פסטה מבושלת","דגנים ולחמים","1 כוס",43,2.5,8,220,"M","בישול אל-דנטה עדיף"],
+["פסטה מלאה מבושלת","דגנים ולחמים","1 כוס",37,6,7.5,174,"L",""],
+["פתיתים מבושלים","דגנים ולחמים","1 כוס",42,1.5,7,210,"M",""],
+["קוסקוס מבושל","דגנים ולחמים","1 כוס",36,2,6,176,"M",""],
+["קורנפלקס","דגנים ולחמים","1 כוס",24,1,2,100,"H",""],
+["גרנולה","דגנים ולחמים","½ כוס",32,4,5,220,"M","לבדוק סוכר מוסף בתווית"],
+["עדשים מבושלות","קטניות","½ כוס",20,8,9,115,"L","עשירות בסיבים וחלבון"],
+["גרגרי חומוס מבושלים","קטניות","½ כוס",22,6,7,135,"L",""],
+["ממרח חומוס","קטניות","2 כפות (30 ג')",4,1.5,2,50,"L",""],
+["שעועית לבנה מבושלת","קטניות","½ כוס",22,6,8,125,"L",""],
+["פול מבושל","קטניות","½ כוס",17,5,7,95,"L",""],
+["אדממה","קטניות","½ כוס",7,4,9,95,"L","נשנוש עשיר בחלבון"],
+["פלאפל","קטניות","5 כדורים",27,5,11,290,"M",""],
+["תפוח","פירות","1 בינוני",25,4.5,0.5,95,"L",""],
+["אגס","פירות","1 בינוני",27,5.5,0.6,100,"L",""],
+["תפוז","פירות","1 בינוני",15,3,1,62,"L",""],
+["קלמנטינה","פירות","1 יחידה",9,1.3,0.6,35,"L",""],
+["אשכולית","פירות","½ יחידה",13,2,1,52,"L",""],
+["בננה","פירות","1 בינונית",27,3,1.3,105,"M","בשלה מאוד מעלה יותר"],
+["ענבים","פירות","1 כוס",27,1.4,1,104,"M",""],
+["אבטיח","פירות","1 כוס",11,0.6,1,46,"H",""],
+["מלון","פירות","1 כוס",13,1.4,1.3,54,"M",""],
+["תותים","פירות","1 כוס",12,3,1,49,"L",""],
+["אוכמניות","פירות","1 כוס",21,3.6,1,84,"L",""],
+["אפרסק","פירות","1 בינוני",14,2,1.4,58,"L",""],
+["שזיף","פירות","1 יחידה",8,1,0.5,30,"L",""],
+["קיווי","פירות","1 יחידה",10,2,0.8,42,"L",""],
+["מנגו","פירות","1 כוס",25,2.6,1.4,99,"M",""],
+["אננס","פירות","1 כוס",22,2.3,0.9,82,"M",""],
+["רימון","פירות","½ כוס גרגרים",16,3.5,1.5,72,"L",""],
+["תמר מג'הול","פירות","1 יחידה",18,1.6,0.4,66,"M",""],
+["צימוקים","פירות","2 כפות",22,1,0.6,85,"M",""],
+["שקדים","אגוזים וזרעים","15 יחידות (20 ג')",4,2.5,4,115,"L","מצוינים לצד פרי"],
+["אגוזי מלך","אגוזים וזרעים","7 חצאים (20 ג')",3,1.4,3,130,"L",""],
+["פיסטוקים","אגוזים וזרעים","30 יחידות (25 ג')",7,2.5,5,140,"L",""],
+["בוטנים","אגוזים וזרעים","2 כפות (30 ג')",5,2.5,7.5,170,"L",""],
+["גרעיני דלעת","אגוזים וזרעים","2 כפות (20 ג')",2.7,1,6,115,"L",""],
+["זרעי צ'יה","אגוזים וזרעים","1 כף (12 ג')",5,4,2,58,"L",""],
+["זרעי פשתן טחונים","אגוזים וזרעים","1 כף (7 ג')",2,2,1.3,37,"L",""],
+["טחינה גולמית","אגוזים וזרעים","1 כף (15 ג')",3,1.4,2.5,90,"L",""],
+["חמאת בוטנים טבעית","אגוזים וזרעים","1 כף (16 ג')",3,1,4,95,"L",""],
+["שמן זית","שומנים","1 כף",0,0,0,120,"L",""],
+["אבוקדו","שומנים","¼ יחידה",3,2.5,1,80,"L",""],
+["זיתים","שומנים","10 יחידות",2,1,0.3,50,"L",""],
+["מים","משקאות ותוספות","1 כוס",0,0,0,0,"L",""],
+["תה ללא סוכר","משקאות ותוספות","1 כוס",0,0,0,2,"L",""],
+["קפה הפוך","משקאות ותוספות","1 כוס",10,0,7,110,"L",""],
+["מיץ תפוזים","משקאות ותוספות","1 כוס",26,0.5,1.7,112,"H","עדיף פרי שלם"],
+["משקה ממותק","משקאות ותוספות","1 כוס",26,0,0,100,"H","עדיף להימנע"],
+["סוכר","משקאות ותוספות","1 כפית",5,0,0,20,"H",""],
+["דבש","משקאות ותוספות","1 כפית",6,0,0,21,"H",""],
+["ריבה","משקאות ותוספות","1 כפית",4.5,0,0,18,"H",""],
+["שוקולד מריר 70%","חטיפים ומתוקים","2 קוביות (20 ג')",9,2,1.6,120,"L","כמות קטנה אחרי ארוחה"],
+["פופקורן ביתי","חטיפים ומתוקים","3 כוסות",18,3.5,3,95,"M",""],
+["צ'יפס שקית","חטיפים ומתוקים","25 ג'",13,1,1.6,135,"M",""],
+["עוגיות מתוקות","חטיפים ומתוקים","2 יחידות",20,0.5,1.5,140,"H",""],
+["עוגה","חטיפים ומתוקים","1 פרוסה",30,0.5,3,200,"H",""],
+["גלידה","חטיפים ומתוקים","½ כוס",16,0.5,2,140,"M",""]
+].map(([n,c,s,carb,fib,prot,kcal,gi,tip])=>({n,c,s,carb,fib,prot,kcal,gi,tip}));
+const GI_VAL={"גזר": 35, "סלק מבושל": 64, "דלעת מבושלת": 66, "תירס": 52, "אפונה ירוקה": 51, "תפוח אדמה מבושל": 78, "בטטה מבושלת": 63, "יוגורט טבעי 3%": 35, "יוגורט יווני 0%": 35, "חלב 3%": 39, "משקה סויה ללא סוכר": 34, "מעדן חלב ממותק": 45, "לחם מלא": 69, "לחם לבן": 75, "לחם שיפון מלא": 56, "לחם כוסמין מלא": 63, "חלה": 70, "פיתה": 68, "פיתה מקמח מלא": 56, "קרקר מלא": 65, "פריכית אורז": 82, "שיבולת שועל גסה": 55, "אורז לבן מבושל": 73, "אורז מלא מבושל": 68, "קינואה מבושלת": 53, "בורגול מבושל": 48, "כוסמת מבושלת": 49, "פסטה מבושלת": 50, "פסטה מלאה מבושלת": 48, "קוסקוס מבושל": 65, "קורנפלקס": 81, "גרנולה": 57, "עדשים מבושלות": 32, "גרגרי חומוס מבושלים": 28, "ממרח חומוס": 6, "שעועית לבנה מבושלת": 31, "תפוח": 36, "אגס": 38, "תפוז": 43, "קלמנטינה": 47, "אשכולית": 25, "בננה": 51, "ענבים": 59, "אבטיח": 76, "מלון": 65, "תותים": 40, "אוכמניות": 53, "אפרסק": 42, "שזיף": 39, "קיווי": 50, "מנגו": 51, "אננס": 59, "תמר מג'הול": 55, "צימוקים": 64, "בוטנים": 14, "חמאת בוטנים טבעית": 14, "קפה הפוך": 39, "מיץ תפוזים": 50, "משקה ממותק": 63, "סוכר": 65, "דבש": 61, "ריבה": 51, "שוקולד מריר 70%": 23, "פופקורן ביתי": 65, "צ'יפס שקית": 56, "עוגיות מתוקות": 60, "עוגה": 55, "גלידה": 51};
+const GI_LOWCARB=new Set(["מלפפון", "עגבנייה", "פלפל אדום", "פלפל ירוק", "חסה", "כרוב", "ברוקולי מבושל", "כרובית מבושלת", "קישוא מבושל", "חציל קלוי", "שעועית ירוקה מבושלת", "תרד מבושל", "פטריות", "בצל", "אספרגוס", "סלרי", "צנון", "קולרבי", "טופו", "אדממה"]);
+FOODS.forEach(f=>{f.gv=GI_VAL[f.n]??null;f.gl=f.gv!=null?Math.round(f.gv*f.carb/100):null});
+const FOOD_BY=Object.fromEntries(FOODS.map(f=>[f.n,f]));
+
+/* ===================== MEAL SUGGESTIONS ===================== */
+const MEALS=[
+{slot:"m_bf",name:"חביתה ולחם מלא",items:[["לחם מלא",2],["חביתה",1],["מלפפון",1],["עגבנייה",1]]},
+{slot:"m_bf",name:"יוגורט עם שיבולת שועל ופירות יער",items:[["יוגורט יווני 0%",1],["שיבולת שועל גסה",0.5],["אוכמניות",0.5],["שקדים",1]]},
+{slot:"m_bf",name:"לחם שיפון וגבינה",items:[["לחם שיפון מלא",2],["גבינה לבנה 5%",1],["ביצה קשה",1],["פלפל אדום",1]]},
+{slot:"m_bf",name:"דייסת שיבולת שועל",items:[["שיבולת שועל גסה",1],["חלב 3%",1],["זרעי צ'יה",1],["אגוזי מלך",1]]},
+{slot:"m_bf",name:"חצי פיתה מלאה עם ביצים וחומוס",items:[["פיתה מקמח מלא",0.5],["ביצה קשה",2],["ממרח חומוס",1],["מלפפון",1],["עגבנייה",1]]},
+{slot:"m_sn",name:"תפוח ושקדים",items:[["תפוח",1],["שקדים",1]]},
+{slot:"m_sn",name:"יוגורט עם פשתן",items:[["יוגורט טבעי 3%",1],["זרעי פשתן טחונים",1]]},
+{slot:"m_sn",name:"ירקות עם ממרח חומוס",items:[["גזר",1],["מלפפון",1],["ממרח חומוס",1]]},
+{slot:"m_sn",name:"קרקר מלא וגבינה צהובה",items:[["קרקר מלא",1],["גבינה צהובה",1]]},
+{slot:"m_sn",name:"קוטג' ועגבנייה",items:[["קוטג' 5%",1],["עגבנייה",1]]},
+{slot:"m_sn",name:"אדממה",items:[["אדממה",1]]},
+{slot:"m_ln",name:"עוף עם קינואה וברוקולי",items:[["חזה עוף צלוי",1.2],["קינואה מבושלת",0.75],["ברוקולי מבושל",1],["חסה",1],["שמן זית",0.5]]},
+{slot:"m_ln",name:"סלמון עם אורז מלא ושעועית ירוקה",items:[["סלמון",1.2],["אורז מלא מבושל",0.75],["שעועית ירוקה מבושלת",1]]},
+{slot:"m_ln",name:"מג'דרה בורגול עם סלט",items:[["עדשים מבושלות",1],["בורגול מבושל",0.5],["מלפפון",1],["עגבנייה",1],["יוגורט טבעי 3%",0.5]]},
+{slot:"m_ln",name:"קציצות עם כוסמת וקישואים",items:[["קציצות בשר",1],["כוסמת מבושלת",0.75],["קישוא מבושל",1]]},
+{slot:"m_ln",name:"בקר עם בטטה וסלט כרוב",items:[["בקר רזה",1.2],["בטטה מבושלת",1],["כרוב",1],["טחינה גולמית",1]]},
+{slot:"m_dn",name:"סלט טונה ולחם מלא",items:[["טונה במים",1],["לחם מלא",2],["מלפפון",1],["עגבנייה",1],["ביצה קשה",1]]},
+{slot:"m_dn",name:"שקשוקה",items:[["ביצה קשה",2],["עגבנייה",2],["פלפל אדום",1],["בצל",0.5],["לחם מלא",1]]},
+{slot:"m_dn",name:"טופו מוקפץ עם ירקות",items:[["טופו",1.5],["ברוקולי מבושל",1],["פטריות",1],["אורז מלא מבושל",0.5]]},
+{slot:"m_dn",name:"מרק עדשים",items:[["עדשים מבושלות",1.5],["גזר",1],["בצל",0.5],["לחם מלא",1]]},
+{slot:"m_dn",name:"פסטה מלאה עם פטריות",items:[["פסטה מלאה מבושלת",1],["פטריות",1],["גבינה צהובה",1],["חסה",1]]},
+{slot:"m_sn2",name:"אגס ואגוזי מלך",items:[["אגס",1],["אגוזי מלך",1]]},
+{slot:"m_sn2",name:"יוגורט יווני עם תותים",items:[["יוגורט יווני 0%",1],["תותים",1]]},
+{slot:"m_sn2",name:"קולרבי ומלפפון עם טחינה",items:[["קולרבי",1],["מלפפון",1],["טחינה גולמית",1]]},
+{slot:"m_sn2",name:"לחם שיפון עם גבינה בולגרית",items:[["לחם שיפון מלא",1],["גבינה בולגרית 5%",1],["עגבנייה",1]]},
+{slot:"m_sn2",name:"אדממה וקלמנטינה",items:[["אדממה",1],["קלמנטינה",1]]},
+{slot:"m_lt",name:"לחם מלא וגבינה לבנה",items:[["לחם מלא",1],["גבינה לבנה 5%",1]]},
+{slot:"m_lt",name:"יוגורט ואגוזי מלך",items:[["יוגורט טבעי 3%",1],["אגוזי מלך",1]]},
+{slot:"m_lt",name:"קרקר מלא וחמאת בוטנים",items:[["קרקר מלא",1],["חמאת בוטנים טבעית",1]]},
+{slot:"m_lt",name:"חצי תפוח וגבינה צהובה",items:[["תפוח",0.5],["גבינה צהובה",1]]},
+{slot:"m_lt",name:"קוטג' עם מלפפון וקרקרים",items:[["קוטג' 5%",1],["קרקר מלא",0.5],["מלפפון",1]]},
+{slot:"m_lt",name:"כוס חלב ושקדים",items:[["חלב 3%",1],["שקדים",1]]}
+];
+
+/* ===================== SLOTS ===================== */
+const SLOTS=[
+{id:"fast",label:"צום בבוקר",kind:"fast",food:false},
+{id:"m_bf",label:"אחרי ארוחת בוקר",kind:"meal",food:true},
+{id:"m_sn",label:"אחרי ביניים של בוקר",kind:"meal",food:true},
+{id:"m_ln",label:"אחרי ארוחת צהריים",kind:"meal",food:true},
+{id:"m_sn2",label:"אחרי ביניים של אחר הצהריים",kind:"meal",food:true},
+{id:"m_dn",label:"אחרי ארוחת ערב",kind:"meal",food:true},
+{id:"m_lt",label:"אחרי ארוחה קלה לפני השינה",kind:"meal",food:true},
+{id:"bed",label:"מדידה לפני השינה",kind:"bed",food:true},
+{id:"other",label:"מדידה נוספת",kind:"other",food:true}
+];
+const SLOT_BY=Object.fromEntries(SLOTS.map(s=>[s.id,s]));
+const MEAL_GROUPS=[["m_bf","בוקר"],["m_sn","ביניים של בוקר"],["m_ln","צהריים"],["m_sn2","ביניים אחר הצהריים"],["m_dn","ערב"],["m_lt","ארוחה קלה לפני השינה"]];
+const FEELS=["משביע וטעים","בסדר","לא משביע","כבד מדי"];
+
+/* ===================== INGREDIENT DETECTION ===================== */
+// Common dishes -> typical ingredients
+const DISHES=[
+["מרק ירקות",["גזר","בצל","קישוא","תפוח אדמה","דלעת","סלרי"]],
+["מרק עוף",["עוף","גזר","בצל","סלרי","קישוא","תפוח אדמה"]],
+["מרק עדשים",["עדשים","גזר","בצל"]],
+["מרק אפונה",["אפונה","גזר","בצל"]],
+["מרק דלעת",["דלעת","בצל","גזר"]],
+["אנטיפסטי",["גזר","פלפל","קישוא","חציל","בצל","בטטה","שמן זית"]],
+["סלט גזר",["גזר"]],
+["סלט כרוב",["כרוב","מיונז"]],
+["סלט ירקות",["מלפפון","עגבנייה","פלפל","בצל"]],
+["סלט ישראלי",["מלפפון","עגבנייה","פלפל","בצל"]],
+["סלט טונה",["טונה","מיונז"]],
+["סלט ביצים",["ביצה","מיונז"]],
+["סלט תפוחי אדמה",["תפוח אדמה","מיונז"]],
+["שקשוקה",["ביצה","עגבנייה","פלפל","בצל"]],
+["מג'דרה",["עדשים","אורז"]],
+["צ'ולנט",["תפוח אדמה","שעועית","בשר","גריסים"]],
+["חמין",["תפוח אדמה","שעועית","בשר","גריסים"]],
+["קוגל ירושלמי",["אטריות","סוכר"]],
+["קוגל תפוחי אדמה",["תפוח אדמה","ביצה"]],
+["קוגל",["אטריות","סוכר"]],
+["פשטידת ירקות",["ביצה","גבינה","קמח"]],
+["פשטידה",["ביצה","גבינה","קמח"]],
+["קציצות דגים",["דג","גזר","בצל"]],
+["גפילטע",["דג","גזר","סוכר"]],
+["ירקות מוקפצים",["ברוקולי","גזר","פלפל","קישוא","בצל"]],
+["ירקות אפויים",["גזר","בטטה","קישוא","פלפל","בצל"]],
+["צימעס",["גזר","סוכר"]],
+["פירה",["תפוח אדמה"]],
+["צ'יפס",["תפוח אדמה"]],
+["לביבות",["תפוח אדמה","קמח"]],
+["שניצל",["עוף","פירורי לחם"]],
+["פיצה",["קמח","גבינה","עגבנייה"]],
+["בורקס",["קמח","גבינה"]],
+["פלאפל",["חומוס","פיתה"]],
+["סביח",["חציל","ביצה","פיתה","טחינה"]],
+["חומוס",["חומוס"]],
+["דייסה",["שיבולת שועל","חלב"]],
+["גרנולה",["גרנולה"]]
+];
+// Canonical ingredients and their spellings (longer phrases first)
+const INGR=[
+["תפוח אדמה",["תפוחי אדמה","תפוח אדמה","תפו\"א","תפוא"]],
+["בטטה",["בטטה","בטטות"]],["גזר",["גזר"]],["דלעת",["דלעת"]],["תירס",["תירס"]],["סלק",["סלק"]],
+["קישוא",["קישוא","קישואים"]],["חציל",["חציל"]],["ברוקולי",["ברוקולי"]],["כרובית",["כרובית"]],["כרוב",["כרוב"]],
+["פלפל",["פלפל"]],["בצל",["בצל"]],["מלפפון",["מלפפון","מלפפונים"]],["עגבנייה",["עגבני","עגבנית"]],["חסה",["חסה"]],
+["פטריות",["פטריות","פטריה"]],["תרד",["תרד"]],["אפונה",["אפונה"]],["שעועית",["שעועית"]],["עדשים",["עדשים"]],
+["חומוס",["חומוס"]],["פול",["פול"]],["אדממה",["אדממה"]],["טופו",["טופו"]],
+["לחם",["לחם","פרוסה","פרוסות","לחמני","טוסט","בגט"]],["פיתה",["פיתה","פיתות","לאפה"]],["חלה",["חלה"]],
+["קרקר",["קרקר","פריכי"]],["אורז",["אורז"]],["פסטה",["פסטה","ספגטי","מקרוני"]],["אטריות",["אטריות","לוקשן"]],
+["פתיתים",["פתיתים"]],["קוסקוס",["קוסקוס"]],["קינואה",["קינואה"]],["בורגול",["בורגול"]],["כוסמת",["כוסמת"]],
+["גריסים",["גריסים"]],["שיבולת שועל",["שיבולת שועל","קוואקר","שיבולת"]],["קורנפלקס",["קורנפלקס","דגני בוקר"]],
+["גרנולה",["גרנולה"]],["קמח",["קמח","בצק"]],["פירורי לחם",["פירורי לחם","פירורים"]],
+["עוף",["עוף","פרגית","שוקיים","כנפיים"]],["הודו",["הודו"]],["בשר",["בשר","בקר","קציצ","המבורגר","סטייק"]],
+["דג",["דג ","דגים","סלמון","אמנון","מושט","בורי","לברק","טונה","סרדינים"]],["טונה",["טונה"]],
+["ביצה",["ביצה","ביצים","חביתה"]],["גבינה",["גבינה","קוטג","בולגרית","צפתית","לבנה"]],["יוגורט",["יוגורט"]],
+["חלב",["חלב"]],["טחינה",["טחינה"]],["מיונז",["מיונז"]],["שמן זית",["שמן זית"]],["אבוקדו",["אבוקדו"]],
+["אגוזים",["אגוז","שקד","פיסטוק","בוטנ","קשיו"]],
+["בננה",["בננה"]],["ענבים",["ענבים"]],["אבטיח",["אבטיח"]],["מלון",["מלון"]],["מנגו",["מנגו"]],["אננס",["אננס"]],
+["תמרים",["תמר"]],["תפוח",["תפוח","תפוחים"]],["אגס",["אגס"]],["תפוז",["תפוז","קלמנטינ"]],["תותים",["תות"]],
+["מיץ",["מיץ"]],["סוכר",["סוכר","ממתק","סירופ","דבש","ריבה"]],["עוגה",["עוגה","עוגת","עוגיות","עוגיה"]],
+["שוקולד",["שוקולד"]],["גלידה",["גלידה"]]
+];
+function detectIngredients(text){
+  let t=" "+(text||"").replace(/[,.;:\n\/+]/g," , ")+" ";
+  const out=[];
+  const add=x=>{if(!out.includes(x))out.push(x)};
+  for(const [dish,ings] of DISHES){ if(t.includes(dish)){ ings.forEach(add); t=t.split(dish).join(" , "); } }
+  for(const [canon,keys] of INGR){
+    for(const k of keys){ if(t.includes(k)){ add(canon); t=t.split(k).join(" "); break; } }
+  }
+  return out;
+}
+
+/* ===================== STATE & STORAGE ===================== */
+let state={profile:{},settings:{},days:{}};
+let col=null, mode="loading", lastSig="";
+const LS_KEY="sugar-diary-v1";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o));
+const pad=n=>String(n).padStart(2,"0");
+const dkey=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const today=()=>dkey(new Date());
+const nowTime=()=>{const d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())};
+const fmtDate=k=>{const [y,m,d]=k.split("-");return d+"/"+m};
+const DOW=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+const dow=k=>{const [y,m,d]=k.split("-").map(Number);return DOW[new Date(y,m-1,d).getDay()]};
+const addDays=(k,n)=>{const [y,m,d]=k.split("-").map(Number);return dkey(new Date(y,m-1,d+n))};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+function toast(msg){const t=$("toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
+
+function loadLocal(){try{const raw=localStorage.getItem(LS_KEY);if(raw)state=Object.assign({profile:{},settings:{},days:{}},JSON.parse(raw))}catch(e){}}
+function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(state))}catch(e){}}
+const queues={};
+function persist(docId,data){
+  if(mode==="db"&&col){
+    queues[docId]=(queues[docId]||Promise.resolve()).then(()=>col.doc(docId).set(data)).catch(e=>{
+      toast(e&&e.code==="quota_exceeded"?"נגמר המקום לשמירה. כדאי למחוק ימים ישנים.":"השמירה לא הצליחה. נא לנסות שוב.");
+    });
+  } else saveLocal();
+}
+function setStatus(){
+  $("status").textContent = mode==="db" ? "הנתונים נשמרים בחשבון שלך ונגישים מכל מכשיר" :
+    mode==="local" ? "הנתונים נשמרים בדפדפן הזה בלבד" : "טוען נתונים…";
+}
+function useLocal(){ if(mode==="db")return; mode="local"; loadLocal(); setStatus(); renderAll(); }
+
+async function initStore(){
+  if(!window.claude||!window.claude.use){useLocal();return}
+  let timer=setTimeout(()=>{ if(mode==="loading"){useLocal()} },10000);
+  try{
+    const [db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);
+    const id=user?await user.id():null;
+    if(!db||!id){clearTimeout(timer);useLocal();return}
+    col=db.collection("data/users/"+id);
+    col.onSnapshot(snap=>{
+      clearTimeout(timer);
+      const next={profile:{},settings:{},days:{}};
+      snap.docs.forEach(d=>{
+        const v=clone(d.data()||{});
+        if(d.id==="profile")next.profile=v;
+        else if(d.id==="settings")next.settings=v;
+        else if(d.id.startsWith("d_"))next.days[d.id.slice(2)]=v;
+      });
+      if(mode!=="db"){ mode="db"; setStatus(); }
+      state=next; renderAll();
+    },err=>{clearTimeout(timer);mode="loading";useLocal();});
+  }catch(e){clearTimeout(timer);useLocal()}
+}
+
+/* ===================== HELPERS ===================== */
+function targetFor(kind){const s=state.settings||{};return kind==="fast"?+s.tFast||0:kind==="meal"?+s.tMeal||0:kind==="bed"?+s.tBed||0:+s.tMeal||0}
+function cls(e){
+  if(e.glucose==null||e.glucose==="")return "";
+  const t=targetFor(SLOT_BY[e.slot]?.kind);
+  if(!t)return "";
+  const g=+e.glucose; return g<=t?"ok":g<=t*1.1?"warn":"high";
+}
+const EMO={ok:"😊",warn:"😐",high:"😟"};
+const OK_NOTES=["מצוין!","ב\"ה","איזה יופי :)"];
+function hashStr(t){let h=0;for(const c of String(t))h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)}
+function gNote(e){const c=cls(e);return c==="ok"?OK_NOTES[hashStr(e.id||e.time||"")%OK_NOTES.length]:c==="warn"?"גבולי":c==="high"?"גבוה מהרצוי":""}
+function gPill(e,withNote){
+  if(e.glucose==null||e.glucose==="")return '<span class="pill">—</span>';
+  const c=cls(e), n=withNote?gNote(e):"", em=EMO[c]||"";
+  return `<span class="gwrap"><span class="pill ${c}">${esc(e.glucose)}</span>${em?`<span class="emo" role="img" aria-label="${esc(gNote(e))}">${em}</span>`:""}${n?`<span class="gnote ${c}">${esc(n)}</span>`:""}</span>`;
+}
+function allEntries(){const out=[];for(const k of Object.keys(state.days).sort()){(state.days[k].entries||[]).forEach(e=>out.push(Object.assign({date:k},e)))}return out}
+function carbsOf(items){return items.reduce((a,[n,q])=>a+(FOOD_BY[n]?FOOD_BY[n].carb*q:0),0)}
+function itemsText(items){return items.map(([n,q])=>(q!==1?fmtQ(q)+" × ":"")+n).join(", ")}
+function fmtQ(q){return q===0.5?"½":q===0.25?"¼":q===0.75?"¾":String(+q.toFixed(2))}
+function round(n){return Math.round(n)}
+
+/* ===================== TIME PICKER (realistic hours per slot) ===================== */
+const HOURS={fast:[4,11,7],m_bf:[5,13,9],m_sn:[8,13,11],m_ln:[11,17,14],m_sn2:[13,20,17],m_dn:[16,23,20],m_lt:[19,25,22],bed:[19,26,23],other:[0,23,12]};
+function hourList(slot){const [a,b]=HOURS[slot]||HOURS.other;const out=[];for(let h=a;h<=b;h++)out.push(h%24);return out}
+function fillTime(slot,want){ // want "HH:MM" or null
+  const hs=hourList(slot);
+  let h=null,m=null;
+  if(want&&/^\d\d:\d\d$/.test(want)){h=+want.slice(0,2);m=+want.slice(3)}
+  if(h==null||!hs.includes(h)){
+    const d=new Date();const nh=d.getHours();
+    if(hs.includes(nh)){h=nh;m=Math.floor(d.getMinutes()/5)*5}else{h=HOURS[slot]?.[2]??hs[0];m=0}
+  }
+  const hl=hs.slice(); 
+  $("fHour").innerHTML=hl.map(x=>`<option value="${x}"${x===h?" selected":""}>${pad(x)}</option>`).join("");
+  const mins=[];for(let i=0;i<60;i+=5)mins.push(i);if(!mins.includes(m)){mins.push(m);mins.sort((a,b)=>a-b)}
+  $("fMin").innerHTML=mins.map(x=>`<option value="${x}"${x===m?" selected":""}>${pad(x)}</option>`).join("");
+}
+const getTime=()=>pad(+$("fHour").value)+":"+pad(+$("fMin").value);
+
+/* ===================== FORM ===================== */
+let form={ingr:[],feel:"",editing:null,carbs:null,test:false};
+function fillSlotSelect(){ $("fSlot").innerHTML=SLOTS.map(s=>`<option value="${s.id}">${s.label}</option>`).join("") }
+function renderFeel(){ $("fFeel").innerHTML=FEELS.map(f=>`<button type="button" class="chip" aria-pressed="${form.feel===f}" data-feel="${esc(f)}">${esc(f)}</button>`).join("") }
+function renderIngr(){
+  $("fIngr").innerHTML=form.ingr.length?form.ingr.map(i=>`<span class="tag">${esc(i)}<button type="button" data-rm="${esc(i)}" aria-label="הסרת ${esc(i)}">×</button></span>`).join(""):'<span class="hint">יופיעו כאן בזמן ההקלדה</span>';
+}
+function syncSlotFields(keepTime){
+  const s=SLOT_BY[$("fSlot").value];
+  fillTime(s.id,$("fHour").value!==""&&$("fHour").options.length?getTime():null);
+  $("foodFields").hidden=!s.food;
+  $("feelWrap").hidden=!s.food;
+}
+let ingrTouched=false;
+function onFoodInput(){
+  if(!ingrTouched){ form.ingr=detectIngredients($("fFood").value); renderIngr(); }
+  $("fCarbs").textContent = form.carbs!=null ? `פחמימות משוערות בארוחה: כ-${round(form.carbs)} גרם` : "";
+}
+function resetForm(){
+  form={ingr:[],feel:"",editing:null,carbs:null,test:false}; ingrTouched=false;
+  $("fDate").value=viewDay; $("fHour").innerHTML=""; $("fFood").value=""; $("fGlu").value=""; $("fNote").value="";
+  $("formTitle").textContent="רישום חדש"; $("fCancel").hidden=true; $("fSubmit").textContent="שמירה";
+  renderFeel(); renderIngr(); syncSlotFields(); $("fCarbs").textContent="";
+}
+function prefillMeal(slot,text,carbs,ingr,test){
+  showTab("today");
+  resetForm();
+  $("fSlot").value=slot; syncSlotFields();
+  $("fFood").value=text; form.carbs=carbs??null; form.test=!!test;
+  form.ingr=ingr||detectIngredients(text); ingrTouched=!!ingr; renderIngr();
+  $("fCarbs").textContent = carbs!=null ? `פחמימות משוערות בארוחה: כ-${round(carbs)} גרם` : "";
+  $("fDate").value=today(); fillTime(slot,null);
+  $("fMsg").textContent="אפשר לשמור עכשיו בלי סוכר, ולהשלים את המדידה כשעה אחרי האוכל.";
+  $("formCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function startEdit(date,id){
+  const e=(state.days[date]?.entries||[]).find(x=>x.id===id); if(!e)return;
+  resetForm();
+  form.editing={date,id}; form.ingr=(e.ingr||[]).slice(); ingrTouched=true; form.feel=e.feel||""; form.carbs=e.carbs??null; form.test=!!e.test;
+  $("fDate").value=date; $("fSlot").value=e.slot; $("fFood").value=e.food||""; $("fGlu").value=e.glucose??""; $("fNote").value=e.note||"";
+  $("formTitle").textContent="עריכת רישום"; $("fCancel").hidden=false; $("fSubmit").textContent="שמירת שינויים";
+  renderFeel(); renderIngr(); syncSlotFields(); fillTime(e.slot,e.time||null);
+  $("formCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function upsertEntry(date,entry,removeFrom){
+  if(removeFrom&&removeFrom.date!==date){
+    const old=clone(state.days[removeFrom.date]||{date:removeFrom.date,entries:[]});
+    old.entries=old.entries.filter(x=>x.id!==removeFrom.id); state.days[removeFrom.date]=old; persist("d_"+removeFrom.date,old);
+  }
+  const day=clone(state.days[date]||{date,entries:[]});
+  const i=day.entries.findIndex(x=>x.id===entry.id);
+  if(i>=0)day.entries[i]=entry; else day.entries.push(entry);
+  day.entries.sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+  state.days[date]=day; persist("d_"+date,day); renderAll();
+}
+function deleteEntry(date,id){
+  const day=clone(state.days[date]||{date,entries:[]});
+  day.entries=day.entries.filter(x=>x.id!==id); state.days[date]=day; persist("d_"+date,day); renderAll(); toast("הרישום נמחק");
+}
+
+/* ===================== TODAY ===================== */
+let viewDay=today();
+function entryHTML(e,date,{pending}={}){
+  const s=SLOT_BY[e.slot]||SLOT_BY.other;
+  const ingr=(e.ingr||[]).length?`<div class="chips">${e.ingr.map(i=>`<span class="tag">${esc(i)}</span>`).join("")}</div>`:"";
+  const due = pending&&e.time ? (()=>{const [h,m]=e.time.split(":").map(Number);const t=h*60+m+60;return `למדוד בסביבות ${pad(Math.floor(t/60)%24)}:${pad(t%60)}`})() : "";
+  return `<div class="entry ${pending?"pending":""}" data-date="${date}" data-id="${e.id}">
+    <div class="entry-top">
+      <span class="food">${e.test?'<span class="pill warn" style="font-size:.75rem">ניסיון</span> ':""}${esc(e.food||s.label)}</span>
+      ${pending?"":gPill(e,true)}
+    </div>
+    ${ingr}
+    <div class="meta">${pending?esc(s.label)+" · ":""}${esc(e.time||"")}${e.carbs!=null?` · כ-${round(e.carbs)} ג' פחמימות`:""}${e.feel?" · "+esc(e.feel):""}${e.note?" · "+esc(e.note):""}${due?" · "+due:""}</div>
+    ${pending?`<div class="row">
+        <label style="flex:0 1 150px">כמה הסוכר?<input type="number" inputmode="numeric" class="pGlu" id="pg_${e.id}" placeholder="mg/dL"></label>
+        <div style="display:grid;gap:4px;flex:1 1 200px"><span style="font-weight:600;font-size:.92rem">איך זה היה?</span>
+        <div class="chips">${FEELS.map(f=>`<button type="button" class="chip pFeel" aria-pressed="${e.feel===f}" data-feel="${esc(f)}">${esc(f)}</button>`).join("")}</div></div>
+        <button class="btn small pSave">שמירה</button>
+      </div>`:
+    `<div class="row" style="gap:6px"><button class="btn ghost small eEdit">עריכה</button><span class="confirm"><button class="btn danger small eDel">מחיקה</button></span></div>`}
+  </div>`;
+}
+function renderToday(){
+  $("dPick").value=viewDay;
+  $("dayTitle").textContent=(viewDay===today()?"היום, ":"")+"יום "+dow(viewDay)+" "+fmtDate(viewDay);
+  const entries=state.days[viewDay]?.entries||[];
+  $("daySlots").innerHTML=SLOTS.map(s=>{
+    const es=entries.filter(e=>e.slot===s.id);
+    if(s.id==="other"&&!es.length)return "";
+    return `<div class="slot"><div class="slot-h"><b>${s.label}</b><button class="btn ghost small addSlot" data-slot="${s.id}">+ הוספה</button></div>
+      <div class="entries">${es.length?es.map(e=>entryHTML(e,viewDay)).join(""):'<span class="empty">עדיין אין רישום</span>'}</div></div>`;
+  }).join("");
+  // pending: meals without glucose in last 2 days
+  const pend=[];
+  [addDays(today(),-1),today()].forEach(k=>(state.days[k]?.entries||[]).forEach(e=>{if((e.glucose==null||e.glucose==="")&&SLOT_BY[e.slot]?.food)pend.push([k,e])}));
+  $("pendingCard").hidden=!pend.length;
+  const st=state.settings||{}; $("noTarget").hidden=!!(st.tFast||st.tMeal||st.tBed);
+  $("pendingList").innerHTML=pend.map(([k,e])=>entryHTML(e,k,{pending:true})).join("");
+}
+
+/* ===================== TRACK ===================== */
+function rangeKeys(n){const out=[];for(let i=n-1;i>=0;i--)out.push(addDays(today(),-i));return out}
+function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
+function renderTrack(){
+  const n=+$("tRange").value; const keys=rangeKeys(n);
+  const es=[]; keys.forEach(k=>(state.days[k]?.entries||[]).forEach(e=>es.push(Object.assign({date:k},e))));
+  const withG=es.filter(e=>e.glucose!==""&&e.glucose!=null);
+  const byKind=k=>withG.filter(e=>SLOT_BY[e.slot]?.kind===k).map(e=>+e.glucose);
+  const judged=withG.filter(e=>cls(e));
+  const inT=judged.filter(e=>cls(e)==="ok").length;
+  const st=[
+    ["ממוצע צום בבוקר",avg(byKind("fast"))],
+    ["ממוצע אחרי ארוחות",avg(byKind("meal"))],
+    ["ממוצע לפני השינה",avg(byKind("bed"))],
+  ];
+  $("tStats").innerHTML=st.map(([k,v])=>`<div class="stat"><div class="k">${k}</div><div class="v">${v==null?"—":round(v)} <small>mg/dL</small></div></div>`).join("")+
+   `<div class="stat"><div class="k">בתוך היעד</div><div class="v">${judged.length?round(inT/judged.length*100)+"%":"—"} <small>${judged.length?`${inT} מתוך ${judged.length}`:"יש להגדיר יעדים"}</small></div></div>`+
+   `<div class="stat"><div class="k">מדידות בתקופה</div><div class="v">${withG.length}</div></div>`;
+  renderChart(keys);
+  renderTable(keys);
+  renderInsights();
+  renderMealLists(withG);
+}
+function renderChart(keys){
+  const W=Math.max(560,keys.length*28),H=230,L=40,R=12,T=14,B=30;
+  const series=[
+    ["fast","var(--l1)",k=>avg((state.days[k]?.entries||[]).filter(e=>e.slot==="fast"&&e.glucose!==""&&e.glucose!=null).map(e=>+e.glucose))],
+    ["meal","var(--l2)",k=>avg((state.days[k]?.entries||[]).filter(e=>SLOT_BY[e.slot]?.kind==="meal"&&e.glucose!==""&&e.glucose!=null).map(e=>+e.glucose))],
+    ["bed","var(--l3)",k=>avg((state.days[k]?.entries||[]).filter(e=>e.slot==="bed"&&e.glucose!==""&&e.glucose!=null).map(e=>+e.glucose))]
+  ];
+  const vals=series.flatMap(s=>keys.map(s[2])).filter(v=>v!=null);
+  const tg=[targetFor("fast"),targetFor("meal"),targetFor("bed")].filter(Boolean);
+  if(!vals.length){$("chart").innerHTML='<p class="empty">הגרף יופיע אחרי שיירשמו מדידות.</p>';return}
+  let lo=Math.min(...vals,...tg),hi=Math.max(...vals,...tg);
+  lo=Math.max(0,Math.floor((lo-10)/20)*20); hi=Math.ceil((hi+10)/20)*20;
+  const x=i=>L+(keys.length===1?(W-L-R)/2:i*(W-L-R)/(keys.length-1));
+  const y=v=>T+(hi-v)*(H-T-B)/(hi-lo);
+  let g="";
+  for(let v=lo;v<=hi;v+=20){g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`}
+  const step=Math.ceil(keys.length/14);
+  keys.forEach((k,i)=>{if(i%step===0||i===keys.length-1)g+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle">${fmtDate(k)}</text>`});
+  [["fast","var(--l1)"],["meal","var(--l2)"],["bed","var(--l3)"]].forEach(([k,c])=>{const t=targetFor(k);if(t)g+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="${c}" stroke-dasharray="5 4" stroke-width="1.2" opacity=".7"/>`});
+  series.forEach(([id,c,f])=>{
+    const pts=keys.map((k,i)=>[i,f(k)]).filter(p=>p[1]!=null);
+    if(pts.length>1)g+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linejoin="round" points="${pts.map(([i,v])=>x(i)+","+y(v)).join(" ")}"/>`;
+    pts.forEach(([i,v],j)=>g+=`<circle cx="${x(i)}" cy="${y(v)}" r="${j===pts.length-1?4.5:3}" fill="${c}"><title>${fmtDate(keys[i])}: ${round(v)}</title></circle>`);
+  });
+  $("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="direction:ltr;max-width:none;display:block">${g}</svg>`+
+    (tg.length?'<p class="hint">הקווים המקווקווים הם היעדים שהוגדרו.</p>':'');
+}
+function cell(es){ if(!es.length)return '<td class="num" style="color:var(--muted)">—</td>'; return `<td>${es.map(gPill).join(" ")}</td>` }
+function renderTable(keys){
+  const cols=SLOTS.filter(s=>s.id!=="other");
+  let h=`<thead><tr><th>תאריך</th>${cols.map(s=>`<th>${s.label}</th>`).join("")}</tr></thead><tbody>`;
+  const rows=keys.slice().reverse().filter(k=>(state.days[k]?.entries||[]).length);
+  if(!rows.length)h+=`<tr><td colspan="${cols.length+1}" class="empty">אין מדידות בתקופה הזו.</td></tr>`;
+  rows.forEach(k=>{const es=state.days[k].entries;h+=`<tr><td>${dow(k)} ${fmtDate(k)}</td>${cols.map(s=>cell(es.filter(e=>e.slot===s.id&&e.glucose!==""&&e.glucose!=null))).join("")}</tr>`});
+  $("tTable").innerHTML=h+"</tbody>";
+}
+function isHigh(e,ref){ // ref: own average post-meal when no target set
+  const t=targetFor("meal"); const g=+e.glucose;
+  return t? g>t : (ref? g>ref*1.1 : false);
+}
+function renderInsights(){
+  const meals=allEntries().filter(e=>SLOT_BY[e.slot]?.kind==="meal"&&e.glucose!==""&&e.glucose!=null&&(e.ingr||[]).length);
+  const t=targetFor("meal");
+  const ref=t?null:avg(meals.map(e=>+e.glucose));
+  $("insHint").textContent = t ? `ארוחה נחשבת "גבוהה" כשהסוכר שעה אחריה מעל ${t} mg/dL (היעד שהוגדר).`
+    : "עדיין לא הוגדר יעד אחרי ארוחות, ולכן ההשוואה היא לממוצע האישי שלך. מומלץ להגדיר יעד בלשונית \"פרטים ויעדים\".";
+  if(meals.length<3){$("insights").innerHTML='<p class="empty">צריך לפחות 3 ארוחות עם מדידה ומרכיבים כדי להתחיל לזהות דפוסים.</p>';return}
+  const highs=meals.filter(e=>isHigh(e,ref)&&!e.test);
+  const stats={};
+  meals.filter(e=>!e.test).forEach(e=>(e.ingr||[]).forEach(i=>{const s=stats[i]||(stats[i]={n:0,h:0,sum:0,highMeals:[]});s.n++;s.sum+=+e.glucose;if(isHigh(e,ref)){s.h++;s.highMeals.push(e)}}));
+  const tests={};
+  meals.filter(e=>e.test).forEach(e=>(e.ingr||[]).forEach(i=>{(tests[i]=tests[i]||[]).push(e)}));
+  const baseRate=highs.length/Math.max(1,meals.filter(e=>!e.test).length);
+  const suspects=Object.entries(stats).filter(([i,s])=>s.h>=2&&s.h/s.n>=0.6&&s.h/s.n>baseRate).sort((a,b)=>b[1].h-a[1].h||b[1].h/b[1].n-a[1].h/a[1].n);
+  const safe=Object.entries(stats).filter(([i,s])=>s.n>=3&&s.h===0).sort((a,b)=>b[1].n-a[1].n).slice(0,8);
+  let h="";
+  suspects.slice(0,6).forEach(([i,s])=>{
+    const ex=s.highMeals.slice(-3).map(e=>`${esc(e.food||"")} (${e.glucose})`).join("، ");
+    const tr=tests[i];
+    const trTxt=tr?` <b>ניסיונות לבד:</b> ${tr.length} מדידות, ממוצע ${round(avg(tr.map(e=>+e.glucose)))}${t?(avg(tr.map(e=>+e.glucose))>t?" — גם לבד מעל היעד.":" — לבד נראה בסדר, ייתכן שהשילוב עם מאכל אחר הוא שמעלה."):""}`:"";
+    h+=`<div class="insight"><p><b>ייתכן ש${esc(i)} מעלה את הסוכר.</b> הופיע ב-${s.h} מתוך ${s.n} ארוחות שאחריהן הסוכר היה גבוה.</p>
+      <p class="hint" style="color:inherit">למשל: ${ex}</p>
+      <p>כדאי לנסות לאכול ${esc(i)} לבד (או עם מעט חלבון) ולמדוד שעה אחרי.${trTxt}</p>
+      <div><button class="btn small tryAlone" data-ing="${esc(i)}">רישום ניסיון: ${esc(i)} לבד</button></div></div>`;
+  });
+  if(!suspects.length)h+=`<div class="insight good"><p><b>לא זוהה מאכל חשוד כרגע.</b> ${highs.length?`היו ${highs.length} ארוחות גבוהות, אבל בלי מרכיב שחוזר על עצמו בהן.`:"לא נמצאו ארוחות גבוהות בנתונים."}</p></div>`;
+  if(safe.length)h+=`<div class="insight good"><p><b>מרכיבים שנראה שמסתדרים טוב:</b> ${safe.map(([i,s])=>`${esc(i)} (${s.n} ארוחות)`).join("، ")}</p></div>`;
+  h+='<p class="hint">זהו זיהוי סטטיסטי פשוט. גם כמות האוכל, השעה, פעילות ושינה משפיעים, ולכן כדאי לבדוק את החשד בניסיון ולהתייעץ עם הצוות המטפל.</p>';
+  $("insights").innerHTML=h;
+}
+function renderMealLists(withG){
+  const meals=withG.filter(e=>SLOT_BY[e.slot]?.kind==="meal"&&e.food);
+  const good=meals.filter(e=>cls(e)==="ok").slice(-12).reverse();
+  const bad=meals.filter(e=>cls(e)==="high"||cls(e)==="warn").slice(-12).reverse();
+  const li=e=>`<div class="entry"><div class="entry-top"><span class="food">${esc(e.food)}</span>${gPill(e,true)}</div><div class="meta">${dow(e.date)} ${fmtDate(e.date)} · ${esc(SLOT_BY[e.slot].label)}${e.feel?" · "+esc(e.feel):""}</div></div>`;
+  const none=targetFor("meal")?'<p class="empty">אין עדיין ארוחות כאלה בתקופה.</p>':'<p class="empty">יופיע אחרי הגדרת יעד אחרי ארוחות.</p>';
+  $("goodMeals").innerHTML=good.length?`<div class="entries">${good.map(li).join("")}</div>`:none;
+  $("badMeals").innerHTML=bad.length?`<div class="entries">${bad.map(li).join("")}</div>`:none;
+}
+function summaryText(){
+  const keys=rangeKeys(+$("tRange").value).filter(k=>(state.days[k]?.entries||[]).length);
+  const p=state.profile||{};
+  let s="סיכום מדידות סוכר (mg/dL)\n";
+  if(p.age||p.height||p.weight)s+=`גיל ${p.age||"-"}, גובה ${p.height||"-"} ס"מ, משקל ${p.weight||"-"} ק"ג\n`;
+  s+="\n";
+  keys.forEach(k=>{
+    s+=`${dow(k)} ${fmtDate(k)}\n`;
+    state.days[k].entries.forEach(e=>{s+=`  ${e.time||""} ${SLOT_BY[e.slot]?.label||""}: ${e.glucose??"-"}${e.food?" | "+e.food:""}\n`});
+  });
+  return s;
+}
+
+/* ===================== MEALS TAB ===================== */
+let mealFilter="m_bf";
+function renderMeals(){
+  $("mealFilter").innerHTML=MEAL_GROUPS.map(([id,l])=>`<button class="chip" data-mf="${id}" aria-pressed="${mealFilter===id}">${l}</button>`).join("");
+  $("mealList").innerHTML=MEALS.filter(m=>m.slot===mealFilter).map((m,i)=>{
+    const c=carbsOf(m.items);
+    return `<div class="meal"><h3>${esc(m.name)}</h3>
+      <ul>${m.items.map(([n,q])=>`<li>${q!==1?fmtQ(q)+" × ":""}${esc(n)} <span class="hint" style="display:inline">(${esc(FOOD_BY[n]?.s||"")})</span></li>`).join("")}</ul>
+      <div class="carb num">כ-${round(c)} ג' פחמימות</div>
+      <div><button class="btn small useMeal" data-meal="${MEALS.indexOf(m)}">אכלתי את זה</button></div></div>`;
+  }).join("");
+}
+
+/* ===================== FOODS TAB ===================== */
+let catSel="",plate=[];
+const GI_LBL={L:"נמוכה",M:"בינונית",H:"גבוהה"};
+function renderFoods(){
+  $("qCats").innerHTML=[["","הכול"],...CATS.map(c=>[c,c])].map(([v,l])=>`<button class="chip" data-cat="${esc(v)}" aria-pressed="${catSel===v}">${esc(l)}</button>`).join("");
+  const q=$("qFood").value.trim(), gi=$("qGi").value, so=$("qSort").value;
+  let list=FOODS.filter(f=>(!catSel||f.c===catSel)&&(!gi||f.gi===gi)&&(!q||f.n.includes(q)||f.c.includes(q)));
+  const nv=v=>v==null?999:v;
+  if(so==="carb")list.sort((a,b)=>a.carb-b.carb);
+  else if(so==="gi")list.sort((a,b)=>nv(a.gv)-nv(b.gv));
+  else if(so==="gl")list.sort((a,b)=>nv(a.gl)-nv(b.gl));
+  else if(so==="fiber")list.sort((a,b)=>b.fib-a.fib);
+  else if(so==="prot")list.sort((a,b)=>b.prot-a.prot);
+  else list.sort((a,b)=>CATS.indexOf(a.c)-CATS.indexOf(b.c));
+  $("foodCount").textContent=`${list.length} מאכלים · ערכים למנה אחת`;
+  $("foodGrid").innerHTML=list.length?list.map(f=>`<div class="food">
+      <div class="food-h"><div><b>${esc(f.n)}</b><div class="hint">${esc(f.s)}</div></div><span class="gi ${f.gi}">${GI_LBL[f.gi]}</span></div>
+      <dl class="nut">
+        <div><dt>פחמימות</dt><dd>${f.carb}<small> ג'</small></dd></div>
+        <div><dt>סיבים</dt><dd>${f.fib}<small> ג'</small></dd></div>
+        <div><dt>חלבון</dt><dd>${f.prot}<small> ג'</small></dd></div>
+        <div><dt>קלוריות</dt><dd>${f.kcal}</dd></div>
+      </dl>
+      <div class="gix">${f.gv!=null?`<span>ערך גליקמי <b>${f.gv}</b></span><span>עומס גליקמי למנה <b>${f.gl}</b></span>`:`<span>ערך גליקמי <b>—</b></span><span class="hint">${GI_LOWCARB.has(f.n)?"לא נמדד: מעט מאוד פחמימות, השפעה קטנה":f.carb<5?"כמעט ללא פחמימות":"לא נמצא ערך מדוד"}</span>`}</div>
+      ${f.tip?`<p class="hint">${esc(f.tip)}</p>`:""}
+      <button class="btn ghost small addPlate" data-food="${esc(f.n)}">+ לצלחת</button>
+    </div>`).join(""):'<p class="empty">לא נמצא מאכל. אפשר לנסות מילה אחרת.</p>';
+  renderPlate();
+}
+function renderPlate(){
+  $("plate").hidden=!plate.length;
+  $("plateItems").innerHTML=plate.map(([n,q],i)=>`<span class="tag">${esc(n)} <input class="qty" type="number" step="0.25" min="0.25" value="${q}" data-pq="${i}" aria-label="כמות ${esc(n)}"> מנות <button type="button" data-prm="${i}" aria-label="הסרה">×</button></span>`).join("");
+  const c=carbsOf(plate), f=plate.reduce((a,[n,q])=>a+FOOD_BY[n].fib*q,0), p=plate.reduce((a,[n,q])=>a+FOOD_BY[n].prot*q,0);
+  $("plateTot").textContent=`פחמימות ${round(c)} ג' · סיבים ${round(f)} ג' · חלבון ${round(p)} ג'`;
+}
+
+/* ===================== PROFILE ===================== */
+function renderMe(){
+  const p=state.profile||{}, s=state.settings||{};
+  if(document.activeElement?.closest?.("#tab-me")==null){
+    $("pAge").value=p.age??""; $("pHeight").value=p.height??""; $("pWeight").value=p.weight??"";
+    $("sFast").value=s.tFast??""; $("sMeal").value=s.tMeal??""; $("sBed").value=s.tBed??"";
+  }
+  const bmi=p.height&&p.weight?(p.weight/((p.height/100)**2)):null;
+  const ws=(p.weights||[]);
+  const first=ws[0], last=ws[ws.length-1];
+  $("pStats").innerHTML=`<div class="stat"><div class="k">BMI</div><div class="v">${bmi?bmi.toFixed(1):"—"}</div></div>`+
+    `<div class="stat"><div class="k">שינוי משקל מתחילת המעקב</div><div class="v">${first&&last&&ws.length>1?((last.kg-first.kg)>0?"+":"")+(last.kg-first.kg).toFixed(1):"—"} <small>ק"ג</small></div></div>`;
+  let h=`<thead><tr><th>תאריך</th><th>משקל (ק"ג)</th></tr></thead><tbody>`;
+  if(!ws.length)h+='<tr><td colspan="2" class="empty">כל שמירה של משקל חדש תתווסף כאן.</td></tr>';
+  ws.slice().reverse().forEach(w=>h+=`<tr><td>${dow(w.date)} ${fmtDate(w.date)}</td><td>${w.kg}</td></tr>`);
+  $("wTable").innerHTML=h+"</tbody>";
+}
+
+/* ===================== ENCOURAGEMENT & TIPS ===================== */
+const QUOTES=[
+["כל מדידה היא צעד קטן של אכפתיות. את עושה עבודה נהדרת.",""],
+["גם מספר גבוה הוא לא כישלון. הוא מידע שעוזר לך להמשיך ולדייק.",""],
+["נֹתֵן לַיָּעֵף כֹּחַ וּלְאֵין אוֹנִים עָצְמָה יַרְבֶּה","ישעיהו מ, כט"],
+["קַוֵּה אֶל ה' חֲזַק וְיַאֲמֵץ לִבֶּךָ וְקַוֵּה אֶל ה'","תהלים כז, יד"],
+["לא צריך להיות מושלמת. מספיק להמשיך בעקביות, יום אחרי יום.",""],
+["כל צלחת מאוזנת היא הישג. מגיעה לך מילה טובה.",""],
+["הסבלנות וההתמדה שלך מרשימות. ממשיכים בכוחות מחודשים.",""],
+["ימים קשים עוברים, והכוח שלך נשאר.",""],
+["מה שאת משקיעה עכשיו שווה כל רגע. בעזרת ה', הכול לטובה.",""],
+["תני לעצמך רגע של מנוחה והוקרה. את עושה הרבה.",""],
+["הַשְׁלֵךְ עַל ה' יְהָבְךָ וְהוּא יְכַלְכְּלֶךָ","תהלים נה, כג"],
+["כל יום שבו את שמה לב לעצמך הוא יום מוצלח.",""],
+["הקשבה לגוף היא חוכמה. את לומדת אותו כל יום מחדש.",""],
+["עוד יום, עוד מדידה, עוד צעד קדימה. כל הכבוד!",""]
+];
+const TIPS=[
+"להתחיל את הארוחה בירקות ובחלבון, ורק בסוף לאכול את הלחם או האורז.",
+"הליכה קלה של 10–15 דקות אחרי ארוחה עוזרת לגוף להשתמש בסוכר.",
+"לשתות מים לאורך היום. מיץ ומשקאות ממותקים מעלים סוכר מהר.",
+"פרי עדיף לאכול שלם ולא כמיץ, ולצרף אליו כמה שקדים או יוגורט.",
+"להחליף לחם לבן בלחם מלא או שיפון, ואורז לבן באורז מלא, כוסמת או בורגול.",
+"ארוחות קטנות וקבועות לאורך היום מאזנות יותר מארוחה אחת גדולה.",
+"לבדוק בתוויות סוכר מוסף: גם ביוגורט \"טבעי בטעמים\" ובגרנולה יש לא מעט.",
+"פחמימה לבד מעלה מהר. לשלב תמיד חלבון, שומן טוב או סיבים.",
+"תפוח אדמה ופסטה שהתקררו מעלים את הסוכר פחות מאשר כשהם חמים מהסיר.",
+"לאכול לאט וללעוס היטב. לגוף לוקח זמן להרגיש שובע.",
+"כף טחינה, אבוקדו או שמן זית בארוחה מאטים את קצב עליית הסוכר.",
+"כדאי להכין מראש נשנושים מתאימים: ירקות חתוכים, ביצה קשה, אגוזים.",
+"שינה מספקת חשובה גם לאיזון הסוכר. כדאי לשמור על שעת שינה קבועה.",
+"לרשום מה אכלת סמוך לארוחה. כך קל יותר לזהות מה מעלה את הסוכר.",
+"קטניות כמו עדשים וחומוס עשירות בסיבים ובחלבון ומשביעות לאורך זמן.",
+"לא לדלג על ארוחת בוקר. דילוג עלול לגרום לעלייה גבוהה בארוחה הבאה.",
+"מנה של פחמימה בגודל אגרוף אחד היא נקודת התחלה טובה לבדיקה עם הדיאטנית.",
+"ירקות מבושלים מאוד או מרוסקים מעלים מעט יותר מאשר טריים או מאודים קלות.",
+"נשנוש קטן עם חלבון לפני השינה עשוי לעזור לאיזון של הבוקר. כדאי לבדוק עם הצוות המטפל.",
+"מתח משפיע על הסוכר. כמה נשימות עמוקות ורגע של מנוחה עוזרים גם כאן.",
+"כשמדידה יוצאת גבוהה, לחזור לארוחה ולבדוק את הכמות, השילוב והשעה.",
+"קינמון, לימון וחומץ תפוחים נותנים טעם בלי להוסיף סוכר."
+];
+const dayIndex=()=>{const d=new Date();return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5)};
+let qi=dayIndex()%QUOTES.length, ti=dayIndex()%TIPS.length;
+function renderQuote(){const [t,src]=QUOTES[qi];$("quoteText").textContent=t;$("quoteSrc").textContent=src?"("+src+")":"";$("quoteSrc").hidden=!src}
+function renderTip(){$("tipText").textContent=TIPS[ti]}
+$("quoteNext").addEventListener("click",()=>{qi=(qi+1)%QUOTES.length;renderQuote()});
+$("tipNext").addEventListener("click",()=>{ti=(ti+1)%TIPS.length;renderTip()});
+function renderHero(){
+  const h=new Date().getHours();
+  $("hello").textContent=h<5?"לילה טוב":h<12?"בוקר טוב":h<17?"צהריים טובים":h<21?"ערב טוב":"לילה טוב";
+  const es=(state.days[today()]?.entries||[]);
+  const g=es.filter(e=>e.glucose!==""&&e.glucose!=null);
+  const j=g.filter(e=>cls(e));
+  $("hToday").textContent=g.length;
+  $("hOk").textContent=j.length?j.filter(e=>cls(e)==="ok").length+"/"+j.length:"—";
+  $("hPend").textContent=es.filter(e=>(e.glucose==null||e.glucose==="")&&SLOT_BY[e.slot]?.food).length;
+}
+const PRAISE_OK=["מצוין!","ב\"ה, ערך רצוי","איזה יופי :)"];
+const PRAISE_HIGH=["גבוה מהרצוי. לא נורא, ממשיכים ולומדים","גבוה מהרצוי. כדאי לבדוק את הארוחה הזו"];
+function praise(e){const c=cls(e);if(c==="warn")return "נשמר. ערך גבולי";const arr=c==="ok"?PRAISE_OK:c?PRAISE_HIGH:null;return arr?arr[Math.floor(Math.random()*arr.length)]:null}
+
+/* ===================== RENDER / EVENTS ===================== */
+function renderAll(){
+  const sig=JSON.stringify(state);
+  if(sig===lastSig&&mode!=="loading")return; lastSig=sig;
+  renderToday(); renderTrack(); renderMe(); renderHero();
+}
+let curTab="today";
+const ARTS={"today": "      <path d=\"M4 160a40 40 0 0 1 80 0\" fill=\"none\" stroke=\"var(--shape-1)\" stroke-width=\"3\" opacity=\".7\"/>\n      <path d=\"M16 160a28 28 0 0 1 56 0\" fill=\"none\" stroke=\"var(--shape-1)\" stroke-width=\"3\" opacity=\".7\"/>\n      <circle cx=\"136\" cy=\"18\" r=\"7\" fill=\"var(--shape-1)\"/>\n      <circle cx=\"12\" cy=\"20\" r=\"4\" fill=\"var(--shape-4)\"/>\n      <path d=\"M118 150h24M126 158h16\" stroke=\"var(--shape-4)\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n      <g transform=\"translate(4 14) scale(1.12)\">\n        <path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-4)\"/>\n        <circle cx=\"36\" cy=\"36\" r=\"4.5\" fill=\"var(--face)\"/>\n        <circle cx=\"64\" cy=\"36\" r=\"4.5\" fill=\"var(--face)\"/>\n        <circle cx=\"37.5\" cy=\"34.5\" r=\"1.4\" fill=\"var(--shape-4)\"/>\n        <circle cx=\"65.5\" cy=\"34.5\" r=\"1.4\" fill=\"var(--shape-4)\"/>\n        <ellipse cx=\"26\" cy=\"47\" rx=\"6\" ry=\"3.5\" fill=\"var(--shape-2)\" opacity=\".7\"/>\n        <ellipse cx=\"74\" cy=\"47\" rx=\"6\" ry=\"3.5\" fill=\"var(--shape-2)\" opacity=\".7\"/>\n        <path d=\"M40 48q10 11 20 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"3.2\" stroke-linecap=\"round\"/>\n      </g>\n      <g transform=\"translate(86 96) scale(.56)\">\n        <path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-1)\"/>\n        <circle cx=\"36\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/>\n        <circle cx=\"64\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/>\n        <ellipse cx=\"25\" cy=\"50\" rx=\"7\" ry=\"4\" fill=\"var(--shape-2)\" opacity=\".8\"/>\n        <ellipse cx=\"75\" cy=\"50\" rx=\"7\" ry=\"4\" fill=\"var(--shape-2)\" opacity=\".8\"/>\n        <path d=\"M38 50q12 13 24 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"4.5\" stroke-linecap=\"round\"/>\n      </g>\n      <path d=\"M78 104q6-8 12-2\" fill=\"none\" stroke=\"var(--shape-4)\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".8\"/>", "track": "<path d=\"M4 160a40 40 0 0 1 80 0\" fill=\"none\" stroke=\"var(--shape-1)\" stroke-width=\"3\" opacity=\".7\"/>\n<rect x=\"30\" y=\"16\" width=\"82\" height=\"126\" rx=\"22\" fill=\"var(--shape-4)\"/>\n<rect x=\"42\" y=\"30\" width=\"58\" height=\"48\" rx=\"12\" fill=\"var(--shape-1)\"/>\n<circle cx=\"61\" cy=\"49\" r=\"4\" fill=\"var(--face)\"/><circle cx=\"81\" cy=\"49\" r=\"4\" fill=\"var(--face)\"/>\n<ellipse cx=\"52\" cy=\"60\" rx=\"5\" ry=\"3\" fill=\"var(--shape-2)\" opacity=\".8\"/><ellipse cx=\"90\" cy=\"60\" rx=\"5\" ry=\"3\" fill=\"var(--shape-2)\" opacity=\".8\"/>\n<path d=\"M60 61q11 10 22 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<circle cx=\"56\" cy=\"104\" r=\"9\" fill=\"var(--shape-2)\"/><circle cx=\"86\" cy=\"104\" r=\"9\" fill=\"var(--shape-1)\"/>\n<path d=\"M52 124h38\" stroke=\"var(--shape-1)\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<rect x=\"62\" y=\"140\" width=\"18\" height=\"22\" rx=\"4\" fill=\"var(--shape-1)\"/>\n<g transform=\"translate(108 6) scale(.36)\"><path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-2)\"/></g>\n<g transform=\"translate(116 118) scale(.26)\"><path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-4)\"/></g>\n<path d=\"M120 70h22M126 78h16\" stroke=\"var(--shape-4)\" stroke-width=\"3\" stroke-linecap=\"round\"/>", "meals": "<circle cx=\"74\" cy=\"88\" r=\"58\" fill=\"var(--shape-4)\"/>\n<circle cx=\"74\" cy=\"88\" r=\"44\" fill=\"none\" stroke=\"var(--shape-1)\" stroke-width=\"3\"/>\n<g transform=\"translate(48 64) scale(.52)\"><path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-2)\"/>\n<circle cx=\"36\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/><circle cx=\"64\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/>\n<path d=\"M38 50q12 13 24 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g>\n<path d=\"M6 40v34M12 40v34M18 40v34M6 74q6 8 12 0M12 78v74\" fill=\"none\" stroke=\"var(--shape-4)\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<ellipse cx=\"140\" cy=\"54\" rx=\"8\" ry=\"14\" fill=\"var(--shape-4)\"/><path d=\"M140 68v84\" stroke=\"var(--shape-4)\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n<circle cx=\"40\" cy=\"160\" r=\"5\" fill=\"var(--shape-1)\"/><circle cx=\"108\" cy=\"160\" r=\"4\" fill=\"var(--shape-4)\"/>", "foods": "<path d=\"M75 52C55 36 22 46 22 86C22 128 54 152 75 142C96 152 128 128 128 86C128 46 95 36 75 52Z\" fill=\"var(--shape-4)\"/>\n<path d=\"M75 52q2-16 10-24\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>\n<g transform=\"translate(84 14) scale(.3)\"><path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-2)\"/></g>\n<circle cx=\"61\" cy=\"90\" r=\"5\" fill=\"var(--face)\"/><circle cx=\"89\" cy=\"90\" r=\"5\" fill=\"var(--face)\"/>\n<ellipse cx=\"48\" cy=\"104\" rx=\"7\" ry=\"4\" fill=\"var(--shape-2)\" opacity=\".7\"/><ellipse cx=\"102\" cy=\"104\" rx=\"7\" ry=\"4\" fill=\"var(--shape-2)\" opacity=\".7\"/>\n<path d=\"M63 104q12 13 24 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>\n<circle cx=\"20\" cy=\"22\" r=\"8\" fill=\"var(--shape-1)\"/><circle cx=\"34\" cy=\"30\" r=\"6\" fill=\"var(--shape-2)\"/><path d=\"M20 14q8-10 16 2\" fill=\"none\" stroke=\"var(--shape-4)\" stroke-width=\"2.5\"/>\n<path d=\"M118 160h24M126 152h16\" stroke=\"var(--shape-4)\" stroke-width=\"3\" stroke-linecap=\"round\"/>", "me": "<rect x=\"28\" y=\"18\" width=\"94\" height=\"132\" rx=\"16\" fill=\"var(--shape-4)\"/>\n<circle cx=\"52\" cy=\"18\" r=\"6\" fill=\"var(--shape-2)\"/><circle cx=\"75\" cy=\"18\" r=\"6\" fill=\"var(--shape-2)\"/><circle cx=\"98\" cy=\"18\" r=\"6\" fill=\"var(--shape-2)\"/>\n<g transform=\"translate(54 34) scale(.42)\"><path d=\"M50 88C20 66 4 48 4 30C4 16 15 6 28 6C38 6 46 12 50 20C54 12 62 6 72 6C85 6 96 16 96 30C96 48 80 66 50 88Z\" fill=\"var(--shape-2)\"/>\n<circle cx=\"36\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/><circle cx=\"64\" cy=\"38\" r=\"5\" fill=\"var(--face)\"/>\n<path d=\"M38 50q12 13 24 0\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"5\" stroke-linecap=\"round\"/></g>\n<path d=\"M46 98h58M46 112h58M46 126h38\" stroke=\"var(--shape-1)\" stroke-width=\"3.5\" stroke-linecap=\"round\"/>\n<circle cx=\"122\" cy=\"142\" r=\"16\" fill=\"var(--shape-1)\"/><path d=\"M114 142l6 6 10-12\" fill=\"none\" stroke=\"var(--face)\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n<path d=\"M4 160a28 28 0 0 1 56 0\" fill=\"none\" stroke=\"var(--shape-1)\" stroke-width=\"3\" opacity=\".7\"/>"};
+function renderArt(t){$("heroArt").innerHTML=`<svg viewBox="0 0 150 170">${ARTS[t]||ARTS.today}</svg>`}
+function showTab(t){
+  curTab=t;
+  renderArt(t);
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  document.querySelectorAll("section.tab").forEach(s=>s.hidden=s.id!=="tab-"+t);
+  try{sessionStorage.setItem("sd-tab",t)}catch(e){}
+}
+document.querySelector("nav.tabs").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
+
+$("fSlot").addEventListener("change",syncSlotFields);
+$("fFood").addEventListener("input",onFoodInput);
+$("fFeel").addEventListener("click",e=>{const b=e.target.closest("[data-feel]");if(!b)return;form.feel=form.feel===b.dataset.feel?"":b.dataset.feel;renderFeel()});
+$("fIngr").addEventListener("click",e=>{const b=e.target.closest("[data-rm]");if(!b)return;ingrTouched=true;form.ingr=form.ingr.filter(x=>x!==b.dataset.rm);renderIngr()});
+function addIngr(){const v=$("fIngrAdd").value.trim();if(!v)return;ingrTouched=true;v.split(/[,،]/).map(x=>x.trim()).filter(Boolean).forEach(x=>{if(!form.ingr.includes(x))form.ingr.push(x)});$("fIngrAdd").value="";renderIngr()}
+$("fIngrBtn").addEventListener("click",addIngr);
+$("fIngrAdd").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addIngr()}});
+$("fCancel").addEventListener("click",resetForm);
+$("entryForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const date=$("fDate").value||today(), slot=$("fSlot").value, s=SLOT_BY[slot];
+  const g=$("fGlu").value.trim();
+  if(!s.food&&!g){$("fMsg").textContent="במדידת צום צריך למלא את רמת הסוכר.";return}
+  if(s.food&&!$("fFood").value.trim()&&!g){$("fMsg").textContent="נא למלא מה אכלתי או את רמת הסוכר.";return}
+  const entry={id:form.editing?form.editing.id:uid(),slot,time:getTime(),glucose:g===""?null:+g,
+    food:s.food?$("fFood").value.trim():"",ingr:s.food?form.ingr.slice():[],feel:s.food?form.feel:"",note:$("fNote").value.trim()};
+  if(form.carbs!=null)entry.carbs=form.carbs;
+  if(form.test)entry.test=true;
+  upsertEntry(date,entry,form.editing);
+  viewDay=date;
+  toast(form.editing?"השינויים נשמרו":g===""?"נשמר. המדידה ממתינה למעלה":(praise(entry)||"נשמר ביומן"));
+  resetForm(); renderToday();
+});
+
+$("dPick").addEventListener("change",e=>{if(e.target.value){viewDay=e.target.value;renderToday();$("fDate").value=viewDay}});
+$("dPrev").addEventListener("click",()=>{viewDay=addDays(viewDay,-1);renderToday();$("fDate").value=viewDay});
+$("dNext").addEventListener("click",()=>{viewDay=addDays(viewDay,1);renderToday();$("fDate").value=viewDay});
+
+document.addEventListener("click",e=>{
+  const ent=e.target.closest(".entry[data-id]");
+  if(e.target.closest(".addSlot")){resetForm();$("fSlot").value=e.target.closest(".addSlot").dataset.slot;$("fDate").value=viewDay;syncSlotFields();$("formCard").scrollIntoView({behavior:"smooth"});(SLOT_BY[$("fSlot").value].food?$("fFood"):$("fGlu")).focus({preventScroll:true});return}
+  if(ent&&e.target.closest(".eEdit")){startEdit(ent.dataset.date,ent.dataset.id);return}
+  if(ent&&e.target.closest(".eDel")){
+    const wrap=e.target.closest(".confirm");
+    wrap.innerHTML='למחוק? <button class="btn danger small eDelYes">כן, למחוק</button><button class="btn ghost small eDelNo">לא</button>';return}
+  if(ent&&e.target.closest(".eDelYes")){deleteEntry(ent.dataset.date,ent.dataset.id);return}
+  if(ent&&e.target.closest(".eDelNo")){renderToday();lastSig="";return}
+  if(ent&&e.target.closest(".pFeel")){const b=e.target.closest(".pFeel");const on=b.getAttribute("aria-pressed")==="true";ent.querySelectorAll(".pFeel").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed",String(!on));return}
+  if(ent&&e.target.closest(".pSave")){
+    const v=ent.querySelector(".pGlu").value.trim();
+    if(!v){toast("נא למלא את רמת הסוכר");return}
+    const f=ent.querySelector('.pFeel[aria-pressed="true"]');
+    const day=state.days[ent.dataset.date]; const old=day.entries.find(x=>x.id===ent.dataset.id);
+    const upd=Object.assign(clone(old),{glucose:+v,feel:f?f.dataset.feel:old.feel||""});
+    upsertEntry(ent.dataset.date,upd);
+    toast(praise(upd)||"המדידה נשמרה");return}
+  const um=e.target.closest(".useMeal");
+  if(um){const m=MEALS[+um.dataset.meal];const ingr=[];m.items.forEach(([n])=>detectIngredients(n).forEach(x=>{if(!ingr.includes(x))ingr.push(x)}));prefillMeal(m.slot,m.name+": "+itemsText(m.items),carbsOf(m.items),ingr);return}
+  const ta=e.target.closest(".tryAlone");
+  if(ta){const i=ta.dataset.ing;prefillMeal("m_sn","ניסיון: "+i+" לבד",null,[i],true);$("fMsg").textContent="לאכול רק את המאכל הזה (אפשר עם מעט חלבון), ולמדוד שעה אחרי.";return}
+  const mf=e.target.closest("[data-mf]"); if(mf){mealFilter=mf.dataset.mf;renderMeals();return}
+  const ct=e.target.closest("[data-cat]"); if(ct){catSel=ct.dataset.cat;renderFoods();return}
+  const ap=e.target.closest(".addPlate"); if(ap){const n=ap.dataset.food;const ex=plate.find(p=>p[0]===n);if(ex)ex[1]+=1;else plate.push([n,1]);renderPlate();toast(n+" נוסף לצלחת");return}
+  const pr=e.target.closest("[data-prm]"); if(pr){plate.splice(+pr.dataset.prm,1);renderPlate();return}
+});
+$("plateItems").addEventListener("change",e=>{const i=e.target.dataset.pq;if(i!=null){plate[+i][1]=Math.max(0.25,+e.target.value||1);renderPlate()}});
+$("plateClear").addEventListener("click",()=>{plate=[];renderPlate()});
+$("plateLog").addEventListener("click",()=>{
+  const ingr=[];plate.forEach(([n])=>detectIngredients(n).forEach(x=>{if(!ingr.includes(x))ingr.push(x)}));
+  const h=new Date().getHours(); const slot=h<10?"m_bf":h<12?"m_sn":h<15?"m_ln":h<18?"m_sn2":h<21?"m_dn":"m_lt";
+  prefillMeal(slot,itemsText(plate),carbsOf(plate),ingr);
+});
+["qFood","qGi","qSort"].forEach(id=>$(id).addEventListener("input",renderFoods));
+$("tRange").addEventListener("change",renderTrack);
+$("nSave").addEventListener("click",()=>{
+  const v=id=>$(id).value===""?null:+$(id).value;
+  const s={tFast:v("nFast"),tMeal:v("nMeal"),tBed:v("nBed")};
+  if(!s.tFast&&!s.tMeal&&!s.tBed){$("nMsg").textContent="נא למלא לפחות יעד אחד.";return}
+  state.settings=s; persist("settings",s); lastSig=""; renderAll(); toast("היעדים נשמרו. המדידות נצבעו");
+});
+$("copySum").addEventListener("click",()=>{
+  const txt=summaryText();
+  const fb=()=>{const t=$("copyFallback");t.hidden=false;t.value=txt;t.focus();t.select();toast("אפשר להעתיק את הטקסט מהתיבה")};
+  try{navigator.clipboard.writeText(txt).then(()=>toast("הסיכום הועתק"),fb)}catch(e){fb()}
+});
+$("pSave").addEventListener("click",()=>{
+  const p=clone(state.profile||{});
+  const w=$("pWeight").value===""?null:+$("pWeight").value;
+  p.age=$("pAge").value===""?null:+$("pAge").value; p.height=$("pHeight").value===""?null:+$("pHeight").value;
+  if(w&&w!==p.weight){p.weights=(p.weights||[]).filter(x=>x.date!==today());p.weights.push({date:today(),kg:w});p.weights.sort((a,b)=>a.date.localeCompare(b.date))}
+  p.weight=w; state.profile=p; persist("profile",p); lastSig=""; document.activeElement.blur(); renderAll(); $("pMsg").textContent="נשמר";
+});
+$("sSave").addEventListener("click",()=>{
+  const v=id=>$(id).value===""?null:+$(id).value;
+  const s={tFast:v("sFast"),tMeal:v("sMeal"),tBed:v("sBed")};
+  state.settings=s; persist("settings",s); lastSig=""; document.activeElement.blur(); renderAll(); $("sMsg").textContent="היעדים נשמרו";
+});
+
+/* ===================== EXPORT / BACKUP ===================== */
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_T[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zipStore(files){ // files: [{name, text}] -> Uint8Array (stored, no compression)
+  const enc=new TextEncoder(), parts=[], central=[]; let off=0;
+  const d=new Date(), dt=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1)), dd=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate());
+  for(const f of files){
+    const name=enc.encode(f.name), data=enc.encode(f.text), crc=crc32(data);
+    const h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,0,true);
+    h.setUint16(10,dt,true);h.setUint16(12,dd,true);h.setUint32(14,crc,true);h.setUint32(18,data.length,true);h.setUint32(22,data.length,true);
+    h.setUint16(26,name.length,true);h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer),name,data);
+    const c=new DataView(new ArrayBuffer(46));
+    c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(10,0,true);
+    c.setUint16(12,dt,true);c.setUint16(14,dd,true);c.setUint32(16,crc,true);c.setUint32(20,data.length,true);c.setUint32(24,data.length,true);
+    c.setUint16(28,name.length,true);c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer),name);
+    off+=30+name.length+data.length;
+  }
+  const csz=central.reduce((a,b)=>a+b.length,0);
+  const e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,csz,true);e.setUint32(16,off,true);
+  const all=[...parts,...central,new Uint8Array(e.buffer)], out=new Uint8Array(all.reduce((a,b)=>a+b.length,0));
+  let p=0; for(const a of all){out.set(a,p);p+=a.length} return out;
+}
+const xesc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"");
+function colName(i){let s="";i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s}
+function sheetXml(rows,widths){
+  const cols=widths?`<cols>${widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols>`:"";
+  const body=rows.map((r,ri)=>`<row r="${ri+1}">${r.map((v,ci)=>{
+    if(v==null||v==="")return "";
+    const ref=colName(ci)+(ri+1), st=ri===0?' s="1"':"";
+    return typeof v==="number"&&isFinite(v)?`<c r="${ref}"${st}><v>${v}</v></c>`:`<c r="${ref}" t="inlineStr"${st}><is><t xml:space="preserve">${xesc(v)}</t></is></c>`;
+  }).join("")}</row>`).join("");
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView rightToLeft="1" workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>${cols}<sheetData>${body}</sheetData></worksheet>`;
+}
+function buildXlsx(sheets){ // [{name, rows, widths}]
+  const ns='xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
+  const files=[
+    {name:"[Content_Types].xml",text:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")}</Types>`},
+    {name:"_rels/.rels",text:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`},
+    {name:"xl/workbook.xml",text:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook ${ns}><bookViews><workbookView/></bookViews><sheets>${sheets.map((s,i)=>`<sheet name="${xesc(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join("")}</sheets></workbook>`},
+    {name:"xl/_rels/workbook.xml.rels",text:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join("")}<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`},
+    {name:"xl/styles.xml",text:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Arial"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Arial"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFB8265E"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`},
+    ...sheets.map((s,i)=>({name:`xl/worksheets/sheet${i+1}.xml`,text:sheetXml(s.rows,s.widths)}))
+  ];
+  return zipStore(files);
+}
+const STATUS_LBL={ok:"רצוי",warn:"גבולי",high:"גבוה מהרצוי"};
+function workbookSheets(){
+  const keys=Object.keys(state.days).sort();
+  const m=[["תאריך","יום","שעה","סוג מדידה","סוכר (mg/dL)","יעד","מצב","מה אכלתי","מרכיבים","פחמימות משוערות (ג')","איך היה","הערה"]];
+  keys.forEach(k=>(state.days[k].entries||[]).forEach(e=>{
+    const kind=SLOT_BY[e.slot]?.kind, t=targetFor(kind)||"", c=cls(e);
+    m.push([k.split("-").reverse().join("/"),dow(k),e.time||"",(SLOT_BY[e.slot]?.label||e.slot)+(e.test?" (ניסיון)":""),e.glucose??"",t,c?STATUS_LBL[c]:"",e.food||"",(e.ingr||[]).join(", "),e.carbs!=null?Math.round(e.carbs):"",e.feel||"",e.note||""]);
+  }));
+  const cols=SLOTS.filter(x=>x.id!=="other");
+  const d=[["תאריך","יום",...cols.map(x=>x.label)]];
+  keys.forEach(k=>{const es=state.days[k].entries||[];if(!es.length)return;
+    d.push([k.split("-").reverse().join("/"),dow(k),...cols.map(x=>{const v=es.filter(e=>e.slot===x.id&&e.glucose!=null&&e.glucose!=="").map(e=>+e.glucose);return v.length===1?v[0]:v.join(" / ")})])});
+  const p=state.profile||{}, st=state.settings||{};
+  const info=[["פרט","ערך"],["גיל",p.age??""],["גובה (ס\"מ)",p.height??""],["משקל (ק\"ג)",p.weight??""],
+    ["BMI",p.height&&p.weight?+(p.weight/((p.height/100)**2)).toFixed(1):""],
+    ["יעד צום בבוקר",st.tFast??""],["יעד שעה אחרי ארוחה",st.tMeal??""],["יעד לפני השינה",st.tBed??""],
+    ["תאריך הייצוא",new Date().toLocaleDateString("he-IL")]];
+  const w=[["תאריך","משקל (ק\"ג)"],...(p.weights||[]).map(x=>[x.date.split("-").reverse().join("/"),x.kg])];
+  return [
+    {name:"כל המדידות",rows:m,widths:[12,8,7,26,13,7,13,40,30,12,14,30]},
+    {name:"סיכום יומי",rows:d,widths:[12,8,...cols.map(()=>16)]},
+    {name:"פרטים ויעדים",rows:info,widths:[22,14]},
+    {name:"משקל",rows:w,widths:[12,12]}
+  ];
+}
+async function saveFile(filename,data,mime){
+  try{
+    const dl=window.claude?.use?await window.claude.use("downloads"):null;
+    if(dl){await dl.save({filename,data});return true}
+  }catch(e){
+    if(e&&e.code==="declined")return false;
+    if(e&&e.code&&e.code!=="unavailable"&&e.code!=="not_granted"&&e.code!=="capability_disabled"&&e.code!=="capability_removed"){toast("ההורדה לא הצליחה. נא לנסות שוב.");return false}
+  }
+  try{ // standalone file opened in a regular browser
+    const url=URL.createObjectURL(new Blob([data],{type:mime}));
+    const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);return true;
+  }catch(e){toast("ההורדה לא זמינה כאן");return false}
+}
+const stamp=()=>today();
+async function exportXlsx(){
+  const n=allEntries().length;
+  if(!n&&!state.profile?.age){toast("אין עדיין נתונים לייצוא");return}
+  const ok=await saveFile(`sugar-diary-${stamp()}.xlsx`,buildXlsx(workbookSheets()),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+  if(ok)toast(`קובץ האקסל מוכן (${n} מדידות)`);
+}
+async function exportJson(){
+  const data={app:"sugar-diary",version:1,exported:new Date().toISOString(),profile:state.profile||{},settings:state.settings||{},days:state.days||{}};
+  const ok=await saveFile(`sugar-diary-backup-${stamp()}.json`,JSON.stringify(data,null,1),"application/json");
+  if(ok){try{localStorage.setItem("sd-lastbackup",new Date().toISOString())}catch(e){} renderBackupInfo(); toast("קובץ הגיבוי נשמר")}
+}
+function renderBackupInfo(){
+  let last=null; try{last=localStorage.getItem("sd-lastbackup")}catch(e){}
+  const d=last?new Date(last):null;
+  const days=d?Math.floor((Date.now()-d)/864e5):null;
+  $("bLast").textContent=d?`גיבוי אחרון מהמכשיר הזה: ${d.toLocaleDateString("he-IL")}${days>=7?" · כדאי לגבות שוב":""}`:"עדיין לא נשמר גיבוי מהמכשיר הזה.";
+}
+let pendingRestore=null;
+function validBackup(o){return o&&typeof o==="object"&&o.app==="sugar-diary"&&o.days&&typeof o.days==="object"}
+$("bFile").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f)return;
+  let o=null; try{o=JSON.parse(await f.text())}catch(err){}
+  const box=$("bRestore"); box.hidden=false;
+  if(!validBackup(o)){pendingRestore=null;box.innerHTML='<b>הקובץ הזה אינו קובץ גיבוי של היומן.</b><span class="hint">יש לבחור קובץ שנשמר בכפתור "הורדת קובץ גיבוי" (מסתיים ב-json.).</span><div><button class="btn ghost small" id="rCancel">סגירה</button></div>';return}
+  pendingRestore=o;
+  const keys=Object.keys(o.days).filter(k=>/^\d{4}-\d\d-\d\d$/.test(k)).sort();
+  const n=keys.reduce((a,k)=>a+((o.days[k].entries||[]).length),0);
+  box.innerHTML=`<b>נמצא גיבוי מ-${new Date(o.exported).toLocaleDateString("he-IL")}</b>
+    <span>${n} רישומים ב-${keys.length} ימים${keys.length?` (${fmtDate(keys[0])} עד ${fmtDate(keys[keys.length-1])})`:""}.</span>
+    <span class="hint">מיזוג מוסיף את הרישומים מהגיבוי בלי למחוק רישומים קיימים. החלפה מוחקת את כל מה שיש עכשיו ושמה במקומו את הגיבוי.</span>
+    <div class="row"><button class="btn small" id="rMerge">מיזוג עם הנתונים הקיימים</button><button class="btn danger small" id="rReplace">החלפת כל הנתונים</button><button class="btn ghost small" id="rCancel">ביטול</button></div>`;
+});
+$("bRestore").addEventListener("click",e=>{
+  const id=e.target.id, box=$("bRestore");
+  if(id==="rCancel"){box.hidden=true;pendingRestore=null;return}
+  if(id==="rReplace"){box.querySelector(".row").innerHTML='<b>כל הנתונים הנוכחיים יימחקו. להמשיך?</b><button class="btn danger small" id="rReplaceYes">כן, להחליף</button><button class="btn ghost small" id="rCancel">ביטול</button>';return}
+  if(id==="rMerge"||id==="rReplaceYes")doRestore(id==="rReplaceYes");
+});
+function doRestore(replace){
+  const o=pendingRestore; if(!o)return;
+  const keys=Object.keys(o.days).filter(k=>/^\d{4}-\d\d-\d\d$/.test(k));
+  if(replace){
+    Object.keys(state.days).filter(k=>!keys.includes(k)).forEach(k=>{
+      delete state.days[k];
+      if(mode==="db"&&col){queues["d_"+k]=(queues["d_"+k]||Promise.resolve()).then(()=>col.doc("d_"+k).delete()).catch(()=>{})}
+    });
+  }
+  keys.forEach(k=>{
+    const src=(o.days[k].entries||[]).filter(e=>e&&e.id&&e.slot);
+    let entries;
+    if(replace)entries=src;
+    else{const cur=(state.days[k]?.entries||[]).slice();const ids=new Set(cur.map(e=>e.id));src.forEach(e=>{if(!ids.has(e.id))cur.push(e)});entries=cur}
+    entries.sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+    const day={date:k,entries:clone(entries)}; state.days[k]=day; persist("d_"+k,day);
+  });
+  if(replace||!state.profile||!Object.keys(state.profile).length){state.profile=clone(o.profile||{});persist("profile",state.profile)}
+  if(replace||!state.settings||!Object.keys(state.settings).length){state.settings=clone(o.settings||{});persist("settings",state.settings)}
+  pendingRestore=null; $("bRestore").hidden=true; lastSig=""; document.activeElement?.blur?.(); renderAll();
+  toast(replace?"הנתונים שוחזרו מהגיבוי":"הגיבוי מוזג עם הנתונים הקיימים");
+}
+$("bXlsx").addEventListener("click",exportXlsx);
+$("bXlsx2").addEventListener("click",exportXlsx);
+$("bJson").addEventListener("click",exportJson);
+
+/* boot */
+fillSlotSelect(); renderArt("today"); renderQuote(); renderTip(); resetForm(); renderMeals(); renderFoods(); renderAll();
+try{const t=sessionStorage.getItem("sd-tab");if(t&&$("tab-"+t))showTab(t)}catch(e){}
+renderBackupInfo();
+initStore();
+</script>
+
+</body>
+</html>
