@@ -42,7 +42,7 @@
   --ink:#5c1634; --muted:#7d2a4d; --accent:#9e1f50; --field-line:#a8577a; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
   --tile:#c73a6f; --tile-2:#a81f55; --tile-ink:#ffffff; --tile-soft:rgb(255 255 255 / .16);
   --shape-1:#f7b4c9; --shape-2:#e57399; --shape-3:#a81f55; --shape-4:#fde7ee; --face:#8f1747;
-  --ok:#1e7a43; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-bg:#a85500; --warn-text:#9a4a00; --warn-soft:#fdebd3; --high:#b3262d; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
+  --ok:#1e7a43; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-ink:#3d1800; --warn-text:#ad5000; --warn-soft:#fdebd3; --high:#b3262d; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
   --l1:#b8265e; --l2:#e08a3c; --l3:#7b55b0;
   --shadow:0 10px 30px rgb(158 31 80 / .10);
   --f-display:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
@@ -121,7 +121,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .num{font-variant-numeric:tabular-nums}
 .pill{display:inline-block;padding:1px 10px;border-radius:999px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--sunk);color:var(--ink)}
 .pill.ok{background:var(--ok);color:var(--pill-ink)}
-.pill.warn{background:var(--warn-bg,var(--warn));color:var(--pill-ink)}
+.pill.warn{background:var(--warn);color:var(--warn-ink,var(--pill-ink))}
 .pill.high{background:var(--high);color:var(--pill-ink)}
 .gwrap{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .gnote{font-size:.85rem;font-weight:600}
