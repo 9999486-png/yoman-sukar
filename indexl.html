@@ -22,7 +22,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#b8265e">
+<meta name="theme-color" content="#9e1f50">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "יומן סוכר ותזונה", "alternateName": ["יומן סוכר"], "url": "https://yoman-sukar.vercel.app/", "inLanguage": "he"}</script>
 <style>body{margin:0}</style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
@@ -39,26 +39,26 @@
 /* Layout: soft blush app - raspberry hero card with geometric art, frosted rounded cards, pill tabs, concentric arcs in the backdrop */
 :root{
   --bg:#fbe3ea; --surface:#fff6f8; --sunk:#fae0e8; --line:#f2c9d6; --arc:rgb(214 92 134 / .16);
-  --ink:#5c1634; --muted:#a05676; --accent:#b8265e; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
+  --ink:#5c1634; --muted:#7d2a4d; --accent:#9e1f50; --field-line:#c98aa4; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
   --tile:#c73a6f; --tile-2:#a81f55; --tile-ink:#ffffff; --tile-soft:rgb(255 255 255 / .16);
   --shape-1:#f7b4c9; --shape-2:#e57399; --shape-3:#a81f55; --shape-4:#fde7ee; --face:#8f1747;
-  --ok:#2e9d57; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-text:#c96400; --warn-soft:#fdebd3; --high:#d7333a; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
+  --ok:#2e9d57; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-text:#9a4a00; --warn-soft:#fdebd3; --high:#d7333a; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
   --l1:#b8265e; --l2:#e08a3c; --l3:#7b55b0;
-  --shadow:0 10px 30px rgb(184 38 94 / .10);
+  --shadow:0 10px 30px rgb(158 31 80 / .10);
   --f-display:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
   --f-body:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
   --r:22px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1f0e16; --surface:#2b1520; --sunk:#361b29; --line:#4b2638; --arc:rgb(242 122 165 / .10);
-  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
+  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --field-line:#9a5d78; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
   --tile:#8f1f4c; --tile-2:#6e1239; --tile-ink:#fff0f5; --tile-soft:rgb(255 255 255 / .10);
   --shape-1:#7a2a4a; --shape-2:#c2507c; --shape-3:#f27aa5; --shape-4:#4a1d33; --face:#fde4ee;
   --ok:#5cc47e; --ok-soft:#173222; --warn:#ff9a3c; --warn-text:#ffb06a; --warn-soft:#3b2912; --high:#ff6b73; --high-soft:#43191e; --low:#7aa7ff; --low-soft:#16243f; --pill-ink:#1f0e16;
   --l1:#f27aa5; --l2:#f0a35a; --l3:#b39af0; --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1f0e16; --surface:#2b1520; --sunk:#361b29; --line:#4b2638; --arc:rgb(242 122 165 / .10);
-  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
+  --ink:#fde4ee; --muted:#d79ab4; --accent:#f27aa5; --field-line:#9a5d78; --accent-2:#f7a3c2; --accent-soft:#4a1d33; --accent-ink:#2a0816;
   --tile:#8f1f4c; --tile-2:#6e1239; --tile-ink:#fff0f5; --tile-soft:rgb(255 255 255 / .10);
   --shape-1:#7a2a4a; --shape-2:#c2507c; --shape-3:#f27aa5; --shape-4:#4a1d33; --face:#fde4ee;
   --ok:#5cc47e; --ok-soft:#173222; --warn:#ff9a3c; --warn-text:#ffb06a; --warn-soft:#3b2912; --high:#ff6b73; --high-soft:#43191e; --low:#7aa7ff; --low-soft:#16243f; --pill-ink:#1f0e16;
@@ -95,14 +95,14 @@ h3{font-size:1.05rem;font-weight:600}
 @media (max-width:620px){.hero{grid-template-columns:1fr}.hero-art{position:absolute;top:14px;left:14px;width:78px}.hero h1{padding-left:84px}}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding-block:14px 10px;margin-top:6px}
-nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:500 .98rem var(--f-body);padding:8px 16px;border-radius:999px;cursor:pointer}
+nav.tabs button{flex:0 0 auto;border:1px solid var(--field-line);background:var(--surface);color:var(--muted);font:500 .98rem var(--f-body);padding:8px 16px;border-radius:999px;cursor:pointer}
 nav.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 section.tab{display:grid;gap:18px;margin-top:10px;grid-template-columns:minmax(0,1fr)}
 section.tab>*{min-width:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
 label{display:grid;gap:4px;font-weight:600;font-size:.92rem}
-input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 12px;width:100%;min-width:0}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--field-line);border-radius:14px;padding:9px 12px;width:100%;min-width:0}
 textarea{resize:vertical;min-height:60px}
 input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
@@ -138,7 +138,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .lowhint{background:var(--low-soft);color:var(--ink);border-radius:14px;padding:10px 12px;font-size:.9rem}
 .legend-g{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:.88rem}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;font:inherit;font-size:.88rem;cursor:pointer}
+.chip{border:1px solid var(--field-line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 12px;font:inherit;font-size:.88rem;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:700}
 .tag{display:inline-flex;align-items:center;gap:4px;background:var(--sunk);border-radius:6px;padding:1px 8px;font-size:.84rem}
 .tag button{border:0;background:none;color:var(--muted);cursor:pointer;font:inherit;padding:0}
