@@ -39,10 +39,10 @@
 /* Layout: soft blush app - raspberry hero card with geometric art, frosted rounded cards, pill tabs, concentric arcs in the backdrop */
 :root{
   --bg:#fbe3ea; --surface:#fff6f8; --sunk:#fae0e8; --line:#f2c9d6; --arc:rgb(214 92 134 / .16);
-  --ink:#5c1634; --muted:#7d2a4d; --accent:#9e1f50; --field-line:#c98aa4; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
+  --ink:#5c1634; --muted:#7d2a4d; --accent:#9e1f50; --field-line:#a8577a; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
   --tile:#c73a6f; --tile-2:#a81f55; --tile-ink:#ffffff; --tile-soft:rgb(255 255 255 / .16);
   --shape-1:#f7b4c9; --shape-2:#e57399; --shape-3:#a81f55; --shape-4:#fde7ee; --face:#8f1747;
-  --ok:#2e9d57; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-text:#9a4a00; --warn-soft:#fdebd3; --high:#d7333a; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
+  --ok:#1e7a43; --ok-soft:#ddf1e3; --warn:#f28a1e; --warn-bg:#a85500; --warn-text:#9a4a00; --warn-soft:#fdebd3; --high:#b3262d; --high-soft:#fbd9dc; --low:#2b63c9; --low-soft:#dce7fb; --pill-ink:#ffffff;
   --l1:#b8265e; --l2:#e08a3c; --l3:#7b55b0;
   --shadow:0 10px 30px rgb(158 31 80 / .10);
   --f-display:"Rubik",system-ui,"Segoe UI",Arial,sans-serif;
@@ -114,13 +114,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 @media (pointer:coarse){.btn.small,.chip,nav.tabs button,.quote button{min-height:44px}}
 .skip{position:absolute;inset-inline-start:8px;top:-60px;z-index:50;background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:999px}
 .skip:focus{top:8px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
 .credit .legal{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:0 auto 8px;font-size:.85rem}
 .btn.danger{border-color:var(--high);background:transparent;color:var(--high)}
 .hint{color:var(--muted);font-size:.88rem;margin:0}
 .num{font-variant-numeric:tabular-nums}
 .pill{display:inline-block;padding:1px 10px;border-radius:999px;font-weight:700;font-variant-numeric:tabular-nums;background:var(--sunk);color:var(--ink)}
 .pill.ok{background:var(--ok);color:var(--pill-ink)}
-.pill.warn{background:var(--warn);color:var(--pill-ink)}
+.pill.warn{background:var(--warn-bg,var(--warn));color:var(--pill-ink)}
 .pill.high{background:var(--high);color:var(--pill-ink)}
 .gwrap{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .gnote{font-size:.85rem;font-weight:600}
@@ -306,6 +307,9 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
 .wrap{position:relative;z-index:1}
 .credit,.toast{position:relative;z-index:2}
 .toast{position:fixed}
+html.still *,html.still *::before,html.still *::after{animation:none!important;transition:none!important}
+html.still .bgfx,html.still .burst,html.still .ripple,html.still .mconf{display:none!important}
+.toast:empty{opacity:0;pointer-events:none;padding:0;box-shadow:none}
 .burst{position:fixed;z-index:30;pointer-events:none;width:18px;height:16px}
 .burst::before{content:"";position:absolute;inset:0;background:var(--ok);clip-path:path("M9 16C3 12 0 9 0 5.2C0 2.4 2.1 0 4.9 0C6.7 0 8.2 1 9 2.4C9.8 1 11.3 0 13.1 0C15.9 0 18 2.4 18 5.2C18 9 15 12 9 16Z")}
 .burst.b2::before{background:var(--accent-2)}
@@ -413,7 +417,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
         <label>נמוך מדי: מתחת ל-<input type="number" id="nLow" inputmode="numeric" placeholder="mg/dL"></label>
         <button class="btn" type="button" id="nSave" style="flex:0 0 auto">שמירת יעדים</button>
       </div>
-      <span class="hint" id="nMsg"></span>
+      <span class="hint" id="nMsg" role="status"></span>
     </div>
     <div class="card" id="pendingCard" hidden>
       <h3>איך הייתה הארוחה? כמה הסוכר?</h3>
@@ -423,7 +427,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
 
     <div class="card" id="formCard">
       <h2 id="formTitle">רישום חדש</h2>
-      <form id="entryForm" style="display:grid;gap:12px;margin-top:12px">
+      <form id="entryForm" novalidate style="display:grid;gap:12px;margin-top:12px">
         <div class="row">
           <label>תאריך<input type="date" id="fDate" required></label>
           <label>שעה<span style="display:flex;gap:6px;direction:ltr"><select id="fHour" aria-label="שעה"></select><span style="align-self:center">:</span><select id="fMin" aria-label="דקות"></select></span></label>
@@ -454,7 +458,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
         <div class="row">
           <button class="btn" type="submit" id="fSubmit">שמירה</button>
           <button class="btn ghost" type="button" id="fCancel" hidden>ביטול עריכה</button>
-          <span class="hint" id="fMsg"></span>
+          <span class="hint" id="fMsg" role="status"></span>
         </div>
       </form>
     </div>
@@ -565,11 +569,11 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
       <div class="card" style="display:grid;gap:12px">
         <h2>פרטים אישיים</h2>
         <div class="row">
-          <label>גיל<input type="number" id="pAge" min="10" max="99" inputmode="numeric"></label>
+          <label>גיל<input type="number" id="pAge" min="12" max="70" inputmode="numeric"></label>
           <label>גובה (ס"מ)<input type="number" id="pHeight" min="100" max="230" inputmode="numeric"></label>
           <label>משקל (ק"ג)<input type="number" id="pWeight" min="30" max="250" step="0.1" inputmode="decimal"></label>
         </div>
-        <div class="row"><button class="btn" id="pSave">שמירת פרטים</button><span class="hint" id="pMsg"></span></div>
+        <div class="row"><button class="btn" id="pSave">שמירת פרטים</button><span class="hint" id="pMsg" role="status"></span></div>
         <div class="stats" id="pStats"></div>
       </div>
       <div class="card" style="display:grid;gap:12px">
@@ -583,7 +587,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
           <label>לפני השינה עד<input type="number" id="sBed" inputmode="numeric" placeholder="mg/dL"></label>
           <label>נמוך מדי: מתחת ל-<input type="number" id="sLow" inputmode="numeric" placeholder="mg/dL"></label>
         </div>
-        <div class="row"><button class="btn" id="sSave">שמירת יעדים</button><span class="hint" id="sMsg"></span></div>
+        <div class="row"><button class="btn" id="sSave">שמירת יעדים</button><span class="hint" id="sMsg" role="status"></span></div>
       </div>
     </div>
     <div class="card" id="backupCard" style="display:grid;gap:12px">
@@ -616,14 +620,14 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   </main>
 </div>
 <footer class="credit">
-<nav class="legal" aria-label="מידע משפטי"><a href="https://yoman-sukar.vercel.app/accessibility.html">הצהרת נגישות</a><a href="https://yoman-sukar.vercel.app/privacy.html">מדיניות פרטיות</a></nav>
+<nav class="legal" aria-label="מידע משפטי"><button type="button" class="linkbtn" id="motionBtn" aria-pressed="false">עצירת הנפשות</button><a href="https://yoman-sukar.vercel.app/accessibility.html">הצהרת נגישות</a><a href="https://yoman-sukar.vercel.app/privacy.html">מדיניות פרטיות</a></nav>
 <p class="disclaimer">האתר הוא כלי עזר לרישום ולמעקב אישי, ואינו מחליף מעקב, אבחון או הנחיות של הצוות הרפואי.</p>
 <div class="credit-in">
 <svg class="nb-logo" role="img" aria-label="NB" width="30" height="26" viewBox="0 0 200 172" fill="none" stroke-width="9" stroke-linejoin="round"><path d="M14 149 L27 26 Q31 13 40 20 Q44 23 46 30 L88 150 Q92 159 99 151 L114 27" stroke="#e4f34f"/><path d="M131 21 L145 19 Q172 19 177 52 Q180 82 140 87 L127 88 M140 86 Q182 88 186 122 Q189 160 140 160 L136 161" stroke="#ef6a7b"/><path d="M27 155 V34 Q27 22 38 22 Q45 22 49 32 L95 146 Q99 155 106 154 Q113 152 113 142 V23" stroke="#000"/><path d="M124 19 H140 Q172 19 172 54 Q172 84 124 85 M124 85 H142 Q180 86 180 121 Q180 155 140 155 H124" stroke="#000"/></svg>
 <span>נבנה ע"י נעמי בלייברג - עיצוב ובניית אתרים · <a href="tel:0527622763" dir="ltr">0527-622-763</a></span>
 </div>
 </footer>
-<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ===================== FOOD DATABASE =====================
@@ -902,7 +906,7 @@ const dow=k=>{const [y,m,d]=k.split("-").map(Number);return DOW[new Date(y,m-1,d
 const addDays=(k,n)=>{const [y,m,d]=k.split("-").map(Number);return dkey(new Date(y,m-1,d+n))};
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 
-function toast(msg){const t=$("toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2600)}
+function toast(msg){const t=$("toast");t.textContent="";clearTimeout(toast._t);clearTimeout(toast._s);toast._s=setTimeout(()=>{t.textContent=msg;toast._t=setTimeout(()=>t.textContent="",2600)},60)}
 
 function loadLocal(){try{const raw=localStorage.getItem(LS_KEY);if(raw)state=Object.assign({profile:{},settings:{},days:{}},JSON.parse(raw))}catch(e){}}
 function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(state))}catch(e){}}
@@ -1240,7 +1244,7 @@ function renderToday(){
     if(since>=60&&since<=240)pend.push([today(),e,"two"]);
   });
   $("pendingCard").hidden=!pend.length;
-  const st=state.settings||{}; $("noTarget").hidden=!!(st.tFast||st.tMeal||st.tBed);
+  const st=state.settings||{}; $("noTarget").hidden=!!(st.tFast||st.tMeal||st.tMeal2||st.tBed);
   $("pendingList").innerHTML=pend.map(([k,e,t])=>entryHTML(e,k,{pending:t||true})).join("");
 }
 
@@ -1413,7 +1417,7 @@ function renderFoods(){
 }
 function renderPlate(){
   $("plate").hidden=!plate.length;
-  $("plateItems").innerHTML=plate.map(([n,q],i)=>`<span class="tag">${esc(n)} <input class="qty" type="number" step="0.25" min="0.25" value="${q}" data-pq="${i}" aria-label="כמות ${esc(n)}"> מנות <button type="button" data-prm="${i}" aria-label="הסרה">×</button></span>`).join("");
+  $("plateItems").innerHTML=plate.map(([n,q],i)=>`<span class="tag">${esc(n)} <input class="qty" type="number" step="0.25" min="0.25" value="${q}" data-pq="${i}" aria-label="כמות ${esc(n)}"> מנות <button type="button" data-prm="${i}" aria-label="הסרת ${esc(n)}">×</button></span>`).join("");
   const c=carbsOf(plate), f=plate.reduce((a,[n,q])=>a+FOOD_BY[n].fib*q,0), p=plate.reduce((a,[n,q])=>a+FOOD_BY[n].prot*q,0);
   $("plateTot").textContent=`פחמימות ${round(c)} ג' · סיבים ${round(f)} ג' · חלבון ${round(p)} ג'`;
 }
@@ -1612,7 +1616,7 @@ $("nSave").addEventListener("click",()=>{
   const v=id=>$(id).value===""?null:+$(id).value;
   const s={tFast:v("nFast"),tMeal:v("nMeal"),tMeal2:v("nMeal2"),tBed:v("nBed"),tLow:v("nLow")};
   const er=targetsError(s); if(er){$("nMsg").textContent=er;return}
-  if(!s.tFast&&!s.tMeal&&!s.tBed){$("nMsg").textContent="נא למלא לפחות יעד אחד.";return}
+  if(!s.tFast&&!s.tMeal&&!s.tMeal2&&!s.tBed){$("nMsg").textContent="נא למלא לפחות יעד אחד.";return}
   state.settings=s; persist("settings",s); lastSig=""; renderAll(); toast("היעדים נשמרו. המדידות נצבעו");
 });
 $("copySum").addEventListener("click",()=>{
@@ -1756,7 +1760,7 @@ $("bFile").addEventListener("change",async e=>{
   if(!validBackup(o)){pendingRestore=null;box.innerHTML='<b>הקובץ הזה אינו קובץ גיבוי של היומן.</b><span class="hint">יש לבחור קובץ שנשמר בכפתור "הורדת קובץ גיבוי" (מסתיים ב-json.).</span><div><button class="btn ghost small" id="rCancel">סגירה</button></div>';return}
   pendingRestore=o;
   const keys=Object.keys(o.days).filter(k=>/^\d{4}-\d\d-\d\d$/.test(k)).sort();
-  const n=keys.reduce((a,k)=>a+((o.days[k].entries||[]).length),0);
+  const n=keys.reduce((a,k)=>a+(Array.isArray(o.days[k]?.entries)?o.days[k].entries.length:0),0);
   box.innerHTML=`<b>נמצא גיבוי מ-${new Date(o.exported).toLocaleDateString("he-IL")}</b>
     <span>${n} רישומים ב-${keys.length} ימים${keys.length?` (${fmtDate(keys[0])} עד ${fmtDate(keys[keys.length-1])})`:""}.</span>
     <span class="hint">מיזוג מוסיף את הרישומים מהגיבוי בלי למחוק רישומים קיימים. החלפה מוחקת את כל מה שיש עכשיו ושמה במקומו את הגיבוי.</span>
@@ -1773,7 +1777,7 @@ const strOr=(v,max)=>typeof v==="string"?v.slice(0,max):"";
 function cleanEntry(e){
   if(!e||typeof e!=="object")return null;
   const id=String(e.id||""); if(!/^[A-Za-z0-9_-]{1,40}$/.test(id))return null;
-  if(!SLOT_BY[e.slot])return null;
+  if(typeof e.slot!=="string"||!Object.prototype.hasOwnProperty.call(SLOT_BY,e.slot))return null;
   const out={id,slot:e.slot,time:/^\d\d:\d\d$/.test(e.time||"")?e.time:"",glucose:numOr(e.glucose,1,999),
     food:strOr(e.food,500),ingr:Array.isArray(e.ingr)?e.ingr.filter(x=>typeof x==="string").map(x=>x.slice(0,40)).slice(0,40):[],
     feel:strOr(e.feel,40),note:strOr(e.note,500)};
@@ -1818,17 +1822,20 @@ h+=`<i class="${heart?"h":""}" style="left:${Math.round(Math.random()*100)}%;${h
 (function(){const a=$("arcs");if(!a)return;let h="";for(let i=1;i<=12;i++){const d=i*94;h+=`<span style="width:${d}px;height:${d}px;animation-delay:${i*55}ms"></span>`}a.innerHTML=h;
   let busy=false;
   document.addEventListener("pointerdown",e=>{
-    let reduce=false;try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(_){}
+    let reduce=document.documentElement.classList.contains("still");try{reduce=reduce||matchMedia("(prefers-reduced-motion: reduce)").matches}catch(_){}
     if(reduce)return;
     for(let i=0;i<3;i++){const r=document.createElement("span");r.className="ripple";r.style.left=e.clientX+"px";r.style.top=e.clientY+"px";r.style.animationDelay=(i*0.16)+"s";document.body.appendChild(r);setTimeout(()=>r.remove(),1600)}
     if(!busy){busy=true;a.classList.remove("wave");void a.offsetWidth;a.classList.add("wave");setTimeout(()=>{a.classList.remove("wave");busy=false},1600)}
   },{passive:true});
 })();
-function heartBurst(){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)return}catch(e){}
+function heartBurst(){if(document.documentElement.classList.contains("still"))return;try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)return}catch(e){}
   const x=innerWidth/2,y=innerHeight-90;for(let i=0;i<12;i++){const d=document.createElement("span");d.className="burst"+(i%3===1?" b2":i%3===2?" b3":"");
   d.style.left=(x-9+(Math.random()*60-30))+"px";d.style.top=y+"px";d.style.setProperty("--dx",(Math.random()*240-120)+"px");d.style.setProperty("--rot",(Math.random()*80-40)+"deg");d.style.animationDelay=(i*0.04)+"s";
   document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}}
 
+(function(){const b=$("motionBtn");if(!b)return;const set=on=>{document.documentElement.classList.toggle("still",on);b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"הפעלת הנפשות":"עצירת הנפשות"};
+  let on=false;try{on=localStorage.getItem("sd_still")==="1"}catch(_){}set(on);
+  b.addEventListener("click",()=>{on=!on;set(on);try{localStorage.setItem("sd_still",on?"1":"0")}catch(_){}})})();
 /* boot */
 fillSlotSelect(); renderArt("today"); renderQuote(); renderTip(); resetForm(); renderMeals(); renderFoods(); renderAll();
 try{const t=sessionStorage.getItem("sd-tab");if(t&&$("tab-"+t))showTab(t)}catch(e){}
