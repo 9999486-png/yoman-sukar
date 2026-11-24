@@ -430,7 +430,7 @@ html.still .bgfx,html.still .burst,html.still .ripple,html.still .mconf{display:
       <form id="entryForm" novalidate style="display:grid;gap:12px;margin-top:12px">
         <div class="row">
           <label>תאריך<input type="date" id="fDate" required></label>
-          <label>שעה<span style="display:flex;gap:6px;direction:ltr"><select id="fHour" aria-label="שעה"></select><span style="align-self:center">:</span><select id="fMin" aria-label="דקות"></select></span></label>
+          <label>שעה<span style="display:flex;gap:6px;direction:ltr"><select id="fHour" aria-label="שעה" style="flex:0 0 5.6em;width:5.6em;padding:9px 6px"></select><span style="align-self:center">:</span><input id="fMin" type="text" inputmode="numeric" maxlength="2" autocomplete="off" list="minList" aria-label="דקות (אפשר להקליד)" style="width:5.2em;flex:0 0 5.2em;padding:9px 6px;text-align:center"><datalist id="minList"></datalist></span></label>
           <label>סוג מדידה
             <select id="fSlot"></select>
           </label>
@@ -1004,10 +1004,15 @@ function fillTime(slot,want){ // want "HH:MM" or null
   }
   const hl=hs.slice(); 
   $("fHour").innerHTML=hl.map(x=>`<option value="${x}"${x===h?" selected":""}>${pad(x)}</option>`).join("");
-  const mins=[];for(let i=0;i<60;i+=5)mins.push(i);if(!mins.includes(m)){mins.push(m);mins.sort((a,b)=>a-b)}
-  $("fMin").innerHTML=mins.map(x=>`<option value="${x}"${x===m?" selected":""}>${pad(x)}</option>`).join("");
+  const mins=[];for(let i=0;i<60;i+=5)mins.push(i);
+  $("minList").innerHTML=mins.map(x=>`<option value="${pad(x)}">`).join("");
+  $("fMin").value=pad(m||0);
 }
-const getTime=()=>pad(+$("fHour").value)+":"+pad(+$("fMin").value);
+const minOk=()=>/^\d{1,2}$/.test($("fMin").value.trim())&&+$("fMin").value<=59;
+const getTime=()=>pad(+$("fHour").value)+":"+pad(minOk()?+$("fMin").value:0);
+$("fMin").addEventListener("input",()=>{const t=$("fMin");t.value=t.value.replace(/\D/g,"").slice(0,2)});
+$("fMin").addEventListener("blur",()=>{const t=$("fMin");if(minOk())t.value=pad(+t.value)});
+$("fMin").addEventListener("focus",()=>{try{$("fMin").select()}catch(_){}});
 
 /* ===================== FORM ===================== */
 let form={ingr:[],feel:"",editing:null,carbs:null,test:false};
@@ -1531,6 +1536,7 @@ $("fCancel").addEventListener("click",resetForm);
 $("entryForm").addEventListener("submit",e=>{
   e.preventDefault();
   const date=$("fDate").value||today(), slot=$("fSlot").value, s=SLOT_BY[slot];
+  if(!minOk()){$("fMsg").textContent="דקות צריכות להיות מספר בין 0 ל-59.";$("fMin").focus();return}
   const g=$("fGlu").value.trim();
   const g2chk=$("fGlu2").value.trim();
   if((g!==""&&!(+g>=20&&+g<=600))||(g2chk!==""&&!(+g2chk>=20&&+g2chk<=600))){$("fMsg").textContent="ערך הסוכר צריך להיות בין 20 ל-600.";return}
