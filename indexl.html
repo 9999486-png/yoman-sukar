@@ -105,6 +105,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .pill.high{background:var(--high);color:var(--pill-ink)}
 .gwrap{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .gnote{font-size:.85rem;font-weight:600}
+.glbl{font-size:.78rem;color:var(--muted);font-weight:600}
+.gpair{display:inline-flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
 .emo{font-size:1.1rem;line-height:1}
 .pill:not(.ok):not(.warn):not(.high):not(.low){background:var(--surface);border:1px solid var(--line)}
 .gnote.ok{color:var(--ok)}
@@ -379,6 +381,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
       <div class="row">
         <label>צום בבוקר עד<input type="number" id="nFast" inputmode="numeric" placeholder="mg/dL"></label>
         <label>שעה אחרי ארוחה עד<input type="number" id="nMeal" inputmode="numeric" placeholder="mg/dL"></label>
+        <label>שעתיים אחרי ארוחה עד<input type="number" id="nMeal2" inputmode="numeric" placeholder="mg/dL"></label>
         <label>לפני השינה עד<input type="number" id="nBed" inputmode="numeric" placeholder="mg/dL"></label>
         <label>נמוך מדי: מתחת ל-<input type="number" id="nLow" inputmode="numeric" placeholder="mg/dL"></label>
         <button class="btn" type="button" id="nSave" style="flex:0 0 auto">שמירת יעדים</button>
@@ -387,7 +390,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
     </div>
     <div class="card" id="pendingCard" hidden>
       <h3>איך הייתה הארוחה? כמה הסוכר?</h3>
-      <p class="hint">ארוחות שנרשמו וממתינות למדידה של שעה אחרי האוכל.</p>
+      <p class="hint">ארוחות שנרשמו וממתינות למדידה של שעה או שעתיים אחרי האוכל.</p>
       <div class="entries" id="pendingList" style="margin-top:10px"></div>
     </div>
 
@@ -411,7 +414,8 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
           <div class="hint" id="fCarbs"></div>
         </div>
         <div class="row">
-          <label>רמת סוכר (mg/dL)<input type="number" id="fGlu" inputmode="numeric" min="20" max="600" placeholder="אפשר להשאיר ריק ולהשלים אחר כך"></label>
+          <label><span id="fGluLbl">רמת סוכר (mg/dL)</span><input type="number" id="fGlu" inputmode="numeric" min="20" max="600" placeholder="אפשר להשאיר ריק ולהשלים אחר כך"></label>
+          <label id="fGlu2Wrap">סוכר שעתיים אחרי (mg/dL)<input type="number" id="fGlu2" inputmode="numeric" min="20" max="600" placeholder="אפשר להשאיר ריק ולהשלים אחר כך"></label>
         </div>
         <label class="lowchk" for="fLow"><input type="checkbox" id="fLow"> הייתה נפילת סוכר (סוכר נמוך מדי)</label>
         <div class="lowhint" id="fLowHint" hidden>כדאי לרשום את הערך שנמדד ומה עזר להעלות אותו (בשדה "הערה"). בנפילת סוכר יש לפעול לפי ההנחיות שנתן הצוות המטפל.</div>
@@ -548,6 +552,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
         <div class="row">
           <label>צום בבוקר עד<input type="number" id="sFast" inputmode="numeric" placeholder="mg/dL"></label>
           <label>שעה אחרי ארוחה עד<input type="number" id="sMeal" inputmode="numeric" placeholder="mg/dL"></label>
+          <label>שעתיים אחרי ארוחה עד<input type="number" id="sMeal2" inputmode="numeric" placeholder="mg/dL"></label>
           <label>לפני השינה עד<input type="number" id="sBed" inputmode="numeric" placeholder="mg/dL"></label>
           <label>נמוך מדי: מתחת ל-<input type="number" id="sLow" inputmode="numeric" placeholder="mg/dL"></label>
         </div>
@@ -910,6 +915,14 @@ function cls(e){
   if(!t)return "";
   const g=+e.glucose; return g<=t?"ok":g<=t*1.1?"warn":"high";
 }
+function cls2(e){
+  if(e.glucose2==null||e.glucose2==="")return "";
+  const lo=+(state.settings||{}).tLow||0;
+  if(lo&&+e.glucose2<lo)return "low";
+  const t=+(state.settings||{}).tMeal2||0;
+  if(!t)return "";
+  const g=+e.glucose2; return g<=t?"ok":g<=t*1.1?"warn":"high";
+}
 const EMO={ok:"😊",warn:"😐",high:"😟",low:"⚠️"};
 const OK_NOTES=["מצוין!","ב\"ה","איזה יופי :)"];
 function hashStr(t){let h=0;for(const c of String(t))h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)}
@@ -918,6 +931,16 @@ function gPill(e,withNote){
   if((e.glucose==null||e.glucose==="")&&!e.low)return '<span class="pill">—</span>';
   const c=cls(e), n=withNote?gNote(e):"", em=EMO[c]||"";
   return `<span class="gwrap"><span class="pill ${c}">${esc(e.glucose??"?")}</span>${em?`<span class="emo" role="img" aria-label="${esc(gNote(e))}">${em}</span>`:""}${n?`<span class="gnote ${c}">${esc(n)}</span>`:""}</span>`;
+}
+function noteFor(c,seed){return c==="ok"?OK_NOTES[hashStr(seed)%OK_NOTES.length]:c==="warn"?"גבולי":c==="high"?"גבוה מהרצוי":c==="low"?"נמוך מדי":""}
+function gPill2(e,withNote){
+  if(e.glucose2==null||e.glucose2==="")return "";
+  const c=cls2(e), n=withNote?noteFor(c,(e.id||"")+"2"):"", em=EMO[c]||"";
+  return `<span class="gwrap"><span class="glbl">שעתיים:</span><span class="pill ${c}">${esc(e.glucose2)}</span>${em?`<span class="emo" role="img" aria-label="${esc(noteFor(c,(e.id||"")+"2"))}">${em}</span>`:""}${n?`<span class="gnote ${c}">${esc(n)}</span>`:""}</span>`;
+}
+function gPills(e,withNote){
+  const two=e.glucose2!=null&&e.glucose2!=="";
+  return (two?'<span class="gpair"><span class="gwrap"><span class="glbl">שעה:</span>':"")+gPill(e,withNote)+(two?"</span>"+gPill2(e,withNote)+"</span>":"");
 }
 function allEntries(){const out=[];for(const k of Object.keys(state.days).sort()){(state.days[k].entries||[]).forEach(e=>out.push(Object.assign({date:k},e)))}return out}
 function carbsOf(items){return items.reduce((a,[n,q])=>a+(FOOD_BY[n]?FOOD_BY[n].carb*q:0),0)}
@@ -956,6 +979,9 @@ function syncSlotFields(keepTime){
   fillTime(s.id,$("fHour").value!==""&&$("fHour").options.length?getTime():null);
   $("foodFields").hidden=!s.food;
   $("feelWrap").hidden=!s.food;
+  const isMeal=s.kind==="meal";
+  $("fGlu2Wrap").hidden=!isMeal;
+  $("fGluLbl").textContent=isMeal?"סוכר שעה אחרי (mg/dL)":"רמת סוכר (mg/dL)";
 }
 let ingrTouched=false;
 function onFoodInput(){
@@ -964,7 +990,7 @@ function onFoodInput(){
 }
 function resetForm(){
   form={ingr:[],feel:"",editing:null,carbs:null,test:false}; ingrTouched=false; $("fLow").checked=false; syncLow();
-  $("fDate").value=viewDay; $("fHour").innerHTML=""; $("fFood").value=""; $("fGlu").value=""; $("fNote").value="";
+  $("fDate").value=viewDay; $("fHour").innerHTML=""; $("fFood").value=""; $("fGlu").value=""; $("fGlu2").value=""; $("fNote").value="";
   $("formTitle").textContent="רישום חדש"; $("fCancel").hidden=true; $("fSubmit").textContent="שמירה";
   renderFeel(); renderIngr(); syncSlotFields(); $("fCarbs").textContent="";
 }
@@ -983,7 +1009,7 @@ function startEdit(date,id){
   const e=(state.days[date]?.entries||[]).find(x=>x.id===id); if(!e)return;
   resetForm();
   form.editing={date,id}; form.ingr=(e.ingr||[]).slice(); ingrTouched=true; form.feel=e.feel||""; form.carbs=e.carbs??null; form.test=!!e.test; $("fLow").checked=!!e.low; syncLow();
-  $("fDate").value=date; $("fSlot").value=e.slot; $("fFood").value=e.food||""; $("fGlu").value=e.glucose??""; $("fNote").value=e.note||"";
+  $("fDate").value=date; $("fSlot").value=e.slot; $("fFood").value=e.food||""; $("fGlu").value=e.glucose??""; $("fGlu2").value=e.glucose2??""; $("fNote").value=e.note||"";
   $("formTitle").textContent="עריכת רישום"; $("fCancel").hidden=false; $("fSubmit").textContent="שמירת שינויים";
   renderFeel(); renderIngr(); syncSlotFields(); fillTime(e.slot,e.time||null);
   $("formCard").scrollIntoView({behavior:"smooth",block:"start"});
@@ -1086,12 +1112,18 @@ function confHTML(mood){
 }
 function moodOf(e){
   if(!e)return "none";
+  if(e.__mood)return e.__mood;
   const c=cls(e);
   if(c==="low")return "low";
   if(c==="high")return "sad";
   if(c==="warn")return "warn";
   if(c==="ok"){const t=targetFor(SLOT_BY[e.slot]?.kind);return t&&+e.glucose<=t*0.9?"beam":"happy"}
   return "notarget";
+}
+function showMascot2(e){
+  const c=cls2(e), t=+(state.settings||{}).tMeal2||0;
+  const mood=c==="low"?"low":c==="high"?"sad":c==="warn"?"warn":c==="ok"?(t&&+e.glucose2<=t*0.9?"beam":"happy"):"";
+  if(mood)showMascot({__mood:mood});
 }
 function renderMascot(){
   const es=(state.days[today()]?.entries||[]).filter(e=>(e.glucose!=null&&e.glucose!=="")||e.low).sort((a,b)=>(a.time||"").localeCompare(b.time||""));
@@ -1126,19 +1158,22 @@ let viewDay=today();
 function entryHTML(e,date,{pending}={}){
   const s=SLOT_BY[e.slot]||SLOT_BY.other;
   const ingr=(e.ingr||[]).length?`<div class="chips">${e.ingr.map(i=>`<span class="tag">${esc(i)}</span>`).join("")}</div>`:"";
-  const due = pending&&e.time ? (()=>{const [h,m]=e.time.split(":").map(Number);const t=h*60+m+60;return `למדוד בסביבות ${pad(Math.floor(t/60)%24)}:${pad(t%60)}`})() : "";
+  const two=pending==="two";
+  const due = pending&&e.time ? (()=>{const [h,m]=e.time.split(":").map(Number);const t=h*60+m+(two?120:60);return `למדוד בסביבות ${pad(Math.floor(t/60)%24)}:${pad(t%60)}`})() : "";
   return `<div class="entry ${pending?"pending":""}" data-date="${date}" data-id="${e.id}">
     <div class="entry-top">
       <span class="food">${e.test?'<span class="pill warn" style="font-size:.75rem">ניסיון</span> ':""}${esc(e.food||s.label)}</span>
-      ${pending?"":gPill(e,true)}
+      ${pending?"":gPills(e,true)}
     </div>
     ${ingr}
     <div class="meta">${pending?esc(s.label)+" · ":""}${esc(e.time||"")}${e.carbs!=null?` · כ-${round(e.carbs)} ג' פחמימות`:""}${e.feel?" · "+esc(e.feel):""}${e.note?" · "+esc(e.note):""}${due?" · "+due:""}</div>
     ${pending?`<div class="row">
-        <label style="flex:0 1 150px">כמה הסוכר?<input type="number" inputmode="numeric" class="pGlu" id="pg_${e.id}" placeholder="mg/dL"></label>
+        ${two?`<span class="gwrap"><span class="glbl">שעה אחרי:</span>${gPill(e,false)}</span>
+        <label style="flex:0 1 190px">כמה הסוכר שעתיים אחרי?<input type="number" inputmode="numeric" class="pGlu2" id="pg2_${e.id}" placeholder="mg/dL"></label>
+        <button class="btn small pSave2">שמירה</button><button class="btn ghost small pSkip2">לא מדדתי</button>`:`<label style="flex:0 1 150px">כמה הסוכר?<input type="number" inputmode="numeric" class="pGlu" id="pg_${e.id}" placeholder="mg/dL"></label>
         <div style="display:grid;gap:4px;flex:1 1 200px"><span style="font-weight:600;font-size:.92rem">איך זה היה?</span>
         <div class="chips">${FEELS.map(f=>`<button type="button" class="chip pFeel" aria-pressed="${e.feel===f}" data-feel="${esc(f)}">${esc(f)}</button>`).join("")}</div></div>
-        <button class="btn small pSave">שמירה</button>
+        <button class="btn small pSave">שמירה</button>`}
       </div>`:
     `<div class="row" style="gap:6px"><button class="btn ghost small eEdit">עריכה</button><span class="confirm"><button class="btn danger small eDel">מחיקה</button></span></div>`}
   </div>`;
@@ -1157,9 +1192,17 @@ function renderToday(){
   // pending: meals without glucose in last 2 days
   const pend=[];
   [addDays(today(),-1),today()].forEach(k=>(state.days[k]?.entries||[]).forEach(e=>{if((e.glucose==null||e.glucose==="")&&!e.low&&SLOT_BY[e.slot]?.food)pend.push([k,e])}));
+  // two-hour reading: meals from today with a one-hour value, within 4 hours of the meal
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  (state.days[today()]?.entries||[]).forEach(e=>{
+    if(SLOT_BY[e.slot]?.kind!=="meal"||e.glucose==null||e.glucose===""||e.low||e.skip2)return;
+    if(e.glucose2!=null&&e.glucose2!=="")return;
+    if(!e.time)return; const [h,m]=e.time.split(":").map(Number); const since=nowMin-(h*60+m);
+    if(since>=60&&since<=240)pend.push([today(),e,"two"]);
+  });
   $("pendingCard").hidden=!pend.length;
   const st=state.settings||{}; $("noTarget").hidden=!!(st.tFast||st.tMeal||st.tBed);
-  $("pendingList").innerHTML=pend.map(([k,e])=>entryHTML(e,k,{pending:true})).join("");
+  $("pendingList").innerHTML=pend.map(([k,e,t])=>entryHTML(e,k,{pending:t||true})).join("");
 }
 
 /* ===================== TRACK ===================== */
@@ -1174,7 +1217,8 @@ function renderTrack(){
   const inT=judged.filter(e=>cls(e)==="ok").length;
   const st=[
     ["ממוצע צום בבוקר",avg(byKind("fast"))],
-    ["ממוצע אחרי ארוחות",avg(byKind("meal"))],
+    ["ממוצע שעה אחרי ארוחות",avg(byKind("meal"))],
+    ["ממוצע שעתיים אחרי ארוחות",avg(es.filter(e=>SLOT_BY[e.slot]?.kind==="meal"&&e.glucose2!=null&&e.glucose2!=="").map(e=>+e.glucose2))],
     ["ממוצע לפני השינה",avg(byKind("bed"))],
   ];
   $("tStats").innerHTML=st.map(([k,v])=>`<div class="stat"><div class="k">${k}</div><div class="v">${v==null?"—":round(v)} <small>mg/dL</small></div></div>`).join("")+
@@ -1213,7 +1257,7 @@ function renderChart(keys){
   $("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="direction:ltr;max-width:none;display:block">${g}</svg>`+
     (tg.length?'<p class="hint">הקווים המקווקווים הם היעדים שהוגדרו.</p>':'');
 }
-function cell(es){ if(!es.length)return '<td class="num" style="color:var(--muted)">—</td>'; return `<td>${es.map(gPill).join(" ")}</td>` }
+function cell(es){ if(!es.length)return '<td class="num" style="color:var(--muted)">—</td>'; return `<td>${es.map(e=>gPills(e,false)).join(" ")}</td>` }
 function renderTable(keys){
   const cols=SLOTS.filter(s=>s.id!=="other");
   let h=`<thead><tr><th>תאריך</th>${cols.map(s=>`<th>${s.label}</th>`).join("")}</tr></thead><tbody>`;
@@ -1224,6 +1268,8 @@ function renderTable(keys){
 }
 function isHigh(e,ref){ // ref: own average post-meal when no target set
   const t=targetFor("meal"); const g=+e.glucose;
+  const t2=+(state.settings||{}).tMeal2||0;
+  if(t2&&e.glucose2!=null&&e.glucose2!==""&&+e.glucose2>t2)return true;
   return t? g>t : (ref? g>ref*1.1 : false);
 }
 function renderInsights(){
@@ -1271,7 +1317,7 @@ function summaryText(){
   const st=state.settings||{};
   let s="סיכום מדידות סוכר (mg/dL)\n";
   if(p.age||p.height||p.weight)s+=`גיל ${p.age||"-"}, גובה ${p.height||"-"} ס"מ, משקל ${p.weight||"-"} ק"ג\n`;
-  const tg=[st.tFast?`צום עד ${st.tFast}`:"",st.tMeal?`אחרי ארוחה עד ${st.tMeal}`:"",st.tBed?`לפני השינה עד ${st.tBed}`:"",st.tLow?`נמוך מדי מתחת ל-${st.tLow}`:""].filter(Boolean);
+  const tg=[st.tFast?`צום עד ${st.tFast}`:"",st.tMeal?`שעה אחרי ארוחה עד ${st.tMeal}`:"",st.tMeal2?`שעתיים אחרי ארוחה עד ${st.tMeal2}`:"",st.tBed?`לפני השינה עד ${st.tBed}`:"",st.tLow?`נמוך מדי מתחת ל-${st.tLow}`:""].filter(Boolean);
   if(tg.length)s+="יעדים: "+tg.join(", ")+"\n";
   const lows=[];keys.forEach(k=>state.days[k].entries.forEach(e=>{if(cls(e)==="low")lows.push([k,e])}));
   s+=`\nנפילות סוכר בתקופה: ${lows.length}\n`;
@@ -1279,7 +1325,7 @@ function summaryText(){
   s+="\n";
   keys.forEach(k=>{
     s+=`${dow(k)} ${fmtDate(k)}\n`;
-    state.days[k].entries.forEach(e=>{const lo=cls(e)==="low";s+=`  ${e.time||""} ${SLOT_BY[e.slot]?.label||""}: ${e.glucose??"-"}${lo?" ⚠ נפילת סוכר":""}${e.food?" | "+e.food:""}${e.note?" | "+e.note:""}\n`});
+    state.days[k].entries.forEach(e=>{const lo=cls(e)==="low";s+=`  ${e.time||""} ${SLOT_BY[e.slot]?.label||""}: ${e.glucose??"-"}${lo?" ⚠ נפילת סוכר":""}${e.glucose2!=null&&e.glucose2!==""?" | שעתיים אחרי: "+e.glucose2+(cls2(e)==="low"?" ⚠":""):""}${e.food?" | "+e.food:""}${e.note?" | "+e.note:""}\n`});
   });
   return s;
 }
@@ -1338,7 +1384,7 @@ function renderMe(){
   const p=state.profile||{}, s=state.settings||{};
   if(document.activeElement?.closest?.("#tab-me")==null){
     $("pAge").value=p.age??""; $("pHeight").value=p.height??""; $("pWeight").value=p.weight??"";
-    $("sFast").value=s.tFast??""; $("sMeal").value=s.tMeal??""; $("sBed").value=s.tBed??""; $("sLow").value=s.tLow??"";
+    $("sFast").value=s.tFast??""; $("sMeal").value=s.tMeal??""; $("sMeal2").value=s.tMeal2??""; $("sBed").value=s.tBed??""; $("sLow").value=s.tLow??"";
   }
   const bmi=p.height&&p.weight?(p.weight/((p.height/100)**2)):null;
   const ws=(p.weights||[]);
@@ -1410,6 +1456,7 @@ function renderHero(){
 }
 const PRAISE_OK=["מצוין!","ב\"ה, ערך רצוי","איזה יופי :)"];
 const PRAISE_HIGH=["גבוה מהרצוי. לא נורא, ממשיכים ולומדים","גבוה מהרצוי. כדאי לבדוק את הארוחה הזו"];
+function praiseC(c){if(c==="ok")setTimeout(heartBurst,50);if(c==="warn")return "נשמר. ערך גבולי";if(c==="low")return "נשמר. ערך נמוך מדי; יש לפעול לפי הנחיות הצוות המטפל";const arr=c==="ok"?PRAISE_OK:c?PRAISE_HIGH:null;return arr?arr[Math.floor(Math.random()*arr.length)]:null}
 function praise(e){const c=cls(e);if(c==="ok")setTimeout(heartBurst,50);if(c==="warn")return "נשמר. ערך גבולי";const arr=c==="ok"?PRAISE_OK:c?PRAISE_HIGH:null;return arr?arr[Math.floor(Math.random()*arr.length)]:null}
 
 /* ===================== RENDER / EVENTS ===================== */
@@ -1450,6 +1497,8 @@ $("entryForm").addEventListener("submit",e=>{
   if(form.carbs!=null)entry.carbs=form.carbs;
   if(form.test)entry.test=true;
   if(isLow)entry.low=true;
+  const g2=$("fGlu2").value.trim();
+  if(s.kind==="meal"&&g2!=="")entry.glucose2=+g2;
   upsertEntry(date,entry,form.editing);
   viewDay=date;
   if(entry.glucose!=null||entry.low)showMascot(entry);
@@ -1480,6 +1529,17 @@ document.addEventListener("click",e=>{
     upsertEntry(ent.dataset.date,upd);
     showMascot(upd);
     toast(praise(upd)||"המדידה נשמרה");return}
+  if(ent&&e.target.closest(".pSave2")){
+    const v=ent.querySelector(".pGlu2").value.trim();
+    if(!v){toast("נא למלא את רמת הסוכר");return}
+    const day=state.days[ent.dataset.date]; const old=day.entries.find(x=>x.id===ent.dataset.id);
+    const upd=Object.assign(clone(old),{glucose2:+v});
+    upsertEntry(ent.dataset.date,upd);
+    showMascot2(upd);
+    toast(praiseC(cls2(upd))||"המדידה נשמרה");return}
+  if(ent&&e.target.closest(".pSkip2")){
+    const day=state.days[ent.dataset.date]; const old=day.entries.find(x=>x.id===ent.dataset.id);
+    upsertEntry(ent.dataset.date,Object.assign(clone(old),{skip2:true}));return}
   const um=e.target.closest(".useMeal");
   if(um){const m=MEALS[+um.dataset.meal];const ingr=[];m.items.forEach(([n])=>detectIngredients(n).forEach(x=>{if(!ingr.includes(x))ingr.push(x)}));prefillMeal(m.slot,m.name+": "+itemsText(m.items),carbsOf(m.items),ingr);return}
   const ta=e.target.closest(".tryAlone");
@@ -1501,7 +1561,7 @@ $("tRange").addEventListener("change",renderTrack);
 $("fLow").addEventListener("change",syncLow);
 $("nSave").addEventListener("click",()=>{
   const v=id=>$(id).value===""?null:+$(id).value;
-  const s={tFast:v("nFast"),tMeal:v("nMeal"),tBed:v("nBed"),tLow:v("nLow")};
+  const s={tFast:v("nFast"),tMeal:v("nMeal"),tMeal2:v("nMeal2"),tBed:v("nBed"),tLow:v("nLow")};
   if(!s.tFast&&!s.tMeal&&!s.tBed){$("nMsg").textContent="נא למלא לפחות יעד אחד.";return}
   state.settings=s; persist("settings",s); lastSig=""; renderAll(); toast("היעדים נשמרו. המדידות נצבעו");
 });
@@ -1519,7 +1579,7 @@ $("pSave").addEventListener("click",()=>{
 });
 $("sSave").addEventListener("click",()=>{
   const v=id=>$(id).value===""?null:+$(id).value;
-  const s={tFast:v("sFast"),tMeal:v("sMeal"),tBed:v("sBed"),tLow:v("sLow")};
+  const s={tFast:v("sFast"),tMeal:v("sMeal"),tMeal2:v("sMeal2"),tBed:v("sBed"),tLow:v("sLow")};
   state.settings=s; persist("settings",s); lastSig=""; document.activeElement.blur(); renderAll(); $("sMsg").textContent="היעדים נשמרו";
 });
 
@@ -1575,26 +1635,26 @@ function buildXlsx(sheets){ // [{name, rows, widths}]
 const STATUS_LBL={ok:"רצוי",warn:"גבולי",high:"גבוה מהרצוי",low:"נמוך מדי / נפילת סוכר"};
 function workbookSheets(){
   const keys=Object.keys(state.days).sort();
-  const m=[["תאריך","יום","שעה","סוג מדידה","סוכר (mg/dL)","יעד","מצב","נפילת סוכר","מה אכלתי","מרכיבים","פחמימות משוערות (ג')","איך היה","הערה"]];
+  const m=[["תאריך","יום","שעה","סוג מדידה","סוכר (mg/dL)","יעד","מצב","נפילת סוכר","שעתיים אחרי (mg/dL)","יעד שעתיים","מצב שעתיים","מה אכלתי","מרכיבים","פחמימות משוערות (ג')","איך היה","הערה"]];
   keys.forEach(k=>(state.days[k].entries||[]).forEach(e=>{
     const kind=SLOT_BY[e.slot]?.kind, t=targetFor(kind)||"", c=cls(e);
-    m.push([k.split("-").reverse().join("/"),dow(k),e.time||"",(SLOT_BY[e.slot]?.label||e.slot)+(e.test?" (ניסיון)":""),e.glucose??"",t,c?STATUS_LBL[c]:"",c==="low"?"כן ⚠":"",e.food||"",(e.ingr||[]).join(", "),e.carbs!=null?Math.round(e.carbs):"",e.feel||"",e.note||""]);
+    m.push([k.split("-").reverse().join("/"),dow(k),e.time||"",(SLOT_BY[e.slot]?.label||e.slot)+(e.test?" (ניסיון)":""),e.glucose??"",t,c?STATUS_LBL[c]:"",c==="low"?"כן ⚠":"",e.glucose2??"",SLOT_BY[e.slot]?.kind==="meal"?(+(state.settings||{}).tMeal2||""):"",cls2(e)?STATUS_LBL[cls2(e)]:"",e.food||"",(e.ingr||[]).join(", "),e.carbs!=null?Math.round(e.carbs):"",e.feel||"",e.note||""]);
   }));
   const cols=SLOTS;
   const d=[["תאריך","יום",...cols.map(x=>x.label),"נפילות סוכר"]];
   const lowRows=[["תאריך","יום","שעה","סוג מדידה","סוכר (mg/dL)","הערה"]];
   keys.forEach(k=>{const es=state.days[k].entries||[];if(!es.length)return;
     es.filter(e=>cls(e)==="low").forEach(e=>lowRows.push([k.split("-").reverse().join("/"),dow(k),e.time||"",SLOT_BY[e.slot]?.label||e.slot,e.glucose??"",e.note||""]));
-    d.push([k.split("-").reverse().join("/"),dow(k),...cols.map(x=>{const v=es.filter(e=>e.slot===x.id&&((e.glucose!=null&&e.glucose!=="")||e.low));if(v.length===1&&cls(v[0])!=="low")return +v[0].glucose;return v.map(e=>(e.glucose??"?")+(cls(e)==="low"?" ⚠":"")).join(" / ")}),es.filter(e=>cls(e)==="low").length||""])});
+    d.push([k.split("-").reverse().join("/"),dow(k),...cols.map(x=>{const v=es.filter(e=>e.slot===x.id&&((e.glucose!=null&&e.glucose!=="")||e.low));if(v.length===1&&cls(v[0])!=="low"&&(v[0].glucose2==null||v[0].glucose2===""))return +v[0].glucose;return v.map(e=>(e.glucose??"?")+(cls(e)==="low"?" ⚠":"")+(e.glucose2!=null&&e.glucose2!==""?" (שעתיים: "+e.glucose2+")":"")).join(" / ")}),es.filter(e=>cls(e)==="low").length||""])});
   if(lowRows.length===1)lowRows.push(["לא נרשמו נפילות סוכר"]);
   const p=state.profile||{}, st=state.settings||{};
   const info=[["פרט","ערך"],["גיל",p.age??""],["גובה (ס\"מ)",p.height??""],["משקל (ק\"ג)",p.weight??""],
     ["BMI",p.height&&p.weight?+(p.weight/((p.height/100)**2)).toFixed(1):""],
-    ["יעד צום בבוקר",st.tFast??""],["יעד שעה אחרי ארוחה",st.tMeal??""],["יעד לפני השינה",st.tBed??""],["נמוך מדי: מתחת ל-",st.tLow??""],
+    ["יעד צום בבוקר",st.tFast??""],["יעד שעה אחרי ארוחה",st.tMeal??""],["יעד שעתיים אחרי ארוחה",st.tMeal2??""],["יעד לפני השינה",st.tBed??""],["נמוך מדי: מתחת ל-",st.tLow??""],
     ["תאריך הייצוא",new Date().toLocaleDateString("he-IL")]];
   const w=[["תאריך","משקל (ק\"ג)"],...(p.weights||[]).map(x=>[x.date.split("-").reverse().join("/"),x.kg])];
   return [
-    {name:"כל המדידות",rows:m,widths:[12,8,7,26,13,7,20,11,40,30,12,14,30]},
+    {name:"כל המדידות",rows:m,widths:[12,8,7,26,13,7,20,11,14,10,18,40,30,12,14,30]},
     {name:"נפילות סוכר",rows:lowRows,widths:[12,8,7,26,13,40]},
     {name:"סיכום יומי",rows:d,widths:[12,8,...cols.map(()=>16),12]},
     {name:"פרטים ויעדים",rows:info,widths:[22,14]},
