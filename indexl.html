@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>יומן סוכר אונליין בחינם – מעקב מדידות סוכר וארוחות | יומן סוכר ותזונה</title>
+<title>יומן סוכר אונליין בחינם - מעקב מדידות וארוחות</title>
 <meta name="description" content="יומן חינמי לנשים עם סוכרת הריון - למעקב ערכי סוכר: מדידות בבוקר, אחרי כל ארוחה ולפני השינה, צבעים לפי היעדים שקבע הצוות המטפל, זיהוי מאכלים שמעלים את הסוכר, מאגר מאכלים עם פחמימות והצעות לארוחות. אפשר להוריד לאקסל. האתר אינו מחליף מעקב רפואי.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://yoman-sukar.vercel.app/">
@@ -12,6 +12,18 @@
 <meta property="og:title" content="יומן סוכר ותזונה">
 <meta property="og:description" content="מעקב יומי אחרי ערכי הסוכר והארוחות, במקום אחד ובחינם.">
 <meta property="og:url" content="https://yoman-sukar.vercel.app/">
+<meta property="og:site_name" content="יומן סוכר ותזונה">
+<meta property="og:image" content="https://yoman-sukar.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="יומן סוכר ותזונה - סוכריה מחייכת ותוצאת מדידה ביעד">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yoman-sukar.vercel.app/og-image.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#b8265e">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "יומן סוכר ותזונה", "alternateName": ["יומן סוכר"], "url": "https://yoman-sukar.vercel.app/", "inLanguage": "he"}</script>
 <style>body{margin:0}</style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -24,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: soft blush app — raspberry hero card with geometric art, frosted rounded cards, pill tabs, concentric arcs in the backdrop */
+/* Layout: soft blush app - raspberry hero card with geometric art, frosted rounded cards, pill tabs, concentric arcs in the backdrop */
 :root{
   --bg:#fbe3ea; --surface:#fff6f8; --sunk:#fae0e8; --line:#f2c9d6; --arc:rgb(214 92 134 / .16);
   --ink:#5c1634; --muted:#a05676; --accent:#b8265e; --accent-2:#e2709a; --accent-soft:#f9d2df; --accent-ink:#ffffff;
@@ -98,6 +110,11 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font:600 .95rem var(--f-body);padding:9px 20px;border-radius:999px;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--accent)}
 .btn.small{padding:4px 10px;font-size:.85rem}
+#formCard{scroll-margin-top:72px}
+@media (pointer:coarse){.btn.small,.chip,nav.tabs button,.quote button{min-height:44px}}
+.skip{position:absolute;inset-inline-start:8px;top:-60px;z-index:50;background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:999px}
+.skip:focus{top:8px}
+.credit .legal{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:0 auto 8px;font-size:.85rem}
 .btn.danger{border-color:var(--high);background:transparent;color:var(--high)}
 .hint{color:var(--muted);font-size:.88rem;margin:0}
 .num{font-variant-numeric:tabular-nums}
@@ -344,6 +361,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
 
 <div class="arcs" id="arcs" aria-hidden="true"></div>
 <div class="bgfx" id="bgfx" aria-hidden="true"></div>
+<a class="skip" href="#main">דילוג לתוכן</a>
 <div class="wrap">
   <header class="hero">
     <div>
@@ -358,23 +376,24 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
       </div>
       <div class="hero-tiles">
         <div><b id="hToday">0</b><span>מדידות היום</span></div>
-        <div><b id="hOk">—</b><span>בתוך היעד</span></div>
+        <div><b id="hOk">-</b><span>בתוך היעד</span></div>
         <div><b id="hPend">0</b><span>ממתינות למדידה</span></div>
       </div>
     </div>
     <div class="hero-art" id="heroArt" aria-hidden="true"></div>
   </header>
 
-  <nav class="tabs" role="tablist">
-    <button role="tab" data-tab="today" aria-selected="true">היומן</button>
-    <button role="tab" data-tab="track" aria-selected="false">מעקב וזיהוי</button>
-    <button role="tab" data-tab="meals" aria-selected="false">הצעות לארוחות</button>
-    <button role="tab" data-tab="foods" aria-selected="false">מאגר מאכלים</button>
-    <button role="tab" data-tab="me" aria-selected="false">פרטים ויעדים</button>
+  <main id="main">
+  <nav class="tabs" role="tablist" aria-label="מסכי היומן">
+    <button role="tab" id="tabbtn-today" aria-controls="tab-today" data-tab="today" aria-selected="true">היומן</button>
+    <button role="tab" id="tabbtn-track" aria-controls="tab-track" data-tab="track" aria-selected="false">מעקב וזיהוי</button>
+    <button role="tab" id="tabbtn-meals" aria-controls="tab-meals" data-tab="meals" aria-selected="false">הצעות לארוחות</button>
+    <button role="tab" id="tabbtn-foods" aria-controls="tab-foods" data-tab="foods" aria-selected="false">מאגר מאכלים</button>
+    <button role="tab" id="tabbtn-me" aria-controls="tab-me" data-tab="me" aria-selected="false">פרטים ויעדים</button>
   </nav>
 
   <!-- ============ TODAY ============ -->
-  <section class="tab" id="tab-today">
+  <section class="tab" role="tabpanel" aria-labelledby="tabbtn-today" id="tab-today">
     <div class="card mascot-card" id="mascotCard">
       <div id="mascotArt"></div>
       <div><p class="mmsg" id="mascotMsg"></p><p class="mlast" id="mascotLast"></p></div>
@@ -445,7 +464,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
         <h2 id="dayTitle">היום</h2>
         <div class="row" style="gap:6px">
           <button class="btn ghost small" id="dPrev" aria-label="יום קודם">→ יום קודם</button>
-          <input type="date" id="dPick" style="width:auto">
+          <input type="date" id="dPick" style="width:auto" aria-label="בחירת יום להצגה">
           <button class="btn ghost small" id="dNext" aria-label="יום הבא">יום הבא ←</button>
         </div>
       </div>
@@ -454,7 +473,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   </section>
 
   <!-- ============ TRACK ============ -->
-  <section class="tab" id="tab-track" hidden>
+  <section class="tab" role="tabpanel" aria-labelledby="tabbtn-track" id="tab-track" hidden>
     <div class="row" style="justify-content:space-between;align-items:center">
       <h2>מעקב לאורך זמן</h2>
       <label style="flex:0 0 auto">תקופה
@@ -474,14 +493,14 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
         <span><i style="background:var(--l2)"></i>ממוצע אחרי ארוחות</span>
         <span><i style="background:var(--l3)"></i>לפני השינה</span>
       </div>
-      <div class="scroll" id="chart"></div>
+      <div class="scroll" id="chart" tabindex="0" role="region" aria-label="גרף מגמת הסוכר"></div>
     </div>
     <div class="card">
       <div class="row" style="justify-content:space-between;align-items:center">
         <h3>טבלת מדידות יומית</h3>
         <span class="row" style="gap:6px"><button class="btn ghost small" id="copySum">העתקת סיכום לצוות המטפל</button><button class="btn small" id="bXlsx2">הורדה לאקסל</button></span>
       </div>
-      <div class="scroll" style="margin-top:8px"><table id="tTable"></table></div>
+      <div class="scroll" style="margin-top:8px" tabindex="0" role="region" aria-label="טבלת מדידות יומית"><table id="tTable"></table></div>
       <textarea id="copyFallback" hidden readonly style="margin-top:8px;min-height:160px"></textarea>
     </div>
     <div class="grid2">
@@ -491,7 +510,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   </section>
 
   <!-- ============ MEALS ============ -->
-  <section class="tab" id="tab-meals" hidden>
+  <section class="tab" role="tabpanel" aria-labelledby="tabbtn-meals" id="tab-meals" hidden>
     <div class="card">
       <h2>מה כדאי לשלב</h2>
       <ul class="rules" style="margin-top:12px">
@@ -509,7 +528,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   </section>
 
   <!-- ============ FOODS ============ -->
-  <section class="tab" id="tab-foods" hidden>
+  <section class="tab" role="tabpanel" aria-labelledby="tabbtn-foods" id="tab-foods" hidden>
     <div class="card" style="display:grid;gap:10px">
       <div class="row">
         <label style="flex:2 1 220px">חיפוש מאכל<input id="qFood" placeholder="למשל: לחם, עדשים, תפוח"></label>
@@ -522,8 +541,8 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
       </div>
       <div class="chips" id="qCats"></div>
       <details class="hint"><summary style="cursor:pointer;color:var(--accent);font-weight:600">מה זה ערך גליקמי ועומס גליקמי?</summary>
-        <p style="margin:6px 0 0"><b>ערך גליקמי</b> מראה כמה מהר הפחמימה במאכל מעלה את הסוכר, בסולם של 0 עד 100: עד 55 נמוך, 56–69 בינוני, 70 ומעלה גבוה.</p>
-        <p style="margin:4px 0 0"><b>עומס גליקמי</b> מחשב גם את כמות הפחמימות במנה, ולכן מראה טוב יותר כמה המנה עצמה מעלה את הסוכר: עד 10 נמוך, 11–19 בינוני, 20 ומעלה גבוה. למשל לאבטיח ערך גליקמי גבוה, אבל בכוס אחת העומס נמוך.</p>
+        <p style="margin:6px 0 0"><b>ערך גליקמי</b> מראה כמה מהר הפחמימה במאכל מעלה את הסוכר, בסולם של 0 עד 100: עד 55 נמוך, 56-69 בינוני, 70 ומעלה גבוה.</p>
+        <p style="margin:4px 0 0"><b>עומס גליקמי</b> מחשב גם את כמות הפחמימות במנה, ולכן מראה טוב יותר כמה המנה עצמה מעלה את הסוכר: עד 10 נמוך, 11-19 בינוני, 20 ומעלה גבוה. למשל לאבטיח ערך גליקמי גבוה, אבל בכוס אחת העומס נמוך.</p>
         <p style="margin:4px 0 0">הערכים הם ממוצעים מטבלאות המחקר הבינלאומיות של ערך גליקמי, ומשתנים לפי זן, בשלות ואופן הכנה. ירקות דלי פחמימות (מלפפון, עגבנייה, חסה וכדומה) כמעט לא נבדקים, כי בבדיקה צריך לאכול כמות שמכילה 50 גרם פחמימות, כלומר יותר מקילו ירק. לכן מופיע אצלם "לא נמדד".</p>
       </details>
       <p class="hint">הערכים התזונתיים למנה מקובלת וקרובים לממוצע; הם משתנים לפי מותג, גודל ואופן הכנה. "השפעה על הסוכר" לוקחת בחשבון את הערך הגליקמי, את כמות הפחמימות במנה ואת סוג המאכל.</p>
@@ -541,7 +560,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   </section>
 
   <!-- ============ ME ============ -->
-  <section class="tab" id="tab-me" hidden>
+  <section class="tab" role="tabpanel" aria-labelledby="tabbtn-me" id="tab-me" hidden>
     <div class="grid2">
       <div class="card" style="display:grid;gap:12px">
         <h2>פרטים אישיים</h2>
@@ -573,7 +592,7 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
       <div class="row">
         <button class="btn" type="button" id="bXlsx">הורדת כל הנתונים לאקסל</button>
         <button class="btn ghost" type="button" id="bJson">הורדת קובץ גיבוי</button>
-        <label class="btn ghost" style="display:inline-flex;flex:0 0 auto;font-weight:600" for="bFile">שחזור מגיבוי</label>
+        <button type="button" class="btn ghost" id="bRestoreBtn">שחזור מגיבוי</button>
         <input type="file" id="bFile" accept=".json,application/json" hidden>
       </div>
       <p class="hint" id="bLast"></p>
@@ -581,11 +600,11 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
     </div>
     <div class="card">
       <h3>היסטוריית משקל</h3>
-      <div class="scroll" style="margin-top:8px"><table id="wTable"></table></div>
+      <div class="scroll" style="margin-top:8px" tabindex="0" role="region" aria-label="היסטוריית משקל"><table id="wTable"></table></div>
     </div>
   </section>
 <section class="about card" id="about" aria-labelledby="aboutTitle">
-  <h2 id="aboutTitle">יומן סוכר אונליין – בחינם ובעברית</h2>
+  <h2 id="aboutTitle">יומן סוכר אונליין - בחינם ובעברית</h2>
   <p>יומן סוכר דיגיטלי לרישום ומעקב אחרי מדידות הסוכר: בצום בבוקר, שעה ושעתיים אחרי כל ארוחה ולפני השינה. כל מדידה נצבעת לפי היעדים שקבע הצוות המטפל, היומן מזהה מאכלים שמעלים את הסוכר, ויש בו מאגר מאכלים עם פחמימות וערך גליקמי והצעות לארוחות מאוזנות. את יומן המדידות אפשר להוריד לאקסל ולשלוח לצוות המטפל.</p>
   <h3>שאלות נפוצות על יומן הסוכר</h3>
   <details><summary>האם יומן הסוכר בחינם?</summary><p>כן. יומן הסוכר חינמי לגמרי, בלי הרשמה ובלי התקנה. נכנסים לאתר ומתחילים לרשום.</p></details>
@@ -594,15 +613,17 @@ svg text{fill:var(--muted);font-family:var(--f-body);font-size:11px}
   <details><summary>אפשר להוריד את יומן הסוכר לאקסל?</summary><p>כן. בלחיצה אחת מורידים את כל המדידות לקובץ אקסל מסודר, ואפשר גם להעתיק סיכום ולשלוח לצוות המטפל.</p></details>
   <details><summary>האם יומן הסוכר מחליף מעקב רפואי?</summary><p>לא. זהו כלי עזר לרישום ולמעקב אישי. היעדים נקבעים על ידי הצוות המטפל, ויש לפעול לפי ההנחיות שלו.</p></details>
 </section>
+  </main>
 </div>
 <footer class="credit">
+<nav class="legal" aria-label="מידע משפטי"><a href="https://yoman-sukar.vercel.app/accessibility.html">הצהרת נגישות</a><a href="https://yoman-sukar.vercel.app/privacy.html">מדיניות פרטיות</a></nav>
 <p class="disclaimer">האתר הוא כלי עזר לרישום ולמעקב אישי, ואינו מחליף מעקב, אבחון או הנחיות של הצוות הרפואי.</p>
 <div class="credit-in">
 <svg class="nb-logo" role="img" aria-label="NB" width="30" height="26" viewBox="0 0 200 172" fill="none" stroke-width="9" stroke-linejoin="round"><path d="M14 149 L27 26 Q31 13 40 20 Q44 23 46 30 L88 150 Q92 159 99 151 L114 27" stroke="#e4f34f"/><path d="M131 21 L145 19 Q172 19 177 52 Q180 82 140 87 L127 88 M140 86 Q182 88 186 122 Q189 160 140 160 L136 161" stroke="#ef6a7b"/><path d="M27 155 V34 Q27 22 38 22 Q45 22 49 32 L95 146 Q99 155 106 154 Q113 152 113 142 V23" stroke="#000"/><path d="M124 19 H140 Q172 19 172 54 Q172 84 124 85 M124 85 H142 Q180 86 180 121 Q180 155 140 155 H124" stroke="#000"/></svg>
 <span>נבנה ע"י נעמי בלייברג - עיצוב ובניית אתרים · <a href="tel:0527622763" dir="ltr">0527-622-763</a></span>
 </div>
 </footer>
-<div class="toast" id="toast" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
 /* ===================== FOOD DATABASE =====================
@@ -946,7 +967,7 @@ const OK_NOTES=["מצוין!","ב\"ה","איזה יופי :)"];
 function hashStr(t){let h=0;for(const c of String(t))h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)}
 function gNote(e){const c=cls(e);return c==="ok"?OK_NOTES[hashStr(e.id||e.time||"")%OK_NOTES.length]:c==="warn"?"גבולי":c==="high"?"גבוה מהרצוי":c==="low"?(e.low?"נפילת סוכר":"נמוך מדי"):""}
 function gPill(e,withNote){
-  if((e.glucose==null||e.glucose==="")&&!e.low)return '<span class="pill">—</span>';
+  if((e.glucose==null||e.glucose==="")&&!e.low)return '<span class="pill">-</span>';
   const c=cls(e), n=withNote?gNote(e):"", em=EMO[c]||"";
   return `<span class="gwrap"><span class="pill ${c}">${esc(e.glucose??"?")}</span>${em?`<span class="emo" role="img" aria-label="${esc(gNote(e))}">${em}</span>`:""}${n?`<span class="gnote ${c}">${esc(n)}</span>`:""}</span>`;
 }
@@ -1008,7 +1029,7 @@ function onFoodInput(){
 }
 function resetForm(){
   form={ingr:[],feel:"",editing:null,carbs:null,test:false}; ingrTouched=false; $("fLow").checked=false; syncLow();
-  $("fDate").value=viewDay; $("fHour").innerHTML=""; $("fFood").value=""; $("fGlu").value=""; $("fGlu2").value=""; $("fNote").value="";
+  $("fDate").value=viewDay; $("fHour").innerHTML=""; $("fFood").value=""; $("fGlu").value=""; $("fGlu2").value=""; $("fNote").value=""; $("fMsg").textContent="";
   $("formTitle").textContent="רישום חדש"; $("fCancel").hidden=true; $("fSubmit").textContent="שמירה";
   renderFeel(); renderIngr(); syncSlotFields(); $("fCarbs").textContent="";
 }
@@ -1178,7 +1199,7 @@ function entryHTML(e,date,{pending}={}){
   const ingr=(e.ingr||[]).length?`<div class="chips">${e.ingr.map(i=>`<span class="tag">${esc(i)}</span>`).join("")}</div>`:"";
   const two=pending==="two";
   const due = pending&&e.time ? (()=>{const [h,m]=e.time.split(":").map(Number);const t=h*60+m+(two?120:60);return `למדוד בסביבות ${pad(Math.floor(t/60)%24)}:${pad(t%60)}`})() : "";
-  return `<div class="entry ${pending?"pending":""}" data-date="${date}" data-id="${e.id}">
+  return `<div class="entry ${pending?"pending":""}" data-date="${esc(date)}" data-id="${esc(e.id)}">
     <div class="entry-top">
       <span class="food">${e.test?'<span class="pill warn" style="font-size:.75rem">ניסיון</span> ':""}${esc(e.food||s.label)}</span>
       ${pending?"":gPills(e,true)}
@@ -1187,8 +1208,8 @@ function entryHTML(e,date,{pending}={}){
     <div class="meta">${pending?esc(s.label)+" · ":""}${esc(e.time||"")}${e.carbs!=null?` · כ-${round(e.carbs)} ג' פחמימות`:""}${e.feel?" · "+esc(e.feel):""}${e.note?" · "+esc(e.note):""}${due?" · "+due:""}</div>
     ${pending?`<div class="row">
         ${two?`<span class="gwrap"><span class="glbl">שעה אחרי:</span>${gPill(e,false)}</span>
-        <label style="flex:0 1 190px">כמה הסוכר שעתיים אחרי?<input type="number" inputmode="numeric" class="pGlu2" id="pg2_${e.id}" placeholder="mg/dL"></label>
-        <button class="btn small pSave2">שמירה</button><button class="btn ghost small pSkip2">לא מדדתי</button>`:`<label style="flex:0 1 150px">כמה הסוכר?<input type="number" inputmode="numeric" class="pGlu" id="pg_${e.id}" placeholder="mg/dL"></label>
+        <label style="flex:0 1 190px">כמה הסוכר שעתיים אחרי?<input type="number" inputmode="numeric" class="pGlu2" id="pg2_${esc(e.id)}" placeholder="mg/dL"></label>
+        <button class="btn small pSave2">שמירה</button><button class="btn ghost small pSkip2">לא מדדתי</button>`:`<label style="flex:0 1 150px">כמה הסוכר?<input type="number" inputmode="numeric" class="pGlu" id="pg_${esc(e.id)}" placeholder="mg/dL"></label>
         <div style="display:grid;gap:4px;flex:1 1 200px"><span style="font-weight:600;font-size:.92rem">איך זה היה?</span>
         <div class="chips">${FEELS.map(f=>`<button type="button" class="chip pFeel" aria-pressed="${e.feel===f}" data-feel="${esc(f)}">${esc(f)}</button>`).join("")}</div></div>
         <button class="btn small pSave">שמירה</button>`}
@@ -1239,8 +1260,8 @@ function renderTrack(){
     ["ממוצע שעתיים אחרי ארוחות",avg(es.filter(e=>SLOT_BY[e.slot]?.kind==="meal"&&e.glucose2!=null&&e.glucose2!=="").map(e=>+e.glucose2))],
     ["ממוצע לפני השינה",avg(byKind("bed"))],
   ];
-  $("tStats").innerHTML=st.map(([k,v])=>`<div class="stat"><div class="k">${k}</div><div class="v">${v==null?"—":round(v)} <small>mg/dL</small></div></div>`).join("")+
-   `<div class="stat"><div class="k">בתוך היעד</div><div class="v">${judged.length?round(inT/judged.length*100)+"%":"—"} <small>${judged.length?`${inT} מתוך ${judged.length}`:"יש להגדיר יעדים"}</small></div></div>`+
+  $("tStats").innerHTML=st.map(([k,v])=>`<div class="stat"><div class="k">${k}</div><div class="v">${v==null?"-":round(v)} <small>mg/dL</small></div></div>`).join("")+
+   `<div class="stat"><div class="k">בתוך היעד</div><div class="v">${judged.length?round(inT/judged.length*100)+"%":"-"} <small>${judged.length?`${inT} מתוך ${judged.length}`:"יש להגדיר יעדים"}</small></div></div>`+
    `<div class="stat"><div class="k">מדידות בתקופה</div><div class="v">${withG.length}</div></div>`+
    `<div class="stat"><div class="k">נפילות סוכר בתקופה</div><div class="v">${es.filter(e=>cls(e)==="low").length}</div></div>`;
   renderChart(keys);
@@ -1272,10 +1293,10 @@ function renderChart(keys){
     if(pts.length>1)g+=`<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-linejoin="round" points="${pts.map(([i,v])=>x(i)+","+y(v)).join(" ")}"/>`;
     pts.forEach(([i,v],j)=>g+=`<circle cx="${x(i)}" cy="${y(v)}" r="${j===pts.length-1?4.5:3}" fill="${c}"><title>${fmtDate(keys[i])}: ${round(v)}</title></circle>`);
   });
-  $("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="direction:ltr;max-width:none;display:block">${g}</svg>`+
+  $("chart").innerHTML=`<svg role="img" aria-label="גרף מגמת הסוכר לפי ימים: צום בבוקר, ממוצע אחרי ארוחות ולפני השינה. הנתונים המלאים בטבלה שמתחת." viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="direction:ltr;max-width:none;display:block">${g}</svg>`+
     (tg.length?'<p class="hint">הקווים המקווקווים הם היעדים שהוגדרו.</p>':'');
 }
-function cell(es){ if(!es.length)return '<td class="num" style="color:var(--muted)">—</td>'; return `<td>${es.map(e=>gPills(e,false)).join(" ")}</td>` }
+function cell(es){ if(!es.length)return '<td class="num" style="color:var(--muted)">-</td>'; return `<td>${es.map(e=>gPills(e,false)).join(" ")}</td>` }
 function renderTable(keys){
   const cols=SLOTS.filter(s=>s.id!=="other");
   let h=`<thead><tr><th>תאריך</th>${cols.map(s=>`<th>${s.label}</th>`).join("")}</tr></thead><tbody>`;
@@ -1307,9 +1328,9 @@ function renderInsights(){
   const safe=Object.entries(stats).filter(([i,s])=>s.n>=3&&s.h===0).sort((a,b)=>b[1].n-a[1].n).slice(0,8);
   let h="";
   suspects.slice(0,6).forEach(([i,s])=>{
-    const ex=s.highMeals.slice(-3).map(e=>`${esc(e.food||"")} (${e.glucose})`).join("، ");
+    const ex=s.highMeals.slice(-3).map(e=>`${esc(e.food||"")} (${esc(e.glucose)})`).join("، ");
     const tr=tests[i];
-    const trTxt=tr?` <b>ניסיונות לבד:</b> ${tr.length} מדידות, ממוצע ${round(avg(tr.map(e=>+e.glucose)))}${t?(avg(tr.map(e=>+e.glucose))>t?" — גם לבד מעל היעד.":" — לבד נראה בסדר, ייתכן שהשילוב עם מאכל אחר הוא שמעלה."):""}`:"";
+    const trTxt=tr?` <b>ניסיונות לבד:</b> ${tr.length} מדידות, ממוצע ${round(avg(tr.map(e=>+e.glucose)))}${t?(avg(tr.map(e=>+e.glucose))>t?" - גם לבד מעל היעד.":" - לבד נראה בסדר, ייתכן שהשילוב עם מאכל אחר הוא שמעלה."):""}`:"";
     h+=`<div class="insight"><p><b>ייתכן ש${esc(i)} מעלה את הסוכר.</b> הופיע ב-${s.h} מתוך ${s.n} ארוחות שאחריהן הסוכר היה גבוה.</p>
       <p class="hint" style="color:inherit">למשל: ${ex}</p>
       <p>כדאי לנסות לאכול ${esc(i)} לבד (או עם מעט חלבון) ולמדוד שעה אחרי.${trTxt}</p>
@@ -1339,7 +1360,7 @@ function summaryText(){
   if(tg.length)s+="יעדים: "+tg.join(", ")+"\n";
   const lows=[];keys.forEach(k=>state.days[k].entries.forEach(e=>{if(cls(e)==="low")lows.push([k,e])}));
   s+=`\nנפילות סוכר בתקופה: ${lows.length}\n`;
-  lows.forEach(([k,e])=>{s+=`  ⚠ ${dow(k)} ${fmtDate(k)} ${e.time||""} – ${e.glucose??"ערך לא נרשם"}${e.note?" | "+e.note:""}\n`});
+  lows.forEach(([k,e])=>{s+=`  ⚠ ${dow(k)} ${fmtDate(k)} ${e.time||""} - ${e.glucose??"ערך לא נרשם"}${e.note?" | "+e.note:""}\n`});
   s+="\n";
   keys.forEach(k=>{
     s+=`${dow(k)} ${fmtDate(k)}\n`;
@@ -1384,7 +1405,7 @@ function renderFoods(){
         <div><dt>חלבון</dt><dd>${f.prot}<small> ג'</small></dd></div>
         <div><dt>קלוריות</dt><dd>${f.kcal}</dd></div>
       </dl>
-      <div class="gix">${f.gv!=null?`<span>ערך גליקמי <b>${f.gv}</b></span><span>עומס גליקמי למנה <b>${f.gl}</b></span>`:`<span>ערך גליקמי <b>—</b></span><span class="hint">${GI_LOWCARB.has(f.n)?"לא נמדד: מעט מאוד פחמימות, השפעה קטנה":f.carb<5?"כמעט ללא פחמימות":"לא נמצא ערך מדוד"}</span>`}</div>
+      <div class="gix">${f.gv!=null?`<span>ערך גליקמי <b>${f.gv}</b></span><span>עומס גליקמי למנה <b>${f.gl}</b></span>`:`<span>ערך גליקמי <b>-</b></span><span class="hint">${GI_LOWCARB.has(f.n)?"לא נמדד: מעט מאוד פחמימות, השפעה קטנה":f.carb<5?"כמעט ללא פחמימות":"לא נמצא ערך מדוד"}</span>`}</div>
       ${f.tip?`<p class="hint">${esc(f.tip)}</p>`:""}
       <button class="btn ghost small addPlate" data-food="${esc(f.n)}">+ לצלחת</button>
     </div>`).join(""):'<p class="empty">לא נמצא מאכל. אפשר לנסות מילה אחרת.</p>';
@@ -1407,11 +1428,11 @@ function renderMe(){
   const bmi=p.height&&p.weight?(p.weight/((p.height/100)**2)):null;
   const ws=(p.weights||[]);
   const first=ws[0], last=ws[ws.length-1];
-  $("pStats").innerHTML=`<div class="stat"><div class="k">BMI</div><div class="v">${bmi?bmi.toFixed(1):"—"}</div></div>`+
-    `<div class="stat"><div class="k">שינוי משקל מתחילת המעקב</div><div class="v">${first&&last&&ws.length>1?((last.kg-first.kg)>0?"+":"")+(last.kg-first.kg).toFixed(1):"—"} <small>ק"ג</small></div></div>`;
+  $("pStats").innerHTML=`<div class="stat"><div class="k">BMI</div><div class="v">${bmi?bmi.toFixed(1):"-"}</div></div>`+
+    `<div class="stat"><div class="k">שינוי משקל מתחילת המעקב</div><div class="v">${first&&last&&ws.length>1?((last.kg-first.kg)>0?"+":"")+(last.kg-first.kg).toFixed(1):"-"} <small>ק"ג</small></div></div>`;
   let h=`<thead><tr><th>תאריך</th><th>משקל (ק"ג)</th></tr></thead><tbody>`;
   if(!ws.length)h+='<tr><td colspan="2" class="empty">כל שמירה של משקל חדש תתווסף כאן.</td></tr>';
-  ws.slice().reverse().forEach(w=>h+=`<tr><td>${dow(w.date)} ${fmtDate(w.date)}</td><td>${w.kg}</td></tr>`);
+  ws.slice().reverse().forEach(w=>h+=`<tr><td>${dow(w.date)} ${fmtDate(w.date)}</td><td>${esc(w.kg)}</td></tr>`);
   $("wTable").innerHTML=h+"</tbody>";
 }
 
@@ -1434,7 +1455,7 @@ const QUOTES=[
 ];
 const TIPS=[
 "להתחיל את הארוחה בירקות ובחלבון, ורק בסוף לאכול את הלחם או האורז.",
-"הליכה קלה של 10–15 דקות אחרי ארוחה עוזרת לגוף להשתמש בסוכר.",
+"הליכה קלה של 10-15 דקות אחרי ארוחה עוזרת לגוף להשתמש בסוכר.",
 "לשתות מים לאורך היום. מיץ ומשקאות ממותקים מעלים סוכר מהר.",
 "פרי עדיף לאכול שלם ולא כמיץ, ולצרף אליו כמה שקדים או יוגורט.",
 "להחליף לחם לבן בלחם מלא או שיפון, ואורז לבן באורז מלא, כוסמת או בורגול.",
@@ -1469,7 +1490,7 @@ function renderHero(){
   const g=es.filter(e=>e.glucose!==""&&e.glucose!=null);
   const j=g.filter(e=>cls(e));
   $("hToday").textContent=g.length;
-  $("hOk").textContent=j.length?j.filter(e=>cls(e)==="ok").length+"/"+j.length:"—";
+  $("hOk").textContent=j.length?j.filter(e=>cls(e)==="ok").length+"/"+j.length:"-";
   $("hPend").textContent=es.filter(e=>(e.glucose==null||e.glucose==="")&&SLOT_BY[e.slot]?.food).length;
 }
 const PRAISE_OK=["מצוין!","ב\"ה, ערך רצוי","איזה יופי :)"];
@@ -1507,6 +1528,8 @@ $("entryForm").addEventListener("submit",e=>{
   e.preventDefault();
   const date=$("fDate").value||today(), slot=$("fSlot").value, s=SLOT_BY[slot];
   const g=$("fGlu").value.trim();
+  const g2chk=$("fGlu2").value.trim();
+  if((g!==""&&!(+g>=20&&+g<=600))||(g2chk!==""&&!(+g2chk>=20&&+g2chk<=600))){$("fMsg").textContent="ערך הסוכר צריך להיות בין 20 ל-600.";return}
   const isLow=$("fLow").checked;
   if(!s.food&&!g&&!isLow){$("fMsg").textContent="במדידת צום צריך למלא את רמת הסוכר.";return}
   if(s.food&&!$("fFood").value.trim()&&!g&&!isLow){$("fMsg").textContent="נא למלא מה אכלתי או את רמת הסוכר.";return}
@@ -1534,13 +1557,15 @@ document.addEventListener("click",e=>{
   if(ent&&e.target.closest(".eEdit")){startEdit(ent.dataset.date,ent.dataset.id);return}
   if(ent&&e.target.closest(".eDel")){
     const wrap=e.target.closest(".confirm");
-    wrap.innerHTML='למחוק? <button class="btn danger small eDelYes">כן, למחוק</button><button class="btn ghost small eDelNo">לא</button>';return}
+    const de=(state.days[ent.dataset.date]?.entries||[]).find(x=>x.id===ent.dataset.id)||{};
+    wrap.innerHTML=`למחוק את ${esc(SLOT_BY[de.slot]?.label||"הרישום")}${de.time?" משעה "+esc(de.time):""}? <button class="btn danger small eDelYes">כן, למחוק</button><button class="btn ghost small eDelNo">לא</button>`;return}
   if(ent&&e.target.closest(".eDelYes")){deleteEntry(ent.dataset.date,ent.dataset.id);return}
   if(ent&&e.target.closest(".eDelNo")){renderToday();lastSig="";return}
   if(ent&&e.target.closest(".pFeel")){const b=e.target.closest(".pFeel");const on=b.getAttribute("aria-pressed")==="true";ent.querySelectorAll(".pFeel").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed",String(!on));return}
   if(ent&&e.target.closest(".pSave")){
     const v=ent.querySelector(".pGlu").value.trim();
     if(!v){toast("נא למלא את רמת הסוכר");return}
+    if(!(+v>=20&&+v<=600)){toast("ערך הסוכר צריך להיות בין 20 ל-600");return}
     const f=ent.querySelector('.pFeel[aria-pressed="true"]');
     const day=state.days[ent.dataset.date]; const old=day.entries.find(x=>x.id===ent.dataset.id);
     const upd=Object.assign(clone(old),{glucose:+v,feel:f?f.dataset.feel:old.feel||""});
@@ -1550,6 +1575,7 @@ document.addEventListener("click",e=>{
   if(ent&&e.target.closest(".pSave2")){
     const v=ent.querySelector(".pGlu2").value.trim();
     if(!v){toast("נא למלא את רמת הסוכר");return}
+    if(!(+v>=20&&+v<=600)){toast("ערך הסוכר צריך להיות בין 20 ל-600");return}
     const day=state.days[ent.dataset.date]; const old=day.entries.find(x=>x.id===ent.dataset.id);
     const upd=Object.assign(clone(old),{glucose2:+v});
     upsertEntry(ent.dataset.date,upd);
@@ -1577,9 +1603,15 @@ $("plateLog").addEventListener("click",()=>{
 ["qFood","qGi","qSort"].forEach(id=>$(id).addEventListener("input",renderFoods));
 $("tRange").addEventListener("change",renderTrack);
 $("fLow").addEventListener("change",syncLow);
+function targetsError(s){
+  for(const k of ["tFast","tMeal","tMeal2","tBed"])if(s[k]!=null&&!(s[k]>=40&&s[k]<=400))return "יעד סוכר צריך להיות בין 40 ל-400.";
+  if(s.tLow!=null&&!(s.tLow>=30&&s.tLow<=150))return "הגבול 'נמוך מדי' צריך להיות בין 30 ל-150.";
+  return "";
+}
 $("nSave").addEventListener("click",()=>{
   const v=id=>$(id).value===""?null:+$(id).value;
   const s={tFast:v("nFast"),tMeal:v("nMeal"),tMeal2:v("nMeal2"),tBed:v("nBed"),tLow:v("nLow")};
+  const er=targetsError(s); if(er){$("nMsg").textContent=er;return}
   if(!s.tFast&&!s.tMeal&&!s.tBed){$("nMsg").textContent="נא למלא לפחות יעד אחד.";return}
   state.settings=s; persist("settings",s); lastSig=""; renderAll(); toast("היעדים נשמרו. המדידות נצבעו");
 });
@@ -1592,12 +1624,16 @@ $("pSave").addEventListener("click",()=>{
   const p=clone(state.profile||{});
   const w=$("pWeight").value===""?null:+$("pWeight").value;
   p.age=$("pAge").value===""?null:+$("pAge").value; p.height=$("pHeight").value===""?null:+$("pHeight").value;
+  if(p.age!=null&&!(p.age>=12&&p.age<=70)){$("pMsg").textContent="גיל צריך להיות בין 12 ל-70.";return}
+  if(p.height!=null&&!(p.height>=100&&p.height<=230)){$("pMsg").textContent="גובה צריך להיות בין 100 ל-230 ס\"מ.";return}
+  if(w!=null&&!(w>=30&&w<=250)){$("pMsg").textContent="משקל צריך להיות בין 30 ל-250 ק\"ג.";return}
   if(w&&w!==p.weight){p.weights=(p.weights||[]).filter(x=>x.date!==today());p.weights.push({date:today(),kg:w});p.weights.sort((a,b)=>a.date.localeCompare(b.date))}
   p.weight=w; state.profile=p; persist("profile",p); lastSig=""; document.activeElement.blur(); renderAll(); $("pMsg").textContent="נשמר";
 });
 $("sSave").addEventListener("click",()=>{
   const v=id=>$(id).value===""?null:+$(id).value;
   const s={tFast:v("sFast"),tMeal:v("sMeal"),tMeal2:v("sMeal2"),tBed:v("sBed"),tLow:v("sLow")};
+  const er=targetsError(s); if(er){$("sMsg").textContent=er;return}
   state.settings=s; persist("settings",s); lastSig=""; document.activeElement.blur(); renderAll(); $("sMsg").textContent="היעדים נשמרו";
 });
 
@@ -1732,6 +1768,23 @@ $("bRestore").addEventListener("click",e=>{
   if(id==="rReplace"){box.querySelector(".row").innerHTML='<b>כל הנתונים הנוכחיים יימחקו. להמשיך?</b><button class="btn danger small" id="rReplaceYes">כן, להחליף</button><button class="btn ghost small" id="rCancel">ביטול</button>';return}
   if(id==="rMerge"||id==="rReplaceYes")doRestore(id==="rReplaceYes");
 });
+const numOr=(v,lo,hi)=>{if(v===null||v===undefined||v==="")return null;const n=+v;return Number.isFinite(n)&&n>=lo&&n<=hi?n:null};
+const strOr=(v,max)=>typeof v==="string"?v.slice(0,max):"";
+function cleanEntry(e){
+  if(!e||typeof e!=="object")return null;
+  const id=String(e.id||""); if(!/^[A-Za-z0-9_-]{1,40}$/.test(id))return null;
+  if(!SLOT_BY[e.slot])return null;
+  const out={id,slot:e.slot,time:/^\d\d:\d\d$/.test(e.time||"")?e.time:"",glucose:numOr(e.glucose,1,999),
+    food:strOr(e.food,500),ingr:Array.isArray(e.ingr)?e.ingr.filter(x=>typeof x==="string").map(x=>x.slice(0,40)).slice(0,40):[],
+    feel:strOr(e.feel,40),note:strOr(e.note,500)};
+  const g2=numOr(e.glucose2,1,999); if(g2!=null)out.glucose2=g2;
+  const c=numOr(e.carbs,0,1000); if(c!=null)out.carbs=c;
+  if(e.low===true)out.low=true; if(e.test===true)out.test=true; if(e.skip2===true)out.skip2=true;
+  return out;
+}
+function cleanProfile(p){p=p&&typeof p==="object"?p:{};return {age:numOr(p.age,1,120),height:numOr(p.height,50,250),weight:numOr(p.weight,20,300),
+  weights:Array.isArray(p.weights)?p.weights.filter(w=>w&&/^\d{4}-\d\d-\d\d$/.test(w.date)&&numOr(w.kg,20,300)!=null).map(w=>({date:w.date,kg:+w.kg})):[]}}
+function cleanSettings(s){s=s&&typeof s==="object"?s:{};const o={};["tFast","tMeal","tMeal2","tBed","tLow"].forEach(k=>{o[k]=numOr(s[k],1,999)});return o}
 function doRestore(replace){
   const o=pendingRestore; if(!o)return;
   const keys=Object.keys(o.days).filter(k=>/^\d{4}-\d\d-\d\d$/.test(k));
@@ -1742,21 +1795,22 @@ function doRestore(replace){
     });
   }
   keys.forEach(k=>{
-    const src=(o.days[k].entries||[]).filter(e=>e&&e.id&&e.slot);
+    const src=(Array.isArray(o.days[k]?.entries)?o.days[k].entries:[]).map(cleanEntry).filter(Boolean);
     let entries;
     if(replace)entries=src;
     else{const cur=(state.days[k]?.entries||[]).slice();const ids=new Set(cur.map(e=>e.id));src.forEach(e=>{if(!ids.has(e.id))cur.push(e)});entries=cur}
     entries.sort((a,b)=>(a.time||"").localeCompare(b.time||""));
     const day={date:k,entries:clone(entries)}; state.days[k]=day; persist("d_"+k,day);
   });
-  if(replace||!state.profile||!Object.keys(state.profile).length){state.profile=clone(o.profile||{});persist("profile",state.profile)}
-  if(replace||!state.settings||!Object.keys(state.settings).length){state.settings=clone(o.settings||{});persist("settings",state.settings)}
+  if(replace||!state.profile||!Object.keys(state.profile).length){state.profile=cleanProfile(o.profile);persist("profile",state.profile)}
+  if(replace||!state.settings||!Object.keys(state.settings).length){state.settings=cleanSettings(o.settings);persist("settings",state.settings)}
   pendingRestore=null; $("bRestore").hidden=true; lastSig=""; document.activeElement?.blur?.(); renderAll();
   toast(replace?"הנתונים שוחזרו מהגיבוי":"הגיבוי מוזג עם הנתונים הקיימים");
 }
 $("bXlsx").addEventListener("click",exportXlsx);
 $("bXlsx2").addEventListener("click",exportXlsx);
 $("bJson").addEventListener("click",exportJson);
+$("bRestoreBtn").addEventListener("click",()=>$("bFile").click());
 
 /* ===================== MOTION ===================== */
 (function(){const b=$("bgfx");if(!b)return;let h="";for(let i=0;i<14;i++){const heart=i%3===0;const sz=heart?0:8+Math.round(Math.random()*26);
