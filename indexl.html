@@ -120,7 +120,10 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .minlist[hidden]{display:none}
 .minlist button{min-height:40px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;font:inherit;cursor:pointer}
 .minlist button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
+.topbar{display:flex;justify-content:flex-start;margin:0 0 10px}
+.motion-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 18px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font:600 .95rem var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
+.motion-btn .mi{font-size:1.05rem;line-height:1}
+.motion-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .credit .legal{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:0 auto 8px;font-size:.85rem}
 .btn.danger{border-color:var(--high);background:transparent;color:var(--high)}
 .hint{color:var(--muted);font-size:.88rem;margin:0}
@@ -373,6 +376,7 @@ html.still .bgfx,html.still .burst,html.still .ripple,html.still .mconf{display:
 <div class="bgfx" id="bgfx" aria-hidden="true"></div>
 <a class="skip" href="#main">דילוג לתוכן</a>
 <div class="wrap">
+  <div class="topbar"><button type="button" class="motion-btn" id="motionBtn" aria-pressed="false"><span aria-hidden="true" class="mi">⏸</span><span class="mt">עצירת הנפשות</span></button></div>
   <header class="hero">
     <div>
       <div class="hello" id="hello">שלום</div>
@@ -626,7 +630,7 @@ html.still .bgfx,html.still .burst,html.still .ripple,html.still .mconf{display:
   </main>
 </div>
 <footer class="credit">
-<nav class="legal" aria-label="מידע משפטי"><button type="button" class="linkbtn" id="motionBtn" aria-pressed="false">עצירת הנפשות</button><a href="https://yoman-sukar.vercel.app/accessibility.html">הצהרת נגישות</a><a href="https://yoman-sukar.vercel.app/privacy.html">מדיניות פרטיות</a></nav>
+<nav class="legal" aria-label="מידע משפטי"><a href="https://yoman-sukar.vercel.app/accessibility.html">הצהרת נגישות</a><a href="https://yoman-sukar.vercel.app/privacy.html">מדיניות פרטיות</a></nav>
 <p class="disclaimer">האתר הוא כלי עזר לרישום ולמעקב אישי, ואינו מחליף מעקב, אבחון או הנחיות של הצוות הרפואי.</p>
 <div class="credit-in">
 <svg class="nb-logo" role="img" aria-label="NB" width="30" height="26" viewBox="0 0 200 172" fill="none" stroke-width="9" stroke-linejoin="round"><path d="M14 149 L27 26 Q31 13 40 20 Q44 23 46 30 L88 150 Q92 159 99 151 L114 27" stroke="#e4f34f"/><path d="M131 21 L145 19 Q172 19 177 52 Q180 82 140 87 L127 88 M140 86 Q182 88 186 122 Q189 160 140 160 L136 161" stroke="#ef6a7b"/><path d="M27 155 V34 Q27 22 38 22 Q45 22 49 32 L95 146 Q99 155 106 154 Q113 152 113 142 V23" stroke="#000"/><path d="M124 19 H140 Q172 19 172 54 Q172 84 124 85 M124 85 H142 Q180 86 180 121 Q180 155 140 155 H124" stroke="#000"/></svg>
@@ -1853,7 +1857,7 @@ function heartBurst(){if(document.documentElement.classList.contains("still"))re
   d.style.left=(x-9+(Math.random()*60-30))+"px";d.style.top=y+"px";d.style.setProperty("--dx",(Math.random()*240-120)+"px");d.style.setProperty("--rot",(Math.random()*80-40)+"deg");d.style.animationDelay=(i*0.04)+"s";
   document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}}
 
-(function(){const b=$("motionBtn");if(!b)return;const set=on=>{document.documentElement.classList.toggle("still",on);b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"הפעלת הנפשות":"עצירת הנפשות"};
+(function(){const b=$("motionBtn");if(!b)return;const set=on=>{document.documentElement.classList.toggle("still",on);b.setAttribute("aria-pressed",on?"true":"false");b.querySelector(".mt").textContent=on?"ההנפשות עצורות - להפעלה":"עצירת הנפשות";b.querySelector(".mi").textContent=on?"▶":"⏸"};
   let on=false;try{on=localStorage.getItem("sd_still")==="1"}catch(_){}set(on);
   b.addEventListener("click",()=>{on=!on;set(on);try{localStorage.setItem("sd_still",on?"1":"0")}catch(_){}})})();
 /* boot */
