@@ -155,6 +155,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 /* day log */
 .slots{display:grid;gap:10px}
 .slot{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.snack-add{padding:0 0 12px}
+.snack-add .btn{border-style:dashed;font-weight:500}
 .slot:first-child{border-top:0}
 .slot-h{display:grid;gap:6px;align-content:start;justify-items:start}
 .slot-h b{font-family:var(--f-display);font-weight:600;font-size:1.02rem;color:var(--accent)}
@@ -1261,11 +1263,15 @@ function renderToday(){
   $("dPick").value=viewDay;
   $("dayTitle").textContent=(viewDay===today()?"היום, ":"")+"יום "+dow(viewDay)+" "+fmtDate(viewDay);
   const entries=state.days[viewDay]?.entries||[];
+  const SNACK_AFTER={m_bf:"m_sn",m_ln:"m_sn2",m_dn:"m_lt"}, SNACKS=Object.values(SNACK_AFTER);
+  const has=id=>entries.some(e=>e.slot===id);
   $("daySlots").innerHTML=SLOTS.map(s=>{
     const es=entries.filter(e=>e.slot===s.id);
     if(s.id==="other"&&!es.length)return "";
+    if(SNACKS.includes(s.id)&&!es.length)return "";
+    const sn=SNACK_AFTER[s.id], snBtn=sn&&!has(sn)?`<div class="snack-add"><button class="btn ghost small addSlot" data-slot="${sn}">+ להוספת ארוחת ביניים</button></div>`:"";
     return `<div class="slot"><div class="slot-h"><b>${s.label}</b><button class="btn ghost small addSlot" data-slot="${s.id}">+ הוספה</button></div>
-      <div class="entries">${es.length?es.map(e=>entryHTML(e,viewDay)).join(""):'<span class="empty">עדיין אין רישום</span>'}</div></div>`;
+      <div class="entries">${es.length?es.map(e=>entryHTML(e,viewDay)).join(""):'<span class="empty">עדיין אין רישום</span>'}</div></div>${snBtn}`;
   }).join("");
   // pending: meals without glucose in last 2 days
   const pend=[];
